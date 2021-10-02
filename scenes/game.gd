@@ -1,16 +1,20 @@
 extends MarginContainer
 
+onready var map = $parts/centered/map
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	Matrix.connect("appear_on_the_field", self, 'unit_appeared')
+	
+	GameState.start_new_game()
+
+func unit_appeared(column_pos, line_pos):
+	print('unit_appeared:', column_pos, " ", line_pos)
+	var unit = Matrix.get_cell(column_pos, line_pos)
+	var node_name = str(column_pos) + str(line_pos)
+#	map.get_child()
+#	map.add_child_below_node(node_name)
+	
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _on_Button_pressed():
+	GameState._next_turn()

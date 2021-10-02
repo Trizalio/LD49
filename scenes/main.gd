@@ -17,4 +17,4 @@ func _ready():
 
 
 func _on_start_pressed():
-	SceneChanger.goto_scene('res://scenes/game.tscn')
+	SceneChanger.goto_scene('res://scenes/game.tscn', 0.5, 0.5)

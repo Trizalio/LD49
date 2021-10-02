@@ -1,7 +1,7 @@
 extends Node
 
 #onready var UnitClass = load("res://scenes/unit.gd")
-onready var Imp = load("res://units/imp.gd")
+onready var Imp = load("res://units/imp.tscn")
 
 
 func start_new_game():
@@ -24,7 +24,9 @@ func _add_units_on_top_row():
 		else:
 			print('-- cell[', matrix_cell_index, '].unit is NOT null')
 	print(Matrix.matrix)
+	
 
 func get_new_unit():
-	return Imp.new()
+#	Fader.instance()
+	return Imp.instance()
 #		UnitClass.Unit.new(2)

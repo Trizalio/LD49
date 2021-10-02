@@ -4,69 +4,35 @@ const NeighborsClass = preload("res://utils/unit_neighbors.gd")
 
 
 class Cell:
-#	var _var1
 	var unit
 	func _init():
 		unit = null
-		pass
-#		self._var1 = 1
 	
 	func asgin_unit(new_unit):
 		unit = new_unit
-		pass
+		
+	func release_unit():
+		var unit_ = unit
+		unit = null
+		return unit_
 
 
+signal unit_exited(position)
+signal unit_entered(position)
+signal unit_moved(unit, position_to)
 
-signal move_to_town(column_pos, line_pos)
-signal appear_on_the_field(column_pos, line_pos)
-signal move(column_pos_from, line_pos_from, column_pos_to, line_pos_to)
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 var matrix_length: int = 3
-var matrix_higths: int = 3
+var matrix_hight: int = 3
 var matrix = []
-
-#
-## Called when the node enters the scene tree for the first time.
-#func _ready():
-#
-#	_generate_cells()
-##	var a = get_neighbors(1,1)
-##	print(a)
-##	print(a.left_neighbor)
-##	print(a.top_right_neighbor)
-#	next_turn()
-#	next_turn()
-#	pass # Replace with function body.
-
-
 
 
 func _generate_cells():
-	for line in matrix_higths:
+	for line in matrix_hight:
 		var matrix_line = []
 		for column in matrix_length:
 			matrix_line.append(Cell.new())
 		matrix.append(matrix_line)
-	
-
-	
-# will be replaced 
-func _get_next_wave():
-
-	return []
-
-
-func next_turn():
-	_do_on_next_tern_unit_actions()
-	var next_wave_units = _get_next_wave()
-	for i in range(next_wave_units.size()):
-		appear_on_the_field(i, next_wave_units[i])
-#		unit.do_action()
-		
 
 func _do_on_next_tern_unit_actions():
 	for matrix_line_index in range(matrix.size() - 1, -1, -1):
@@ -77,53 +43,76 @@ func _do_on_next_tern_unit_actions():
 				print('act', matrix_cell_index, matrix_line_index)
 				cell.unit.act()
 
-func get_cell(x, y):
-	 return matrix[y][x]
+func get_cell(position: Vector2):
+	 return matrix[position.y][position.x]
 	
-func move_to_town(column_pos, line_pos):
-	var cell = get_cell(column_pos, line_pos)
-	cell.unit = null
-	emit_signal("move_to_town", column_pos, line_pos)
+func move_to_town(position: Vector2):
+	var cell = get_cell(position)
+	var unit = cell.release_unit()
+	emit_signal("unit_exited", unit)
 	
-func is_next_to_town(line_pos):
-	return line_pos == matrix_higths - 1
+func is_next_to_town(position: Vector2):
+	print('is_next_to_town: ', position, ': ', position.y == (matrix_hight - 1))
+	return position.y == (matrix_hight - 1)
 	
-func move_to(column_pos_from, line_pos_from, column_pos_to, line_pos_to):
-	
-	var cell = matrix[line_pos_from][column_pos_from]
-	matrix[column_pos_to ][line_pos_to].unit = cell.unit
-	cell.unit = null
-	emit_signal("move", column_pos_from, line_pos_from, column_pos_to, line_pos_to)
-	pass
+func move_to(position_from: Vector2, position_to: Vector2):
+	print('move from ', position_from, ' to ', position_to)
+	var cell_from = get_cell(position_from)
+	var cell_to = get_cell(position_to)
+	var unit = cell_from.unit
+	print('cell_from:', cell_from)
+	cell_from.unit = null
+	print('cell_from:', cell_from.unit)
+	cell_to.unit = unit
+	emit_signal("unit_moved", unit, position_to)
 
-func appear_on_the_field(column_pos: int, unit):
-	var cell = get_cell(column_pos, 0)
-	if cell.unit == null:
-		cell.unit = unit
-		emit_signal("appear_on_the_field", column_pos, 0)
+func enter_matrix(position: Vector2, unit):
+	print('Matrix.enter_matrix')
+	assert(position.y == 0)
+	var cell = get_cell(position)
+	assert(cell.unit == null)
+#	if cell.unit == null:
+	cell.unit = unit
+	emit_signal("unit_entered", position)
 
-func get_unit_coordinates(unit):
-	for line in matrix_higths:
+func get_unit_coordinates(unit) -> Vector2:
+	for line in matrix_hight:
 		for column in matrix_length:
 			if matrix[line][column].unit == unit:
-				return	[line, column]
+				return	Vector2(column, line)
+	return Vector2(-1, -1)
+	
+func print_matrix():
+	for matrix_line_index in range(0, matrix.size()):
+		var matrix_line = matrix[matrix_line_index]
+		var line = ''
+		for matrix_cell_index in range(0, matrix_line.size()):
+			var cell = matrix_line[matrix_cell_index]
+			line += str(cell)
+			line += '>'
+			line += str(cell.unit)
+			line += '___'
+			
+		print(line)
 
-func get_neighbors(column_pos, line_pos):
+func get_neighbors(position: Vector2):
+	var column_pos = position.x
+	var line_pos = position.y
 	var top_neighbor = null
 	if line_pos != 0:
 		top_neighbor = matrix[line_pos - 1][column_pos].unit
 	
 	var top_right_neighbor = null
-	if line_pos != 0 and column_pos != matrix_higths - 1:
+	if line_pos != 0 and column_pos != matrix_hight - 1:
 		top_right_neighbor = matrix[line_pos - 1][column_pos + 1].unit
 		
 		
 	var right_neighbor = null
-	if column_pos != matrix_higths - 1:
+	if column_pos != matrix_hight - 1:
 		right_neighbor = matrix[line_pos][column_pos + 1].unit
 	
 	var bottom_right_neighbor = null
-	if  column_pos != matrix_higths - 1 and  line_pos != matrix_length -1:
+	if  column_pos != matrix_hight - 1 and  line_pos != matrix_length -1:
 		bottom_right_neighbor = matrix[line_pos + 1][column_pos + 1].unit
 		
 	var bottom_neighbor = null

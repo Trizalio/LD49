@@ -9,7 +9,9 @@ var rand = RandomNumberGenerator.new()
 
 func _ready():
 	rand.randomize()
-	Matrix.connect("appear_on_the_field", self, 'unit_appeared')
+	Matrix.connect("unit_entered", self, 'unit_entered')
+	Matrix.connect("unit_exited", self, 'unit_exited')
+	Matrix.connect("unit_moved", self, 'unit_moved')
 	
 	GameState.start_new_game()
 	
@@ -20,9 +22,11 @@ func matrix_to_map(matrix_position: Vector2) -> Vector2:
 	var cell_size = tile.get_rect().size
 	return position + cell_size / 2
 
-func unit_appeared(column_pos, line_pos):
+func unit_entered(position: Vector2):
+	var column_pos = position.x
+	var line_pos = position.y
 	print('unit_appeared:', column_pos, " ", line_pos)
-	var unit: Node2D = Matrix.get_cell(column_pos, line_pos).unit
+	var unit: Node2D = Matrix.get_cell(position).unit
 	var unit_matrix_position = Vector2(column_pos, line_pos)
 	units.add_child(unit)
 	var final_position: Vector2 = matrix_to_map(unit_matrix_position)
@@ -33,20 +37,23 @@ func unit_appeared(column_pos, line_pos):
 	var duration = rand.randf_range(0.5, 0.6)
 	Animator.animate(unit, "position", final_position, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	Animator.animate(unit, "modulate", Color(1, 1, 1, 1), duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-#	unit.set_position(get_node_position_from_map_position(Vector2(column_pos, line_pos)))
-#	unit.set_position(Vector2(
-#		(column_pos + 0.5) * cell_size.x + column_pos * separation.x, 
-#		(line_pos + 0.5) * cell_size.y + line_pos * separation.y
-#	))
-#	var unit_start_position = Vector2(
-#		(column_pos + 0.5) * cell_size.x + column_pos * separation.x, 
-#		(line_pos + 0.5) * cell_size.y + line_pos - 1) * separation.y
-#	)
-#	var position = map.get_node(node_name).global_position
-#	print(position, " || ", cell_size)
-#	map.add_child_below_node(node_name)
-	
 
+func unit_moved(unit, position_to: Vector2):
+#	var unit: Node2D = Matrix.get_cell(position_to).unit
+	print('unit moved: ', unit)
+	var final_position: Vector2 = matrix_to_map(position_to)
+	var duration = rand.randf_range(0.5, 0.6)
+	Animator.animate(unit, "position", final_position, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+
+func unit_exited(unit):
+#	var unit: Node2D = Matrix.get_cell(position_to).unit
+	print('unit moved: ', unit)
+	
+	var final_position: Vector2 = 2 * matrix_to_map(Vector2(1, 2)) - matrix_to_map(Vector2(1, 1))
+	var duration = rand.randf_range(0.5, 0.6)
+	Animator.animate(unit, "position", final_position, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	Animator.animate(unit, "modulate", Color(1, 1, 1, 0), duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, true)
+	
 
 func _on_Button_pressed():
 	GameState._next_turn()

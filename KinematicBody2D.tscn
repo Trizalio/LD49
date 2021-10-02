@@ -25,5 +25,4 @@ position = Vector2( 279.439, 287.451 )
 scale = Vector2( 5, 5 )
 frames = SubResource( 3 )
 animation = "imp"
-frame = 1
 playing = true

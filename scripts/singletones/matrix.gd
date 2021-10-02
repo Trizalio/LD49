@@ -1,7 +1,6 @@
 extends Node
 
 const NeighborsClass = preload("res://utils/unit_neighbors.gd")
-const UnitClass = preload("res://scenes/unit.gd")
 
 
 class Cell:
@@ -30,18 +29,18 @@ var matrix_length: int = 3
 var matrix_higths: int = 3
 var matrix = []
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-
-	_generate_cells()
-#	var a = get_neighbors(1,1)
-#	print(a)
-#	print(a.left_neighbor)
-#	print(a.top_right_neighbor)
-	next_turn()
-	next_turn()
-	pass # Replace with function body.
+#
+## Called when the node enters the scene tree for the first time.
+#func _ready():
+#
+#	_generate_cells()
+##	var a = get_neighbors(1,1)
+##	print(a)
+##	print(a.left_neighbor)
+##	print(a.top_right_neighbor)
+#	next_turn()
+#	next_turn()
+#	pass # Replace with function body.
 
 
 
@@ -58,10 +57,7 @@ func _generate_cells():
 # will be replaced 
 func _get_next_wave():
 
-	return [
-		UnitClass.Unit.new(1)
-		,UnitClass.Unit.new(2),
-		UnitClass.Unit.new(1)]
+	return []
 
 
 func next_turn():
@@ -78,19 +74,19 @@ func _do_on_next_tern_unit_actions():
 		for matrix_cell_index in range(matrix_line.size() - 1, -1, -1):
 			var cell = matrix_line[matrix_cell_index]
 			if cell.unit:
+				print('act', matrix_cell_index, matrix_line_index)
 				cell.unit.act()
 
 func get_cell(x, y):
-	 return matrix[x][y]
+	 return matrix[y][x]
 	
-
 func move_to_town(column_pos, line_pos):
-	matrix[line_pos ][column_pos].unit = null
+	var cell = get_cell(column_pos, line_pos)
+	cell.unit = null
 	emit_signal("move_to_town", column_pos, line_pos)
 	
 func is_next_to_town(line_pos):
-	return line_pos ==  matrix_higths - 1
-	
+	return line_pos == matrix_higths - 1
 	
 func move_to(column_pos_from, line_pos_from, column_pos_to, line_pos_to):
 	
@@ -101,9 +97,10 @@ func move_to(column_pos_from, line_pos_from, column_pos_to, line_pos_to):
 	pass
 
 func appear_on_the_field(column_pos: int, unit):
-	if not matrix[matrix_higths - 1][column_pos].unit:
-		matrix[matrix_higths - 1][column_pos].unit = unit
-		emit_signal("appear_on_the_field", column_pos, matrix_higths - 1)
+	var cell = get_cell(column_pos, 0)
+	if cell.unit == null:
+		cell.unit = unit
+		emit_signal("appear_on_the_field", column_pos, 0)
 
 func get_unit_coordinates(unit):
 	for line in matrix_higths:

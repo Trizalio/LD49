@@ -8,10 +8,27 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "TextureRect",
+"class": "Unit",
+"language": "GDScript",
+"path": "res://scenes/unit.gd"
+} ]
+_global_script_class_icons={
+"Unit": ""
+}
+
 [application]
 
 config/name="Ld 49"
+run/main_scene="res://scenes/main.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+SceneChanger="*res://scripts/singletones/scene_changer.gd"
+Matrix="*res://scripts/singletones/matrix.gd"
+GameState="*res://scripts/singletones/game_state.gd"
 
 [display]
 

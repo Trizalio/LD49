@@ -1,8 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://resources/fonts/Galiver Sans.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+font_data = ExtResource( 1 )
 
 [sub_resource type="Theme" id=1]
+default_font = SubResource( 2 )
 
 [node name="main" type="MarginContainer"]
 anchor_right = 1.0
@@ -33,7 +39,7 @@ margin_right = 510.0
 margin_bottom = 463.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 expand = true
 stretch_mode = 6
 
@@ -45,18 +51,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/CenterContainer"]
-margin_left = 233.0
-margin_top = 209.0
-margin_right = 277.0
-margin_bottom = 253.0
+margin_left = 208.0
+margin_top = 177.0
+margin_right = 302.0
+margin_bottom = 285.0
 
 [node name="Button" type="Button" parent="VBoxContainer/CenterContainer/VBoxContainer"]
-margin_right = 44.0
-margin_bottom = 20.0
-text = "start"
+margin_right = 94.0
+margin_bottom = 52.0
+text = "Start"
 
 [node name="Button2" type="Button" parent="VBoxContainer/CenterContainer/VBoxContainer"]
-margin_top = 24.0
-margin_right = 44.0
-margin_bottom = 44.0
-text = "hints"
+margin_top = 56.0
+margin_right = 94.0
+margin_bottom = 108.0
+text = "Hints"

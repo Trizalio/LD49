@@ -2,11 +2,13 @@ extends Node
 
 onready var Imp = preload("res://units/imp.tscn")
 onready var Zombie = preload("res://units/zombie.tscn")
+onready var UndeadSkeleton = preload("res://units/skeleton.tscn")
+onready var Vampire = preload("res://units/vampire.tscn")
 
 var faction_to_units = {}
 func _ready():
 	faction_to_units = {
-		'undead': [Zombie, Zombie, Zombie], 
+		'undead': [Zombie, UndeadSkeleton, Vampire], 
 	#	'orc': [], 
 		'demon': [Imp, Imp, Imp]
 	}

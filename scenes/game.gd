@@ -18,18 +18,13 @@ func _ready():
 
 
 func put_into_animate_queue(arg_1, arg_2 ,arg_3, method_name):
-#	self.call(method_name, arg_1, arg_2, arg_3)
 	_animate_queue.append([method_name, arg_1, arg_2, arg_3])
-#	yield(get_tree().create_timer(5.0), "timeout")
 	pass
 	
 func _fetch_queue():
 	if _animate_queue.size() > 0:
 		var task = _animate_queue.pop_front()
 		call(task[0], task[1], task[2], task[3])
-	
-#	for task in _animate_queue:
-#		call(task[0], task[1], task[2], task[3])
 	yield(get_tree().create_timer(0.5), "timeout")
 	_fetch_queue()
 	
@@ -88,9 +83,6 @@ func _attack_unit_to_unit(from_unit, to_unit):
 		print('GUI.unit_to_unit_attak(from' + str(from_unit) + ' to_unit= ' + str(to_unit) + ')')
 		var from_coordinates: Vector2  = Matrix.get_unit_coordinates(from_unit)
 		var matrix_from_coordinates: Vector2 = matrix_to_map(from_coordinates)
-		
-#		var to_coordinates: Vector2  = Matrix.get_unit_coordinates(to_unit)
-#		var matrix_to_coordinates: Vector2 = matrix_to_map(to_coordinates)
 		var matrix_to_coordinates: Vector2 = to_unit.get_position()
 		
 		
@@ -102,7 +94,6 @@ func _attack_unit_to_unit(from_unit, to_unit):
 		
 		var duration_fist_step = Rand.randf_range(0.5, 0.6)
 		Animator.multi_animate(from_unit, "position", [first_step, last_step], Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-#		Animator.animate(from_unit, "position", from_coordinates, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 		print( "unit_to_unit_attak finished")
 		pass
 	

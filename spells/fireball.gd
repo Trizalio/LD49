@@ -17,6 +17,15 @@ func cast(target_position: Vector2):
 	var target_unit = target_cell.unit
 	if target_unit != null:
 		Matrix.interact_with_unit(self, target_unit, "take_damage")
+#
+#
+#	var matrix_capacity
+#	var units_on_field
+#	var fill_factor = units_on_field / matrix_capacity
+#	var spawn_chance = 1 - fill_factor
+#	if not Rand.check(spawn_chance):
+#		return 
+#
 		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

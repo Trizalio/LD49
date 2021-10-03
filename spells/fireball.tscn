@@ -29,7 +29,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="background" type="TextureRect"]
+[node name="spell" type="CenterContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 material = SubResource( 1 )
 anchor_right = 0.025926
@@ -38,13 +38,20 @@ margin_left = -0.396851
 margin_right = 49.6031
 margin_bottom = 50.0
 rect_min_size = Vector2( 64, 64 )
-texture = ExtResource( 1 )
-expand = true
-stretch_mode = 6
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="background" type="TextureRect" parent="."]
+self_modulate = Color( 1, 1, 1, 0.588235 )
+material = SubResource( 1 )
+margin_right = 64.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 6
 
 [node name="sprite" type="AnimatedSprite" parent="."]
 material = SubResource( 2 )

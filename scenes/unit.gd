@@ -6,6 +6,7 @@ var Burning = preload("res://statuses/burning.tscn")
 
 var _status = null
 var _race = null
+var _tier = null
 
 signal interact(from_unit, to_unit, action)
 signal status_changed(unit, status)
@@ -24,6 +25,9 @@ func _to_string():
 
 func get_race():
 	return _race
+	
+func get_tier():
+	return _tier
 	
 func move_straight():
 	var position =  Matrix.get_unit_coordinates(self)

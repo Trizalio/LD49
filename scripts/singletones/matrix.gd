@@ -19,7 +19,7 @@ class Cell:
 	func _to_string():
 		return 'Cell(id=' + str(get_instance_id()) + ', unit=' + str(unit) + ')' 
 
-signal unit_exited(position)
+signal unit_exited(unit)
 signal unit_entered(position)
 signal unit_moved(position_from, position_to)
 signal unit_interacted(from, to_unit, action)
@@ -33,6 +33,8 @@ var matrix_height: int = 3
 var matrix = []
 
 
+func _ready():
+	print("matrix ready ")
 
 
 func _generate_cells():

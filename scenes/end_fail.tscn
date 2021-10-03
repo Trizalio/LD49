@@ -1,9 +1,29 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://resources/main_style.tres" type="Theme" id=1]
-[ext_resource path="res://resources/scenes_art/main_scene.png" type="Texture" id=2]
+[ext_resource path="res://resources/scenes_art/end_scene_fail.png" type="Texture" id=2]
 [ext_resource path="res://scenes/main.gd" type="Script" id=3]
 [ext_resource path="res://resources/sounds/intro (mp3cut.net).mp3" type="AudioStream" id=4]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 100, 100 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 100, 0, 100, 100 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 200, 0, 100, 100 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [node name="main" type="MarginContainer"]
 anchor_right = 1.0
@@ -33,48 +53,40 @@ margin_bottom = 945.0
 [node name="Label" type="Label" parent="parts"]
 margin_right = 510.0
 margin_bottom = 54.0
-text = "Unstable mage"
+text = "Ending 1 of 4"
 align = 1
 
-[node name="texture" type="TextureRect" parent="parts"]
+[node name="centered" type="CenterContainer" parent="parts"]
 margin_top = 58.0
 margin_right = 510.0
-margin_bottom = 492.0
+margin_bottom = 526.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource( 2 )
-expand = true
-stretch_mode = 6
 
-[node name="centered" type="CenterContainer" parent="parts"]
-margin_top = 496.0
+[node name="AnimatedSprite" type="AnimatedSprite" parent="parts/centered"]
+position = Vector2( 265.203, 241.536 )
+scale = Vector2( 4.13951, 4.02059 )
+frames = SubResource( 4 )
+playing = true
+
+[node name="Label" type="Label" parent="parts/centered"]
+margin_left = 251.0
+margin_top = 207.0
+margin_right = 259.0
+margin_bottom = 261.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="parts"]
+margin_top = 530.0
 margin_right = 510.0
 margin_bottom = 930.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="buttons" type="VBoxContainer" parent="parts/centered"]
-margin_left = 208.0
-margin_top = 161.0
-margin_right = 302.0
-margin_bottom = 273.0
-
-[node name="start" type="Button" parent="parts/centered/buttons"]
-margin_right = 94.0
-margin_bottom = 54.0
-focus_mode = 0
-enabled_focus_mode = 0
-text = "Start"
-
-[node name="Button2" type="Button" parent="parts/centered/buttons"]
-margin_top = 58.0
-margin_right = 94.0
-margin_bottom = 112.0
-text = "Hints"
+rect_min_size = Vector2( 0, 400 )
+bbcode_enabled = true
+bbcode_text = "[center]Из-за распрей между рас
+все погибли[/center]"
+text = "Из-за распрей между рас
+все погибли"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 volume_db = -20.0
 autoplay = true
-
-[connection signal="pressed" from="parts/centered/buttons/start" to="." method="_on_start_pressed"]

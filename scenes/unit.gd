@@ -10,6 +10,7 @@ var _race = null
 signal interact(from_unit, to_unit, action)
 signal status_changed(unit, status)
 signal replace_unit(old_unit, new_unit)
+signal damage_taken(unit)
 
 func move():
 	print("Move")
@@ -39,6 +40,7 @@ func move_straight():
 func take_damage():
 	
 	print("unit: "  + str(self) + " took damage")
+	emit_signal("damage_taken", self)
 	emit_signal("replace_unit", self, null)
 
 

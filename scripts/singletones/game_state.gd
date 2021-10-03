@@ -8,7 +8,10 @@ func start_new_game():
 	turn_number = 0
 	Matrix._generate_cells()
 	pass # Replace with function body.
-	
+#
+#func cast_spell(target: Vector2, spell: Spell):
+#
+#	pass
 
 func _next_turn():
 	print('-----===== Units turn =====------')

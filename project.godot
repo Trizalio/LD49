@@ -37,6 +37,7 @@ Matrix="*res://scripts/singletones/matrix.gd"
 GameState="*res://scripts/singletones/game_state.gd"
 Animator="*res://scripts/singletones/animator.gd"
 Rand="*res://scripts/singletones/rand.gd"
+UnitsGenerator="*res://scripts/singletones/units_generator.gd"
 
 [display]
 

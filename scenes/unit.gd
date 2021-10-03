@@ -9,9 +9,13 @@ var LightningShield = preload("res://statuses/lightning shield.tscn")
 var _status = null
 var _race = null
 var _tier = null
+var _current_status_name = "current_status"
 
+var _stay_frozen_for = 2
+var _staid_frozen = 0
+ 
 signal interact(from_unit, to_unit, action)
-signal status_changed(unit, status)
+signal status_changed(unit, action, inst)
 signal replace_unit(old_unit, new_unit)
 signal damage_taken(unit)
 
@@ -30,10 +34,21 @@ func get_race():
 	
 func get_tier():
 	return _tier
+		
+func get_status():
+	return _status
 	
 func move_straight():
 	var position =  Matrix.get_unit_coordinates(self)
 #	print('move_straight from ', position)
+	if _status == "frozen":
+		if _staid_frozen < _stay_frozen_for:
+			_staid_frozen +=1
+			return
+		else:
+			_staid_frozen = 0
+			change_status(null)
+			
 	if Matrix.is_next_to_town(position):
 		Matrix.exit_from(position)
 		return
@@ -43,30 +58,48 @@ func move_straight():
 	if Matrix.get_cell(desired_position).unit == null:
 		Matrix.move_unit(position, desired_position)
 
-func take_damage():
+func take_damage(from):
 	
-	print("unit: "  + str(self) + " took damage")
-	emit_signal("damage_taken", self)
-	emit_signal("replace_unit", self, null)
+	print("unit: "  + str(self) + " took damage form" + str(from))
+#	if from is Unit:
+#		and from != self
+	if _status == "lightning_shield":
+		print("unit: "  + str(self) + " emited lightning_shield" + str(from))
+		emit_signal("interact", "lightning_shield", from, "take_damage")
+		pass
+	else:
+		emit_signal("damage_taken", self)
+		emit_signal("replace_unit", self, null)
 
 
 func change_status(status):
-	print("unit: "  + str(self) + " changed status from " + str(_status) + " to " + (status) )
+	print("unit: "  + str(self) + " changed status from " + str(_status) + " to " + str(status) )
 	_status = status
+	var action = null
+	var inst = null
 	if status == "frozen":
-		var inst = Frozen.instance()
+		inst = Frozen.instance()
+		inst.set_name(_current_status_name)
 		inst.playing = true
-		self.add_child(inst)
+		action = "add_child"
 	elif status == "burning":
-		var inst = Burning.instance()
-		self.add_child(inst)
+		inst = Burning.instance()
+		inst.set_name(_current_status_name)
+		action = "add_child"
 	elif status == 'lightning_shield':
-		var inst = LightningShield.instance()
-		self.add_child(inst)
+		inst = LightningShield.instance()
+		inst.set_name(_current_status_name)
+		action = "add_child"
+#		self.add_child(inst)
+	elif status == null:
+		inst = self.get_node(_current_status_name)
+#		self.remove_child(status_node)
+		action = "remove_child"
 	else:
 		print('Unexpected status')
 		assert(false)
-	emit_signal("status_changed", self, _status)
+	print("emititng status_changed")
+	emit_signal("status_changed", self, action, inst)
 	
 	
 func interact_to_unit(from_unit: Unit, to_unit: Unit, action: String):

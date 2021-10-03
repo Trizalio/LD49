@@ -10,3 +10,6 @@ func randf_range(from: float, to: float):
 	
 func check(chance: float) -> bool:
 	return chance >= randf_range(0, 1)
+
+func rand_choice(options: Array):
+	return options[rand.randi() % options.size()]

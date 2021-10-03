@@ -2,6 +2,7 @@ extends Node
 
 #onready var UnitClass = load("res://scenes/unit.gd")
 onready var Imp = load("res://units/imp.tscn")
+onready var Zombie = load("res://units/zombie.tscn")
 var turn_number = 0
 
 func start_new_game():
@@ -29,7 +30,7 @@ func _add_units_on_top_row():
 		var cell = Matrix.get_cell(position)
 		if cell.unit == null:
 #			print('-- cell[', position, '].unit is null')
-			var new_unit = get_new_unit()
+			var new_unit = get_new_unit(matrix_cell_index)
 			Matrix.enter_matrix(position, new_unit)
 		else:
 #			print('-- cell[', position, '].unit is NOT null')
@@ -37,7 +38,10 @@ func _add_units_on_top_row():
 #	print(Matrix.matrix)
 	
 
-func get_new_unit():
+func get_new_unit(matrix_cell_index):
 #	Fader.instance()
-	return Imp.instance()
+	if matrix_cell_index > 1:
+		return Imp.instance()
+	else:
+		return Zombie.instance()
 #		UnitClass.Unit.new(2)

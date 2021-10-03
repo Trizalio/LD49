@@ -1,19 +1,27 @@
 extends Node2D
 class_name Unit
 
+
 var _status = null
+var _race = null
+
 signal interact(from_unit, to_unit, action)
 signal status_changed(unit, status)
 signal replace_unit(old_unit, new_unit)
 
 func move():
 	print("Move")
-	
+
+
 
 func _to_string():
 	return 'Unit(id=' + str(get_instance_id()) + ')' 
 #func try_move():
 
+
+func get_race():
+	return _race
+	
 func move_straight():
 	var position =  Matrix.get_unit_coordinates(self)
 #	print('move_straight from ', position)
@@ -26,7 +34,7 @@ func move_straight():
 	if Matrix.get_cell(desired_position).unit == null:
 		Matrix.move_unit(position, desired_position)
 	
-	take_damage()
+#	take_damage()
 
 func take_damage():
 	

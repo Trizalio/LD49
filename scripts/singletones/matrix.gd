@@ -79,6 +79,7 @@ func move_unit(position_from: Vector2, position_to: Vector2) -> void:
 
 func enter_matrix(position: Vector2, unit: Unit) -> void:
 	assert(position.y == 0)
+	assert(unit != null)
 	var cell = get_cell(position)
 	print('Matrix.enter_matrix(cell=' + str(cell) + ', unit=' + str(unit) + ')')
 	assert(cell.unit == null)

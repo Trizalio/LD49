@@ -1,13 +1,16 @@
 extends MarginContainer
 
 onready var map: GridContainer = $parts/centered/map
-onready var units = $parts/centered/map/units
+var units = null
+
+onready var Tile = preload("res://utils/tile.tscn")
 
 # TODO: get from map
 onready var separation: Vector2 = Vector2(4, 4)
 var _animate_queue = []
 
 func _ready():
+	_prepare_battlefield()
 	Matrix.connect("unit_entered", self, 'put_into_animate_queue', [null, null, "unit_entered"])
 	Matrix.connect("unit_exited", self, 'put_into_animate_queue',  [null, null, "unit_exited"])
 	Matrix.connect("unit_moved", self, 'put_into_animate_queue', [null, "unit_moved"])
@@ -16,6 +19,16 @@ func _ready():
 	_fetch_queue()
 	GameState.start_new_game()
 
+func _prepare_battlefield():
+	for y in range(Matrix.matrix_height):
+		for x in range(Matrix.matrix_width):
+			var new_tile = Tile.instance()
+			map.add_child(new_tile)
+			new_tile.set_name(str(x) + str(y))
+			
+	units = Node2D.new()
+	units.set_name('units')
+	map.add_child(units)
 
 func put_into_animate_queue(arg_1, arg_2 ,arg_3, method_name):
 	_animate_queue.append([method_name, arg_1, arg_2, arg_3])
@@ -58,7 +71,7 @@ func unit_moved(__, position_to: Vector2, ___):
 
 func unit_exited(unit,  __  ,___):
 	print('GUI.unit_exited(unit=' + str(unit) + ')')
-	var final_position: Vector2 = 2 * matrix_to_map(Vector2(1, 2)) - matrix_to_map(Vector2(1, 1))
+	var final_position: Vector2 = unit.position + matrix_to_map(Vector2(1, 2)) - matrix_to_map(Vector2(1, 1))
 	var duration = Rand.randf_range(0.5, 0.6)
 	Animator.animate(unit, "position", final_position, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	Animator.animate(unit, "modulate", Color(1, 1, 1, 0), duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, true)

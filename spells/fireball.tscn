@@ -4,6 +4,7 @@
 [ext_resource path="res://spells/fireball.gd" type="Script" id=2]
 [ext_resource path="res://resources/spell/fireball.png" type="Texture" id=3]
 [ext_resource path="res://resources/shaders/glow.shader" type="Shader" id=4]
+[ext_resource path="res://resources/shaders/fire_spell_glow.tres" type="Material" id=5]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 4 )
@@ -12,14 +13,6 @@ shader_param/max_steps = 5
 shader_param/shift_per_step = 1.0
 shader_param/pulse_frequency = 5.0
 shader_param/power = 2.0
-
-[sub_resource type="ShaderMaterial" id=2]
-shader = ExtResource( 4 )
-shader_param/selected_glow = Color( 1, 0.701961, 0, 1 )
-shader_param/max_steps = 5
-shader_param/shift_per_step = 1.0
-shader_param/pulse_frequency = 0.1
-shader_param/power = 1.0
 
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
@@ -54,6 +47,6 @@ expand = true
 stretch_mode = 6
 
 [node name="sprite" type="AnimatedSprite" parent="."]
-material = SubResource( 2 )
+material = ExtResource( 5 )
 position = Vector2( 36.0045, 29.1629 )
 frames = SubResource( 3 )

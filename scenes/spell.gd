@@ -1,4 +1,4 @@
-extends TextureRect
+extends Control
 class_name Spell
 
 var is_dragged = false

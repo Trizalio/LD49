@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://resources/shaders/glow.shader" type="Shader" id=1]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/selected_glow = Color( 1, 0.701961, 0, 1 )
+shader_param/max_steps = 5
+shader_param/shift_per_step = 1.0
+shader_param/pulse_frequency = 0.1
+shader_param/power = 1.0

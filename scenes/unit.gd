@@ -47,7 +47,7 @@ func move_straight():
 			return
 		else:
 			_staid_frozen = 0
-			change_status(null)
+			change_status(self, null)
 			
 	if Matrix.is_next_to_town(position):
 		Matrix.exit_from(position)
@@ -63,16 +63,21 @@ func take_damage(from):
 	print("unit: "  + str(self) + " took damage form" + str(from))
 #	if from is Unit:
 #		and from != self
+
 	if _status == "lightning_shield":
+		print(str(from))
+		if from is CenterContainer:
+			return
 		print("unit: "  + str(self) + " emited lightning_shield" + str(from))
-		emit_signal("interact", "lightning_shield", from, "take_damage")
+		if from.get_status() != "lightning_shield":
+			emit_signal("interact", "lightning_shield", from, "take_damage")
 		pass
 	else:
 		emit_signal("damage_taken", self)
 		emit_signal("replace_unit", self, null)
 
 
-func change_status(status):
+func change_status(from, status):
 	print("unit: "  + str(self) + " changed status from " + str(_status) + " to " + str(status) )
 	_status = status
 	var action = null
@@ -99,7 +104,7 @@ func change_status(status):
 		print('Unexpected status')
 		assert(false)
 	print("emititng status_changed")
-	emit_signal("status_changed", self, action, inst)
+	emit_signal("status_changed", self, action, inst, from)
 	
 	
 func interact_to_unit(from_unit: Unit, to_unit: Unit, action: String):

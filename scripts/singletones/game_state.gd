@@ -40,7 +40,7 @@ func _add_units_on_top_row():
 
 func get_new_unit(matrix_cell_index):
 #	Fader.instance()
-	if matrix_cell_index > 1:
+	if matrix_cell_index >= 1:
 		return Imp.instance()
 	else:
 		return Zombie.instance()

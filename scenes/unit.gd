@@ -33,21 +33,19 @@ func move_straight():
 #	print('move_straight desired_position ', desired_position)
 	if Matrix.get_cell(desired_position).unit == null:
 		Matrix.move_unit(position, desired_position)
-	
-#	take_damage()
 
 func take_damage():
 	
-	print(" damage taken for unit: " +  str(self))
+	print("unit: "  + str(self) + " took damage")
 	emit_signal("replace_unit", self, null)
 
 
 func change_status(status):
+	print("unit: "  + str(self) + " changed status from " + _status + " to " + status )
 	_status = status
 	emit_signal("status_changed", self, _status)
 	
 	
 func interact_to_unit(from_unit: Unit, to_unit: Unit, action: String):
+	print("unit: "  + str(from_unit) + " interact to " + str(to_unit) + " action " + str(action) )
 	emit_signal("interact", from_unit, to_unit, action)
-	
-	pass

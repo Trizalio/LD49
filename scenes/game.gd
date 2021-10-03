@@ -17,6 +17,7 @@ func _ready():
 	Matrix.connect("unit_replaced", self, 'put_into_animate_queue',  [null, "unit_replaced"])
 	Matrix.connect("unit_interacted", self, 'put_into_animate_queue', ["unit_interacted"])
 	Matrix.connect("damage_taken", self, 'put_into_animate_queue', [null, null,"damage_taken"])
+	Matrix.connect("unit_status_changed", self, 'put_into_animate_queue', ["unit_status_changed"])
 	_fetch_queue()
 	GameState.start_new_game()
 
@@ -43,6 +44,9 @@ func _fetch_queue():
 	yield(get_tree().create_timer(0.5), "timeout")
 	_fetch_queue()
 	
+func unit_status_changed(unit, action, inst):
+	print("changing unit status: " + str(unit))
+	unit.call(action, inst)
 	
 func matrix_to_map(matrix_position: Vector2) -> Vector2:
 	var node_name = str(matrix_position.x) + str(matrix_position.y)
@@ -97,8 +101,9 @@ func damage_taken(unit,  __  ,___):
 	
 func _attack_unit_to_unit(from_unit, to_unit):
 		print('GUI.unit_to_unit_attak(from' + str(from_unit) + ' to_unit= ' + str(to_unit) + ')')
-		var from_coordinates: Vector2  = Matrix.get_unit_coordinates(from_unit)
-		var matrix_from_coordinates: Vector2 = matrix_to_map(from_coordinates)
+#		var from_coordinates: Vector2  = Matrix.get_unit_coordinates(from_unit)
+#		var matrix_from_coordinates: Vector2 = matrix_to_map(from_coordinates)
+		var matrix_from_coordinates: Vector2  = from_unit.get_position()
 		var matrix_to_coordinates: Vector2 = to_unit.get_position()
 		
 		

@@ -3,6 +3,7 @@ class_name Unit
 
 var Frozen = preload("res://statuses/frozen.tscn")
 var Burning = preload("res://statuses/burning.tscn")
+var LightningShield = preload("res://statuses/lightning shield.tscn")
 
 var _status = null
 var _race = null
@@ -49,9 +50,15 @@ func change_status(status):
 		var inst = Frozen.instance()
 		inst.playing = true
 		self.add_child(inst)
-	if status == "burning":
+	elif status == "burning":
 		var inst = Burning.instance()
 		self.add_child(inst)
+	elif status == 'lightning_shield':
+		var inst = LightningShield.instance()
+		self.add_child(inst)
+	else:
+		print('Unexpected status')
+		assert(false)
 	emit_signal("status_changed", self, _status)
 	
 	

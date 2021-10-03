@@ -48,14 +48,6 @@ func call_on_all_units(method: String):
 			if cell.unit:
 				cell.unit.call(method)
 
-#func _do_on_next_tern_unit_actions():
-#	for matrix_line_index in range(matrix.size() - 1, -1, -1):
-#		var matrix_line = matrix[matrix_line_index]
-#		for matrix_cell_index in range(matrix_line.size() - 1, -1, -1):
-#			var cell = matrix_line[matrix_cell_index]
-#			if cell.unit:
-#				cell.unit.act()
-
 func get_cell(position: Vector2) -> Cell:
 	 return matrix[position.y][position.x]
 	
@@ -104,8 +96,6 @@ func print_matrix():
 		for matrix_cell_index in range(0, matrix_line.size()):
 			var cell = matrix_line[matrix_cell_index]
 			line += str(cell)
-#			line += '>'
-#			line += str(cell.unit)
 			line += '\t'
 			
 		print(line)

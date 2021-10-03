@@ -10,6 +10,8 @@ func _ready():
 	Matrix.connect("unit_entered", self, 'unit_entered')
 	Matrix.connect("unit_exited", self, 'unit_exited')
 	Matrix.connect("unit_moved", self, 'unit_moved')
+	Matrix.connect("unit_replaced", self, 'unit_replaced')
+	Matrix.connect("unit_interacted", self, 'unit_interacted')
 	
 	GameState.start_new_game()
 	
@@ -46,6 +48,43 @@ func unit_exited(unit):
 	var duration = Rand.randf_range(0.5, 0.6)
 	Animator.animate(unit, "position", final_position, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	Animator.animate(unit, "modulate", Color(1, 1, 1, 0), duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, true)
+
+func unit_replaced(old_unit, new_unit):
+	print('GUI.unit_replaced(from_unit=' + str(old_unit) + ' to_unit=' + str(new_unit) + ')')
+	var coordinates: Vector2  = Matrix.get_unit_coordinates(old_unit)
+	var duration = Rand.randf_range(0.5, 0.6)
+	if not new_unit:
+		Animator.animate(old_unit, "modulate", Color(1, 1, 1, 0), duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, true)
+		pass
+	pass
+func unit_interacted(from, to_unit, action):
+	print('GUI.unit_interact(from' + str(from) + ' to_unit= ' + str(to_unit) + ')')
+	if from:
+		if action == "take_damage":
+			_attack_unit_to_unit(from, to_unit)
+	
+	pass
+	
+func _attack_unit_to_unit(from_unit, to_unit):
+		print('GUI.unit_to_unit_attak(from' + str(from_unit) + ' to_unit= ' + str(to_unit) + ')')
+		var from_coordinates: Vector2  = Matrix.get_unit_coordinates(from_unit)
+		var matrix_from_coordinates: Vector2 = matrix_to_map(from_coordinates)
+		
+		var to_coordinates: Vector2  = Matrix.get_unit_coordinates(to_unit)
+		var matrix_to_coordinates: Vector2 = matrix_to_map(to_coordinates)
+		
+		
+		var duration_first_step = Rand.randf_range(0.5, 0.6) 
+		var first_step = Animator.AnimationStep.new((matrix_to_coordinates * 2 + matrix_from_coordinates) / 3, duration_first_step)
+		
+		var duration_last_step = Rand.randf_range(0.7, 0.8)
+		var last_step = Animator.AnimationStep.new(matrix_from_coordinates, duration_last_step)
+		
+		var duration_fist_step = Rand.randf_range(0.5, 0.6)
+		Animator.multi_animate(from_unit, "position", [first_step, last_step], Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+#		Animator.animate(from_unit, "position", from_coordinates, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+		print( "unit_to_unit_attak finished")
+		pass
 	
 # TODO: Remove later
 func _on_Button_pressed():

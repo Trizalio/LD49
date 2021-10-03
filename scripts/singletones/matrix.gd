@@ -122,8 +122,8 @@ func raise_unit_status_changed(unit: Unit, status):
 	pass
 	
 func interact_with_unit(from, to_unit: Unit, action: String):
-	to_unit.call(action)
 	emit_signal("unit_interacted", from, to_unit, action)
+	to_unit.call(action)
 
 func get_neighbors(position: Vector2):
 	var column_pos = position.x

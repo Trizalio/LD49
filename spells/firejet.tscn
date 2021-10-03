@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://spells/firejet.gd" type="Script" id=1]
 [ext_resource path="res://utils/spell_background.tscn" type="PackedScene" id=2]
 [ext_resource path="res://resources/spell/firejet.png" type="Texture" id=3]
+[ext_resource path="res://resources/shaders/fire_spell_glow.tres" type="Material" id=4]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -25,5 +26,6 @@ __meta__ = {
 [node name="background" parent="." instance=ExtResource( 2 )]
 
 [node name="sprite" type="AnimatedSprite" parent="."]
+material = ExtResource( 4 )
 position = Vector2( 33, 32 )
 frames = SubResource( 1 )

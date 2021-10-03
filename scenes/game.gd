@@ -20,6 +20,7 @@ func _ready():
 	GameState.start_new_game()
 
 func _prepare_battlefield():
+	map.set_columns(Matrix.matrix_width)
 	for y in range(Matrix.matrix_height):
 		for x in range(Matrix.matrix_width):
 			var new_tile = Tile.instance()

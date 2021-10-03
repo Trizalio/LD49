@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Control",
+"base": "TextureRect",
 "class": "Spell",
 "language": "GDScript",
 "path": "res://scenes/spell.gd"
@@ -37,6 +37,7 @@ Matrix="*res://scripts/singletones/matrix.gd"
 GameState="*res://scripts/singletones/game_state.gd"
 Animator="*res://scripts/singletones/animator.gd"
 Rand="*res://scripts/singletones/rand.gd"
+UnitsGenerator="*res://scripts/singletones/units_generator.gd"
 
 [display]
 

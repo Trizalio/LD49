@@ -8,11 +8,10 @@ func _ready():
 	if is_dragged:
 		sprite.set_position(Vector2())
 		sprite.set_centered(true)
-		set_self_modulate(Color(1, 1, 1, 0))
+		$background.set_self_modulate(Color(1, 1, 1, 0))
 	else:
 		sprite.set_position(get_rect().size / 2)
 		sprite.set_centered(true)
-		set_self_modulate(Color(1, 1, 1, 1))
 
 func prepare_to_be_dragged():
 	is_dragged = true

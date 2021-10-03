@@ -19,12 +19,13 @@ class Cell:
 	func _to_string():
 		return 'Cell(id=' + str(get_instance_id()) + ', unit=' + str(unit) + ')' 
 
-signal unit_exited(position)
+signal unit_exited(unit)
 signal unit_entered(position)
 signal unit_moved(position_from, position_to)
 signal unit_interacted(from, to_unit, action)
 signal unit_status_changed(unit, status)
 signal unit_replaced(old_unit, new_unit)
+signal damage_taken(unit)
 
 
 var matrix_width: int = 7
@@ -32,6 +33,8 @@ var matrix_height: int = 7
 var matrix = []
 
 
+func _ready():
+	print("matrix ready ")
 
 
 func _generate_cells():
@@ -79,6 +82,7 @@ func enter_matrix(position: Vector2, unit: Unit) -> void:
 	unit.connect("interact", self, 'interact_with_unit')
 	unit.connect("status_changed", self, 'unit_status_changed')
 	unit.connect("replace_unit", self, 'replace_unit')
+	unit.connect("damage_taken", self, 'damage_taken')
 	emit_signal("unit_entered", position)
 
 func get_unit_coordinates(unit) -> Vector2:
@@ -109,7 +113,9 @@ func replace_unit(old_unit: Unit, new_unit: Unit):
 	
 func raise_unit_status_changed(unit: Unit, status):
 	emit_signal("unit_status_changed", unit, status)
-	pass
+		
+func damage_taken(unit: Unit):
+	emit_signal("damage_taken", unit)
 	
 func interact_with_unit(from, to_unit: Unit, action: String):
 	emit_signal("unit_interacted", from, to_unit, action)

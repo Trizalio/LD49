@@ -7,10 +7,12 @@ var LightningShield = preload("res://statuses/lightning shield.tscn")
 
 var _status = null
 var _race = null
+var _tier = null
 
 signal interact(from_unit, to_unit, action)
 signal status_changed(unit, status)
 signal replace_unit(old_unit, new_unit)
+signal damage_taken(unit)
 
 func move():
 	print("Move")
@@ -24,6 +26,9 @@ func _to_string():
 
 func get_race():
 	return _race
+	
+func get_tier():
+	return _tier
 	
 func move_straight():
 	var position =  Matrix.get_unit_coordinates(self)
@@ -40,6 +45,7 @@ func move_straight():
 func take_damage():
 	
 	print("unit: "  + str(self) + " took damage")
+	emit_signal("damage_taken", self)
 	emit_signal("replace_unit", self, null)
 
 

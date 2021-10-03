@@ -28,10 +28,11 @@ modulate = Color( 1, 1, 1, 0.588235 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 4 )
 animation = "shield"
+frame = 2
 playing = true
 
 [node name="AnimatedSprite2" type="AnimatedSprite" parent="."]
 frames = SubResource( 4 )
 animation = "shield"
-frame = 2
+frame = 1
 playing = true

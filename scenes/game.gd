@@ -16,6 +16,7 @@ func _ready():
 	Matrix.connect("unit_moved", self, 'put_into_animate_queue', [null, "unit_moved"])
 	Matrix.connect("unit_replaced", self, 'put_into_animate_queue',  [null, "unit_replaced"])
 	Matrix.connect("unit_interacted", self, 'put_into_animate_queue', ["unit_interacted"])
+	Matrix.connect("damage_taken", self, 'put_into_animate_queue', [null, null,"damage_taken"])
 	_fetch_queue()
 	GameState.start_new_game()
 
@@ -83,15 +84,16 @@ func unit_replaced(old_unit, new_unit, __):
 	var duration = Rand.randf_range(0.5, 0.6)
 	if not new_unit:
 		Animator.animate(old_unit, "modulate", Color(1, 1, 1, 0), duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, true)
-		pass
-	pass
+
+
 func unit_interacted(from, to_unit, action):
 	print('GUI.unit_interact(from' + str(from) + ' to_unit= ' + str(to_unit) + ')')
 	if from is Unit:
 		if action == "take_damage":
 			_attack_unit_to_unit(from, to_unit)
 	
-	pass
+func damage_taken(unit,  __  ,___):
+	print('GUI.unit took damage(' + str(unit) + ')')
 	
 func _attack_unit_to_unit(from_unit, to_unit):
 		print('GUI.unit_to_unit_attak(from' + str(from_unit) + ' to_unit= ' + str(to_unit) + ')')

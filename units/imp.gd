@@ -1,10 +1,14 @@
 extends Unit
 
-
 func _ready():
 	self._race =  "demon"
+	self._tier =  1
 
+func get_race():
+	return "demon"
 
+func get_tier():
+	return 1
 func act():
 	var coordinates = Matrix.get_unit_coordinates(self)
 	var neighbors = Matrix.get_neighbors(coordinates)

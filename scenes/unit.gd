@@ -1,6 +1,8 @@
 extends Node2D
 class_name Unit
 
+var Frozen = preload("res://statuses/frozen.tscn")
+var Burning = preload("res://statuses/burning.tscn")
 
 var _status = null
 var _race = null
@@ -41,8 +43,15 @@ func take_damage():
 
 
 func change_status(status):
-	print("unit: "  + str(self) + " changed status from " + _status + " to " + status )
+	print("unit: "  + str(self) + " changed status from " + str(_status) + " to " + (status) )
 	_status = status
+	if status == "frozen":
+		var inst = Frozen.instance()
+		inst.playing = true
+		self.add_child(inst)
+	if status == "burning":
+		var inst = Burning.instance()
+		self.add_child(inst)
 	emit_signal("status_changed", self, _status)
 	
 	

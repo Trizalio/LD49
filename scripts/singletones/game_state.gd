@@ -11,25 +11,30 @@ func start_new_game():
 	
 
 func _next_turn():
-	Matrix._do_on_next_tern_unit_actions()
+	print('-----===== Units turn =====------')
+#	Matrix.print_matrix()
+	Matrix.call_on_all_units('act')
 	_add_units_on_top_row()
-	Matrix.print_matrix()
 	turn_number += 1
+	print('-----===== Player turn =====------')
+	Matrix.print_matrix()
+	
 
 func _add_units_on_top_row():
 	if turn_number:
 		return
-	print('_add_units_on_top_row:, cells: ', Matrix.matrix.size())
+#	print('_add_units_on_top_row:, cells: ', Matrix.matrix.size())
 	for matrix_cell_index in range(Matrix.matrix.size() - 1, -1, -1):
 		var position = Vector2(matrix_cell_index, 0)
 		var cell = Matrix.get_cell(position)
 		if cell.unit == null:
-			print('-- cell[', position, '].unit is null')
+#			print('-- cell[', position, '].unit is null')
 			var new_unit = get_new_unit()
 			Matrix.enter_matrix(position, new_unit)
 		else:
-			print('-- cell[', position, '].unit is NOT null')
-	print(Matrix.matrix)
+#			print('-- cell[', position, '].unit is NOT null')
+			pass
+#	print(Matrix.matrix)
 	
 
 func get_new_unit():

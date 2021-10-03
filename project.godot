@@ -30,6 +30,7 @@ SceneChanger="*res://scripts/singletones/scene_changer.gd"
 Matrix="*res://scripts/singletones/matrix.gd"
 GameState="*res://scripts/singletones/game_state.gd"
 Animator="*res://scripts/singletones/animator.gd"
+Rand="*res://scripts/singletones/rand.gd"
 
 [display]
 

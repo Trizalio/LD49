@@ -5,6 +5,7 @@ var Frozen = preload("res://statuses/frozen.tscn")
 var Burning = preload("res://statuses/burning.tscn")
 var LightningShield = preload("res://statuses/lightning shield.tscn")
 
+
 var _status = null
 var _race = null
 

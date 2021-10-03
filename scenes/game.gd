@@ -73,7 +73,7 @@ func unit_replaced(old_unit, new_unit, __):
 	pass
 func unit_interacted(from, to_unit, action):
 	print('GUI.unit_interact(from' + str(from) + ' to_unit= ' + str(to_unit) + ')')
-	if from:
+	if from is Unit:
 		if action == "take_damage":
 			_attack_unit_to_unit(from, to_unit)
 	

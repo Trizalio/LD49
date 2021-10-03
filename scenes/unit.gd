@@ -63,9 +63,14 @@ func take_damage(from):
 	print("unit: "  + str(self) + " took damage form" + str(from))
 #	if from is Unit:
 #		and from != self
+
 	if _status == "lightning_shield":
+		print(str(from))
+		if from is CenterContainer:
+			return
 		print("unit: "  + str(self) + " emited lightning_shield" + str(from))
-		emit_signal("interact", "lightning_shield", from, "take_damage")
+		if from.get_status() != "lightning_shield":
+			emit_signal("interact", "lightning_shield", from, "take_damage")
 		pass
 	else:
 		emit_signal("damage_taken", self)

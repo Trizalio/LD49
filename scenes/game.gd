@@ -54,9 +54,10 @@ func _fetch_queue():
 	
 func unit_status_changed(unit, action, inst, from):
 	print("changing unit status: " + str(unit))
-	if unit:
-		if unit != from:
-			_attack_unit_to_unit(from, unit)
+	if from:
+		if unit is Unit:
+			if unit != from:
+				_attack_unit_to_unit(from, unit)
 	unit.call(action, inst)
 	
 func matrix_to_map(matrix_position: Vector2) -> Vector2:

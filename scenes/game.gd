@@ -15,12 +15,12 @@ var max_time_step = base_time_step * (1 + duration_deviation_fraction)
 
 func _ready():
 	_prepare_battlefield()
-	Matrix.connect("unit_entered", self, 'put_into_animate_queue', [null, null, "unit_entered"])
-	Matrix.connect("unit_exited", self, 'put_into_animate_queue',  [null, null, "unit_exited"])
-	Matrix.connect("unit_moved", self, 'put_into_animate_queue', [null, "unit_moved"])
-	Matrix.connect("unit_replaced", self, 'put_into_animate_queue',  [null, "unit_replaced"])
-	Matrix.connect("unit_interacted", self, 'put_into_animate_queue', ["unit_interacted"])
-	Matrix.connect("damage_taken", self, 'put_into_animate_queue', [null, null,"damage_taken"])
+	Matrix.connect("unit_entered", self, 'put_into_animate_queue', [null, null, null, "unit_entered"])
+	Matrix.connect("unit_exited", self, 'put_into_animate_queue',  [null, null, null, "unit_exited"])
+	Matrix.connect("unit_moved", self, 'put_into_animate_queue', [null ,null, "unit_moved"])
+	Matrix.connect("unit_replaced", self, 'put_into_animate_queue',  [null, null, "unit_replaced"])
+	Matrix.connect("unit_interacted", self, 'put_into_animate_queue', [null,"unit_interacted"])
+	Matrix.connect("damage_taken", self, 'put_into_animate_queue', [null, null, null,"damage_taken"])
 	Matrix.connect("unit_status_changed", self, 'put_into_animate_queue', ["unit_status_changed"])
 	_fetch_queue()
 	GameState.start_new_game()
@@ -41,19 +41,22 @@ func _prepare_battlefield():
 	units.set_name('units')
 	map.add_child(units)
 
-func put_into_animate_queue(arg_1, arg_2 ,arg_3, method_name):
-	_animate_queue.append([method_name, arg_1, arg_2, arg_3])
+func put_into_animate_queue(arg_1, arg_2 ,arg_3, arg_4, method_name):
+	_animate_queue.append([method_name, arg_1, arg_2, arg_3, arg_4])
 	pass
 	
 func _fetch_queue():
 	if _animate_queue.size() > 0:
 		var task = _animate_queue.pop_front()
-		call(task[0], task[1], task[2], task[3])
+		call(task[0], task[1], task[2], task[3],  task[4])
 	yield(get_tree().create_timer(duration_deviation_fraction), "timeout")
 	_fetch_queue()
 	
-func unit_status_changed(unit, action, inst):
+func unit_status_changed(unit, action, inst, from):
 	print("changing unit status: " + str(unit))
+	if unit:
+		if unit != from:
+			_attack_unit_to_unit(from, unit)
 	unit.call(action, inst)
 	
 func matrix_to_map(matrix_position: Vector2) -> Vector2:
@@ -63,7 +66,7 @@ func matrix_to_map(matrix_position: Vector2) -> Vector2:
 	var cell_size = tile.get_rect().size
 	return position + cell_size / 2
 
-func unit_entered(unit_matrix_position: Vector2, __  ,___):
+func unit_entered(unit_matrix_position: Vector2, __  ,___ ,____):
 	print('GUI.unit_appeared(position=' + str(unit_matrix_position) + ')')
 	var unit: Node2D = Matrix.get_cell(unit_matrix_position).unit
 	units.add_child(unit)
@@ -76,21 +79,21 @@ func unit_entered(unit_matrix_position: Vector2, __  ,___):
 	Animator.animate(unit, "position", final_position, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	Animator.animate(unit, "modulate", Color(1, 1, 1, 1), duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 
-func unit_moved(__, position_to: Vector2, ___):
+func unit_moved(__, position_to: Vector2, ___ ,____):
 	print('GUI.unit_moved(position_to=' + str(position_to) + ')')
 	var unit: Node2D = Matrix.get_cell(position_to).unit
 	var final_position: Vector2 = matrix_to_map(position_to)
 	var duration = _get_duration()
 	Animator.animate(unit, "position", final_position, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 
-func unit_exited(unit,  __  ,___):
+func unit_exited(unit,  __  ,___ ,____):
 	print('GUI.unit_exited(unit=' + str(unit) + ')')
 	var final_position: Vector2 = unit.position + matrix_to_map(Vector2(1, 2)) - matrix_to_map(Vector2(1, 1))
 	var duration = _get_duration()
 	Animator.animate(unit, "position", final_position, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	Animator.animate(unit, "modulate", Color(1, 1, 1, 0), duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, true)
 
-func unit_replaced(old_unit, new_unit, __):
+func unit_replaced(old_unit, new_unit, __ ,____):
 	print('GUI.unit_replaced(from_unit=' + str(old_unit) + ' to_unit=' + str(new_unit) + ')')
 	var coordinates: Vector2  = Matrix.get_unit_coordinates(old_unit)
 	var duration = _get_duration()
@@ -98,13 +101,13 @@ func unit_replaced(old_unit, new_unit, __):
 		Animator.animate(old_unit, "modulate", Color(1, 1, 1, 0), duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, true)
 
 
-func unit_interacted(from, to_unit, action):
+func unit_interacted(from, to_unit, action ,____):
 	print('GUI.unit_interact(from' + str(from) + ' to_unit= ' + str(to_unit) + ')')
 	if from is Unit:
 		if action == "take_damage":
 			_attack_unit_to_unit(from, to_unit)
 	
-func damage_taken(unit,  __  ,___):
+func damage_taken(unit,  __  ,___ ,____):
 	print('GUI.unit took damage(' + str(unit) + ')')
 	
 func _attack_unit_to_unit(from_unit, to_unit):

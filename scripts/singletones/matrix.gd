@@ -24,7 +24,7 @@ signal unit_entered(position)
 signal unit_moved(position_from, position_to)
 signal unit_interacted(from, to_unit, action)
 #signal unit_to_unit_status_change(from, to_unit, status)
-signal unit_status_changed(unit, action, inst)
+signal unit_status_changed(unit, action, inst, from)
 signal unit_replaced(old_unit, new_unit)
 signal damage_taken(unit)
 
@@ -112,9 +112,9 @@ func replace_unit(old_unit: Unit, new_unit: Unit):
 	matrix[position.y][position.x].unit = new_unit
 	emit_signal("unit_replaced", old_unit, new_unit)
 	
-func raise_unit_status_changed(unit: Unit,  action, inst):
+func raise_unit_status_changed(unit: Unit,  action, inst, from):
 	print("rerais status change" + str(unit))
-	emit_signal("unit_status_changed", unit,  action, inst)
+	emit_signal("unit_status_changed", unit,  action, inst, from)
 			
 func raise_unit_to_unit_status_change(from_unit: Unit, to_unit: Unit, status):
 	interact_with_unit(from_unit, to_unit, "change_status", status)

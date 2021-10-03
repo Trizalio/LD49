@@ -28,8 +28,8 @@ signal unit_replaced(old_unit, new_unit)
 signal damage_taken(unit)
 
 
-var matrix_width: int = 3
-var matrix_height: int = 3
+var matrix_width: int = 7
+var matrix_height: int = 7
 var matrix = []
 
 

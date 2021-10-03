@@ -31,8 +31,8 @@ func _get_duration():
 
 func _prepare_battlefield():
 	map.set_columns(Matrix.matrix_width)
-	for y in range(Matrix.matrix_height):
-		for x in range(Matrix.matrix_width):
+	for y in range(Matrix.matrix_height - 1, -1, -1):
+		for x in range(Matrix.matrix_width - 1, -1, -1):
 			var new_tile = Tile.instance()
 			map.add_child(new_tile)
 			new_tile.set_name(str(x) + str(y))

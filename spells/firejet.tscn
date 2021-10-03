@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://spells/firejet.gd" type="Script" id=1]
-[ext_resource path="res://resources/spell/background.png" type="Texture" id=2]
+[ext_resource path="res://utils/spell_background.tscn" type="PackedScene" id=2]
 [ext_resource path="res://resources/spell/firejet.png" type="Texture" id=3]
 
 [sub_resource type="SpriteFrames" id=1]
@@ -12,18 +12,17 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="background" type="TextureRect"]
+[node name="spell" type="CenterContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_right = 40.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 64, 64 )
-texture = ExtResource( 2 )
-expand = true
-stretch_mode = 6
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="background" parent="." instance=ExtResource( 2 )]
 
 [node name="sprite" type="AnimatedSprite" parent="."]
 position = Vector2( 33, 32 )

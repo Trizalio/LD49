@@ -23,13 +23,14 @@ signal unit_exited(unit)
 signal unit_entered(position)
 signal unit_moved(position_from, position_to)
 signal unit_interacted(from, to_unit, action)
-signal unit_status_changed(unit, status)
+#signal unit_to_unit_status_change(from, to_unit, status)
+signal unit_status_changed(unit, action, inst, from)
 signal unit_replaced(old_unit, new_unit)
 signal damage_taken(unit)
 
 
-var matrix_width: int = 7
-var matrix_height: int = 7
+var matrix_width: int = 3
+var matrix_height: int = 3
 var matrix = []
 
 
@@ -80,7 +81,7 @@ func enter_matrix(position: Vector2, unit: Unit) -> void:
 	assert(cell.unit == null)
 	cell.unit = unit
 	unit.connect("interact", self, 'interact_with_unit')
-	unit.connect("status_changed", self, 'unit_status_changed')
+	unit.connect("status_changed", self, 'raise_unit_status_changed')
 	unit.connect("replace_unit", self, 'replace_unit')
 	unit.connect("damage_taken", self, 'damage_taken')
 	emit_signal("unit_entered", position)
@@ -111,16 +112,23 @@ func replace_unit(old_unit: Unit, new_unit: Unit):
 	matrix[position.y][position.x].unit = new_unit
 	emit_signal("unit_replaced", old_unit, new_unit)
 	
-func raise_unit_status_changed(unit: Unit, status):
-	emit_signal("unit_status_changed", unit, status)
+func raise_unit_status_changed(unit: Unit,  action, inst, from):
+	print("rerais status change" + str(unit))
+	emit_signal("unit_status_changed", unit,  action, inst, from)
+			
+func raise_unit_to_unit_status_change(from_unit: Unit, to_unit: Unit, status):
+	interact_with_unit(from_unit, to_unit, "change_status", status)
+#	emit_signal("unit_to_unit_status_change", unit, status)
 		
 func damage_taken(unit: Unit):
 	emit_signal("damage_taken", unit)
 	
-func interact_with_unit(from, to_unit: Unit, action: String):
+func interact_with_unit(from, to_unit: Unit, action: String, arg_1 = null, arg_2 = null):
 	emit_signal("unit_interacted", from, to_unit, action)
-	to_unit.call(action)
-
+	if action == "take_damage":
+		to_unit.call(action, from)
+	else:
+		to_unit.call(action)
 func get_neighbors(position: Vector2):
 	var column_pos = position.x
 	var line_pos = position.y

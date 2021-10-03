@@ -5,7 +5,7 @@ extends Unit
 func _ready():
 	self._race =  "undead"
 	self._tier =  1
-
+	change_status(self ,"lightning_shield")
 func get_race():
 	return "undead"
 	
@@ -20,8 +20,10 @@ func act():
 		if neighbors.right_neighbor.get_race() != self._race:
 #			interact_to_unit(self, neighbors.right_neighbor, "take_damage")
 #			interact_to_unit(self, neighbors.right_neighbor, "take_damage")
-			neighbors.right_neighbor.change_status("frozen")
-			return
+			if neighbors.right_neighbor.get_status() != "frozen":
+				neighbors.right_neighbor.change_status(self, "frozen")
+#				emit_signal("interact", self, neighbors.left_neighbor, "change_status", "frozen")
+#				return
 
 	move_straight()
 	

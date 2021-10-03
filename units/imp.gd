@@ -14,7 +14,8 @@ func act():
 	var neighbors = Matrix.get_neighbors(coordinates)
 	if neighbors.left_neighbor:
 		if neighbors.left_neighbor.get_race() != self._race:
-			interact_to_unit(self, neighbors.left_neighbor, "take_damage")
+#			emit_signal("interact", self, neighbors.left_neighbor, "take_damage")
+#			interact_to_unit(self, neighbors.left_neighbor, "take_damage")
 			return
 
 	move_straight()

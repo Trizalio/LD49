@@ -22,11 +22,16 @@ class Cell:
 signal unit_exited(position)
 signal unit_entered(position)
 signal unit_moved(position_from, position_to)
+signal unit_interacted(from, to_unit, action)
+signal unit_status_changed(unit, status)
+signal unit_replaced(old_unit, new_unit)
 
 
 var matrix_width: int = 3
 var matrix_height: int = 3
 var matrix = []
+
+
 
 
 func _generate_cells():
@@ -78,6 +83,9 @@ func enter_matrix(position: Vector2, unit: Unit) -> void:
 	print('Matrix.enter_matrix(cell=' + str(cell) + ', unit=' + str(unit) + ')')
 	assert(cell.unit == null)
 	cell.unit = unit
+	unit.connect("interact", self, 'interact_with_unit')
+	unit.connect("status_changed", self, 'unit_status_changed')
+	unit.connect("replace_unit", self, 'replace_unit')
 	emit_signal("unit_entered", position)
 
 func get_unit_coordinates(unit) -> Vector2:
@@ -100,6 +108,21 @@ func print_matrix():
 			line += '\t'
 			
 		print(line)
+
+
+func replace_unit(old_unit: Unit, new_unit: Unit):
+	var position = get_unit_coordinates(old_unit)
+	assert (position.x != -1 and position.y != -1)
+	matrix[position.y][position.x].unit = new_unit
+	emit_signal("unit_replaced", old_unit, new_unit)
+	
+func raise_unit_status_changed(unit: Unit, status):
+	emit_signal("unit_status_changed", unit, status)
+	pass
+	
+func interact_with_unit(from, to_unit: Unit, action: String):
+	to_unit.call(action)
+	emit_signal("unit_interacted", from, to_unit, action)
 
 func get_neighbors(position: Vector2):
 	var column_pos = position.x

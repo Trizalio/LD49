@@ -9,7 +9,7 @@ func get_race():
 	
 func get_tier():
 	return 1
-func act():
+func _act():
 	var coordinates = Matrix.get_unit_coordinates(self)
 	var neighbors = Matrix.get_neighbors(coordinates)
 	if !neighbors.bottom_neighbor:

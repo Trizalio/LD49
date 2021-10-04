@@ -12,8 +12,7 @@ func get_race():
 func get_tier():
 	return 3
 
-func act():
-	print( "zooooooobie acting")
+func _act():
 	var coordinates = Matrix.get_unit_coordinates(self)
 	var neighbors = Matrix.get_neighbors(coordinates)
 	if neighbors.right_neighbor:

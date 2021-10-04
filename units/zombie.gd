@@ -12,7 +12,7 @@ func get_race():
 func get_tier():
 	return 1
 
-func act():
+func _act():
 	print( "zooooooobie acting")
 	var coordinates = Matrix.get_unit_coordinates(self)
 	var neighbors = Matrix.get_neighbors(coordinates)

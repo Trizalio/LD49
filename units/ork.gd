@@ -3,13 +3,16 @@ extends Unit
 func _ready():
 	self._race =  "greenskin"
 	self._tier =  2
+	self.change_status(self, "frozen")
 
 func get_race():
 	return "greenskin"
 	
 func get_tier():
 	return 2
-func act():
+
+	
+func _act():
 	var coordinates = Matrix.get_unit_coordinates(self)
 	var neighbors = Matrix.get_neighbors(coordinates)
 	var exist_neighbors = neighbors.get_exist_neighbors()

@@ -43,13 +43,7 @@ func move_straight():
 	if position.x == -1 or position.y == -1:
 		return 
 	print('move_straight from ', position)
-	if _status == "frozen":
-		if _staid_frozen < _stay_frozen_for:
-			_staid_frozen +=1
-			return
-		else:
-			_staid_frozen = 0
-			change_status(self, null)
+	
 			
 	if Matrix.is_next_to_town(position):
 		Matrix.exit_from(position)
@@ -59,6 +53,34 @@ func move_straight():
 #	print('move_straight desired_position ', desired_position)
 	if Matrix.get_cell(desired_position).unit == null:
 		Matrix.move_unit(position, desired_position)
+		
+func check_status():
+	if _status == "frozen":
+		return false
+	return true
+
+func interact_status():
+	if _status == "frozen":
+		if _staid_frozen < _stay_frozen_for:
+			_staid_frozen +=1
+			return
+		else:
+			_staid_frozen = 0
+			change_status(self, null)
+	
+	pass
+
+#func _do_act(unit, action_name):
+#	if self.check_status():
+#		unit.call(action_name)
+#	self.interact_status()
+func act():
+	if self.check_status():
+		_act()
+	self.interact_status()
+
+func _act():
+	pass
 
 func take_damage(from):
 	

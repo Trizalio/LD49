@@ -25,7 +25,7 @@ class UnitNeighbors:
 	):
 
 		top_neighbor=_top_neighbor
-		top_right_neighbor = top_right_neighbor
+		top_right_neighbor = _top_right_neighbor
 		right_neighbor = _right_neighbor
 		bottom_right_neighbor = _bottom_right_neighbor
 		bottom_neighbor = _bottom_neighbor
@@ -38,7 +38,6 @@ class UnitNeighbors:
 		
 		if top_neighbor:
 			exist_neighbors.append(top_neighbor)
-		
 		if top_right_neighbor:
 			exist_neighbors.append(top_right_neighbor)
 		

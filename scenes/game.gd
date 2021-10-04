@@ -57,7 +57,7 @@ func unit_status_changed(unit, action, inst, from):
 	print("changing unit status: " + str(unit) + "action " + str(action) + "inst: " + str(inst))
 	if unit:
 		if from:
-			if unit is Unit:
+			if unit is Unit and from is Unit:
 				if unit != from:
 					if action != "stunned":
 						_attack_unit_to_target(from, unit)

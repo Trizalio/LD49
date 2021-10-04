@@ -23,20 +23,20 @@ func get_tier():
 
 func _act():
 #	if turn_counte == max_turn_counter:
-		
-		var coordinates = Matrix.get_unit_coordinates(self)
-		var neighbors_pos = filter_positions(coordinates)
-		var not_undead_neighbors = []
-		for neighbor_pos in neighbors_pos:
-			var cell = Matrix.get_cell(neighbor_pos)
-			if cell.unit:
-				if cell.unit.get_race() != self._race:
-					not_undead_neighbors.append(cell.unit)
-					
-		var neighbor_pos = neighbors_pos[randi() % neighbors_pos.size()]
-		var target =  not_undead_neighbors[randi() % not_undead_neighbors.size()]
-		if target:
-			target.change_status(self, "frozen")
+#
+#		var coordinates = Matrix.get_unit_coordinates(self)
+#		var neighbors_pos = filter_positions([coordinates])
+#		var not_undead_neighbors = []
+#		for neighbor_pos in neighbors_pos:
+#			var cell = Matrix.get_cell(neighbor_pos)
+#			if cell.unit:
+#				if cell.unit.get_race() != self._race:
+#					not_undead_neighbors.append(cell.unit)
+#
+#		var neighbor_pos = Rand.rand_choice(neighbors_pos)
+#		var target =  Rand.rand_choice(not_undead_neighbors)
+#		if target:
+#			target.change_status(self, "frozen")
 
 		wander_move()
 	

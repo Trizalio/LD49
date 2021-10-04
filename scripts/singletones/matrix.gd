@@ -46,8 +46,8 @@ signal damage_taken(unit)
 signal cell_interacted(from, to_cell, action)
 
 
-var matrix_width: int = 6
-var matrix_height: int = 6
+var matrix_width: int = 3
+var matrix_height: int = 3
 var matrix = []
 
 
@@ -97,7 +97,7 @@ func move_unit(position_from: Vector2, position_to: Vector2) -> void:
 	emit_signal("unit_moved", position_from, position_to, unit)
 
 func enter_matrix(position: Vector2, unit: Unit) -> void:
-	assert(position.y == 0)
+#	assert(position.y == 0)
 	assert(unit != null)
 	var cell = get_cell(position)
 	print('Matrix.enter_matrix(cell=' + str(cell) + ', unit=' + str(unit) + ')')

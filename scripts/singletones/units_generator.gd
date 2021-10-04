@@ -1,5 +1,7 @@
 extends Node
 
+onready var MeltedFrostShardUnit = preload("res://units/melted_frost_shard_unit.tscn")
+
 onready var Imp = preload("res://units/imp.tscn")
 onready var Zombie = preload("res://units/zombie.tscn")
 onready var UndeadSkeleton = preload("res://units/skeleton.tscn")

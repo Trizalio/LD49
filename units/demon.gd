@@ -15,13 +15,27 @@ func get_race():
 func get_tier():
 	return 1
 func _act():
+	var moved = nimble_move()
+	if moved:
+		return
+		
 	var coordinates = Matrix.get_unit_coordinates(self)
 	var neighbors = Matrix.get_neighbors(coordinates)
-	if neighbors.left_neighbor:
-		if neighbors.left_neighbor.get_race() != self._race:
-#			emit_signal("interact", self, neighbors.left_neighbor, "take_damage")
-#			interact_to_unit(self, neighbors.left_neighbor, "take_damage")
+	var target = neighbors.bottom_right_neighbor
+	if target:
+		if target.get_race() != self._race:
+			interact_to_unit(self, target, "take_damage")
 			return
-
-	move_straight()
+	target = neighbors.bottom_left_neighbor
+	
+	if target:
+		if target.get_race() != self._race:
+			interact_to_unit(self, target, "take_damage")
+			return
+	target = neighbors.bottom_neighbor
+	
+	if target:
+		if target.get_race() != self._race:
+			interact_to_unit(self, target, "take_damage")
+			return
 

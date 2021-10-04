@@ -2,7 +2,7 @@
 
 [ext_resource path="res://resources/shaders/glow.shader" type="Shader" id=1]
 [ext_resource path="res://utils/spell_background.tscn" type="PackedScene" id=2]
-[ext_resource path="res://resources/sounds/effects/spell_fireball.mp3" type="AudioStream" id=3]
+[ext_resource path="res://resources/sounds/effects/spell_frozen_shard.mp3" type="AudioStream" id=3]
 [ext_resource path="res://resources/shaders/frost_spell_glow.tres" type="Material" id=4]
 [ext_resource path="res://resources/spell/ice shard.png" type="Texture" id=5]
 [ext_resource path="res://spells/frost_shard.gd" type="Script" id=6]
@@ -16,6 +16,7 @@ shader_param/pulse_frequency = 5.0
 shader_param/power = 2.0
 
 [sub_resource type="AtlasTexture" id=2]
+flags = 4
 atlas = ExtResource( 5 )
 region = Rect2( 0, 0, 50, 50 )
 
@@ -43,5 +44,5 @@ material = ExtResource( 4 )
 position = Vector2( 36.0045, 29.1629 )
 frames = SubResource( 3 )
 
-[node name="FireballSpell" type="AudioStreamPlayer" parent="."]
+[node name="FrostShardSpell" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )

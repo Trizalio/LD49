@@ -1,5 +1,10 @@
 extends Unit
 
+var hint = ('Unit: imp \nRace: daemons \nMove: move to one of 3 tiles'+
+'ahead\n Properties: if no way - swaps with the first non-demon on 1 of the 3 front tiles')
+
+
+
 func _ready():
 	self._race =  "demon"
 	self._tier =  1

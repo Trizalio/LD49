@@ -26,3 +26,18 @@ func can_drop_data(position, data):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
+func _on_background_mouse_entered():
+	$timer.start()
+	pass # Replace with function body.
+
+
+func _on_background_mouse_exited():
+	$timer.stop()
+	pass # Replace with function body.
+
+
+func _on_Timer_timeout():
+	print('show hint')
+	pass # Replace with function body.

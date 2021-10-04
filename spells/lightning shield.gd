@@ -1,6 +1,7 @@
 extends Spell
 
-
+var hint = ('Spell: lightning shield \nProperties: protect unit from attack, '+
+'kills the attacking unit')
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"

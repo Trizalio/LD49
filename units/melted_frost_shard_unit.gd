@@ -1,4 +1,7 @@
 extends Unit
+
+var hint = ('Spell: melted frost shard \nProperties: closes the way through the tile')
+
 var _turn_counter = 0
 var _replace_after_turn = 1
 func _ready():

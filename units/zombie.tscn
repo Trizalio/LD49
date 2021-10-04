@@ -18,7 +18,7 @@ region = Rect2( 50, 0, 50, 50 )
 animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ) ],
 "loop": true,
-"name": "zombie",
+"name": "default",
 "speed": 2.0
 } ]
 
@@ -27,7 +27,6 @@ script = ExtResource( 2 )
 
 [node name="sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
-frame = 1
 playing = true
 
 [node name="spawn" type="AudioStreamPlayer" parent="."]

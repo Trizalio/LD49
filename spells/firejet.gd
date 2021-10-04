@@ -1,6 +1,6 @@
 extends Spell
 
-
+var hint = ('Spell: fireball \nProperties: kills units in column')
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"

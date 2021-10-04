@@ -21,7 +21,7 @@ class Cell:
 
 signal unit_exited(unit)
 signal unit_entered(position)
-signal unit_moved(position_from, position_to)
+signal unit_moved(position_from, position_to, unit)
 signal unit_interacted(from, to_unit, action)
 #signal unit_to_unit_status_change(from, to_unit, status)
 signal unit_status_changed(unit, action, inst, from)
@@ -71,7 +71,7 @@ func move_unit(position_from: Vector2, position_to: Vector2) -> void:
 	var unit = cell_from.unit
 	cell_from.unit = null
 	cell_to.unit = unit
-	emit_signal("unit_moved", position_from, position_to)
+	emit_signal("unit_moved", position_from, position_to, unit)
 
 func enter_matrix(position: Vector2, unit: Unit) -> void:
 	assert(position.y == 0)

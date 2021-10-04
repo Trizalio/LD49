@@ -17,7 +17,7 @@ func _ready():
 	_prepare_battlefield()
 	Matrix.connect("unit_entered", self, 'put_into_animate_queue', [null, null, null, "unit_entered"])
 	Matrix.connect("unit_exited", self, 'put_into_animate_queue',  [null, null, null, "unit_exited"])
-	Matrix.connect("unit_moved", self, 'put_into_animate_queue', [null ,null, "unit_moved"])
+	Matrix.connect("unit_moved", self, 'put_into_animate_queue', [null, "unit_moved"])
 	Matrix.connect("unit_replaced", self, 'put_into_animate_queue',  [null, null, "unit_replaced"])
 	Matrix.connect("unit_interacted", self, 'put_into_animate_queue', [null,"unit_interacted"])
 	Matrix.connect("damage_taken", self, 'put_into_animate_queue', [null, null, null,"damage_taken"])
@@ -80,10 +80,11 @@ func unit_entered(unit_matrix_position: Vector2, __  ,___ ,____):
 	Animator.animate(unit, "position", final_position, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	Animator.animate(unit, "modulate", Color(1, 1, 1, 1), duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 
-func unit_moved(__, position_to: Vector2, ___ ,____):
-	print('GUI.unit_moved(position_to=' + str(position_to) + ')')
-	var unit: Node2D = Matrix.get_cell(position_to).unit
+func unit_moved(__, position_to: Vector2, unit: Unit, ___ ):
+	print('GUI.unit_moved(unit=' + str(unit) + ')')
+#	var unit: Node2D = Matrix.get_cell(position_to).unit
 	var final_position: Vector2 = matrix_to_map(position_to)
+#	var final_position = unit.get_position()
 	var duration = _get_duration()
 	Animator.animate(unit, "position", final_position, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 

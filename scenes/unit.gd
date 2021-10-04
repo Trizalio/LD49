@@ -40,7 +40,9 @@ func get_status():
 	
 func move_straight():
 	var position =  Matrix.get_unit_coordinates(self)
-#	print('move_straight from ', position)
+	if position.x == -1 or position.y == -1:
+		return 
+	print('move_straight from ', position)
 	if _status == "frozen":
 		if _staid_frozen < _stay_frozen_for:
 			_staid_frozen +=1

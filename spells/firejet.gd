@@ -12,9 +12,7 @@ func _ready():
 
 func cast(target_position: Vector2):
 	print('cast firejet: ', target_position)
-#	for 
 	var line_x = target_position.x
-	print( "line for jet ", line_x )
 	for cell_y in range(Matrix.matrix_height -1, -1, -1):
 		
 		var target_cell = Matrix.get_cell(Vector2(line_x, cell_y))

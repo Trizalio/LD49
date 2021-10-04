@@ -5,6 +5,7 @@ var units = null
 
 onready var Tile = preload("res://utils/tile.tscn")
 
+
 # TODO: get from map
 onready var separation: Vector2 = Vector2(4, 4)
 var _animate_queue = []
@@ -24,6 +25,8 @@ func _ready():
 	Matrix.connect("unit_status_changed", self, 'put_into_animate_queue', ["unit_status_changed"])
 	Matrix.connect("cell_interacted", self, 'put_into_animate_queue', [null, "cell_interacted"])
 	_fetch_queue()
+	if GameState.god_mode:
+		$parts/next_turn.visible = true
 	GameState.start_new_game()
 	
 func _get_duration():

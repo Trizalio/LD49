@@ -10,16 +10,11 @@ extends TextureRect
 func _ready():
 	pass # Replace with function body.
 
-func drop_data(__, spell):
-	
+func drop_data(__, spell):	
 	print('drop_data(spell=', spell)
 	var name = get_name()
-	var position = Vector2(int(name[0]), int(name[1]))
-	spell.cast(position)
-	
-#	color = data["color"]
-#	print(color)
-
+	var destination = Vector2(int(name[0]), int(name[1]))
+	GameState.cast_spell(spell, destination)
 
 func can_drop_data(position, data):
 	return data is Spell

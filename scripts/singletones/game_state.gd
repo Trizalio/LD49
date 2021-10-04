@@ -2,6 +2,7 @@ extends Node
 
 #onready var UnitClass = load("res://scenes/unit.gd")
 var turn_number: int = 0
+var god_mode: bool = false
 
 var unit_race_to_amount_spawned: Dictionary = {}
 var unit_race_to_amount_field: Dictionary = {}
@@ -11,6 +12,11 @@ func _subsctibe():
 	Matrix.connect("unit_exited", self, 'unit_exited_count')
 	Matrix.connect("unit_entered", self, 'count_entered_unit')
 	Matrix.connect("unit_replaced", self, 'on_unit_replaced')
+
+func cast_spell(spell: Spell, destination: Vector2) -> void:
+	spell.cast(destination)
+	if not god_mode:
+		_next_turn()
 
 func unit_exited_count(unit):
 	var race = unit.get_race()
@@ -42,6 +48,7 @@ func start_new_game():
 	turn_number = 0
 	Matrix._generate_cells()
 	self._subsctibe()
+	_next_turn()
 
 func _next_turn():
 	print('-----===== Units turn =====------')

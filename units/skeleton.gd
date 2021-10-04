@@ -26,7 +26,8 @@ func _act():
 	if !mooved:
 		var traget = neighbors.bottom_neighbor
 		if traget:
-			interact_to_unit(self, traget, "take_damage")
-			return
+			if traget.get_race() != self._race:
+				interact_to_unit(self, traget, "take_damage")
+				return
 
 	

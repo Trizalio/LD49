@@ -79,7 +79,6 @@ size_flags_vertical = 3
 position = Vector2( 265.203, 241.536 )
 scale = Vector2( 4.13951, 4.02059 )
 frames = SubResource( 1502 )
-frame = 1
 playing = true
 
 [node name="Label" type="Label" parent="parts/centered"]

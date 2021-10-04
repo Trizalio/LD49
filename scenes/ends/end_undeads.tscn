@@ -106,8 +106,10 @@ __meta__ = {
 }
 
 [node name="MainMenu" type="Button" parent="parts/RichTextLabel/buttons"]
-margin_right = 510.0
+margin_left = 157.0
+margin_right = 352.0
 margin_bottom = 59.0
+size_flags_horizontal = 4
 custom_fonts/font = SubResource( 1 )
 text = "Main menu"
 

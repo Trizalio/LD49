@@ -23,6 +23,7 @@ class UnitNeighbors:
 		_left_neighbor,
 		_top_left_neighbor
 	):
+
 		top_neighbor=_top_neighbor
 		top_right_neighbor = top_right_neighbor
 		right_neighbor = _right_neighbor
@@ -31,6 +32,39 @@ class UnitNeighbors:
 		bottom_left_neighbor = _bottom_left_neighbor
 		left_neighbor = _left_neighbor
 		top_left_neighbor = _top_left_neighbor
+		var list = self.get_property_list()
+		for d in list:
+			print("> " + d["name"])
+			print("> " + str(d))
+		
+	func get_exist_neighbors():
+		var exist_neighbors = []
+		
+		if top_neighbor:
+			exist_neighbors.append(top_neighbor)
+		
+		if top_right_neighbor:
+			exist_neighbors.append(top_right_neighbor)
+		
+		if right_neighbor:
+			exist_neighbors.append(right_neighbor)
+		
+		if bottom_right_neighbor:
+			exist_neighbors.append(bottom_right_neighbor)
+		
+		if bottom_neighbor:
+			exist_neighbors.append(bottom_neighbor)
+		
+		if bottom_left_neighbor:
+			exist_neighbors.append(bottom_left_neighbor)
+		
+		if left_neighbor:
+			exist_neighbors.append(left_neighbor)
+		
+		if top_left_neighbor:
+			exist_neighbors.append(top_left_neighbor)
+		return exist_neighbors
+		
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"

@@ -12,10 +12,8 @@ func get_tier():
 func act():
 	var coordinates = Matrix.get_unit_coordinates(self)
 	var neighbors = Matrix.get_neighbors(coordinates)
-	if neighbors.left_neighbor:
-		if neighbors.left_neighbor.get_race() != self._race:
-#			emit_signal("interact", self, neighbors.left_neighbor, "take_damage")
-			interact_to_unit(self, neighbors.left_neighbor, "take_damage")
-			return
-
-	move_straight()
+	var exist_neighbors = neighbors.get_exist_neighbors()
+	if exist_neighbors.size():
+		var neighbor = exist_neighbors[randi() % exist_neighbors.size()]
+		interact_to_unit(self, neighbor, "take_damage")
+		move_straight()

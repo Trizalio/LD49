@@ -7,12 +7,10 @@
 [ext_resource path="res://resources/sounds/units/victory/zombie_vic.mp3" type="AudioStream" id=5]
 
 [sub_resource type="AtlasTexture" id=1]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 50, 50 )
 
 [sub_resource type="AtlasTexture" id=2]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 50, 0, 50, 50 )
 
@@ -20,7 +18,7 @@ region = Rect2( 50, 0, 50, 50 )
 animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ) ],
 "loop": true,
-"name": "default",
+"name": "zombie",
 "speed": 2.0
 } ]
 

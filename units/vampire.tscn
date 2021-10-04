@@ -7,12 +7,10 @@
 [ext_resource path="res://resources/sounds/units/victory/vampire_vic.mp3" type="AudioStream" id=5]
 
 [sub_resource type="AtlasTexture" id=1]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 50, 50 )
 
 [sub_resource type="AtlasTexture" id=2]
-flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 50, 0, 50, 50 )
 
@@ -29,7 +27,6 @@ script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
-frame = 1
 playing = true
 
 [node name="spawn" type="AudioStreamPlayer" parent="."]

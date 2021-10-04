@@ -8,6 +8,7 @@ onready var Goblin = preload("res://units/goblin.tscn")
 onready var Ogre = preload("res://units/ogre.tscn")
 onready var Ork = preload("res://units/ork.tscn")
 onready var Ifrite = preload("res://units/ifrite.tscn")
+onready var Demon = preload("res://units/demon.tscn")
 
 var faction_to_units = {}
 func _ready():
@@ -16,7 +17,7 @@ func _ready():
 #		'undead': [Zombie, Zombie, Zombie], 
 #		'orc': [Ogre, Ogre, Ogre],
 #		'orc': [Goblin, Goblin, Goblin],
-		'demon': [Ifrite, Ifrite, Ifrite]
+		'demon': [Demon, Demon, Demon]
 	}
 
 

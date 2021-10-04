@@ -22,4 +22,4 @@ func cast(target_position: Vector2):
 		if neighbor != null:
 			neighbor.change_status("frost_circle", "frozen")
 #			Matrix.interact_with_unit(self, neighbor, "take_damage")
-	$FireballSpell.play()
+#	$FireballSpell.play()

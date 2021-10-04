@@ -67,6 +67,9 @@ func interact_status():
 		else:
 			_staid_frozen = 0
 			change_status(self, null)
+	elif _status == "burning":
+		take_damage("burning")
+		
 	
 	pass
 

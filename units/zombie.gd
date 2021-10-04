@@ -6,6 +6,7 @@ var hint = ("Unit: zombie \nRace: undead \nMove: 'madly', in any direction"+
 "to next three tiles, if no way - move to random way"+
 "\nProperties: if no way - charge himself, if charged - attacks the front tile") 
 
+var inraged = false
 
 func _ready():
 	self._race =  "undead"
@@ -31,8 +32,16 @@ func _act():
 #				neighbors.right_neighbor.change_status(self, "frozen")
 #				emit_signal("interact", self, neighbors.left_neighbor, "change_status", "frozen")
 #				return
-	
-	wander_move()
+	if inraged:
+		var traget = neighbors.bottom_neighbor
+		if traget:
+			interact_to_unit(self, traget, "take_damage")
+			inraged = false
+			return
+			
+	var mooved = wander_move()
+	if !mooved:
+		inraged = true
 #	_move_crazy(coordinates, neighbors)
 #	self.change_status(self, "frozen")
 

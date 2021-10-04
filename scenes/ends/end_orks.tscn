@@ -6,31 +6,31 @@
 [ext_resource path="res://resources/sounds/endings/ending_greenskins_win.mp3" type="AudioStream" id=4]
 [ext_resource path="res://resources/fonts/Galiver Sans.ttf" type="DynamicFontData" id=5]
 
-[sub_resource type="DynamicFont" id=1497]
+[sub_resource type="DynamicFont" id=1]
 size = 35
 font_data = ExtResource( 5 )
 
-[sub_resource type="AtlasTexture" id=1499]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 100, 100 )
 
-[sub_resource type="AtlasTexture" id=1500]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 2 )
 region = Rect2( 100, 0, 100, 100 )
 
-[sub_resource type="AtlasTexture" id=1501]
+[sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 2 )
 region = Rect2( 200, 0, 100, 100 )
 
-[sub_resource type="SpriteFrames" id=1502]
+[sub_resource type="SpriteFrames" id=5]
 animations = [ {
-"frames": [ SubResource( 1499 ), SubResource( 1500 ), SubResource( 1501 ) ],
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
 "name": "default",
 "speed": 4.0
 } ]
 
-[sub_resource type="DynamicFont" id=1503]
+[sub_resource type="DynamicFont" id=6]
 size = 30
 font_data = ExtResource( 5 )
 
@@ -53,41 +53,41 @@ __meta__ = {
 margin_left = 15.0
 margin_top = 15.0
 margin_right = 525.0
-margin_bottom = 945.0
+margin_bottom = 735.0
 
 [node name="parts" type="VBoxContainer" parent="."]
 margin_left = 15.0
 margin_top = 15.0
 margin_right = 525.0
-margin_bottom = 945.0
+margin_bottom = 735.0
 
 [node name="Label" type="Label" parent="parts"]
 margin_right = 510.0
 margin_bottom = 59.0
-custom_fonts/font = SubResource( 1497 )
+custom_fonts/font = SubResource( 1 )
 text = "Ending 1 of 4"
 align = 1
 
 [node name="centered" type="CenterContainer" parent="parts"]
 margin_top = 63.0
 margin_right = 510.0
-margin_bottom = 526.0
+margin_bottom = 316.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="OrkCastle" type="AnimatedSprite" parent="parts/centered"]
-position = Vector2( 265.203, 241.536 )
-scale = Vector2( 4.13951, 4.02059 )
-frames = SubResource( 1502 )
+position = Vector2( 258, 125 )
+scale = Vector2( 2.425, 2.425 )
+frames = SubResource( 5 )
 frame = 2
 playing = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="parts"]
-margin_top = 530.0
+margin_top = 320.0
 margin_right = 510.0
-margin_bottom = 930.0
+margin_bottom = 720.0
 rect_min_size = Vector2( 0, 400 )
-custom_fonts/normal_font = SubResource( 1503 )
+custom_fonts/normal_font = SubResource( 6 )
 bbcode_enabled = true
 bbcode_text = "[center]Victory!
 Orks occupied the castle.
@@ -108,7 +108,7 @@ __meta__ = {
 [node name="MainMenu" type="Button" parent="parts/RichTextLabel/buttons"]
 margin_right = 510.0
 margin_bottom = 59.0
-custom_fonts/font = SubResource( 1497 )
+custom_fonts/font = SubResource( 1 )
 text = "Main menu"
 
 [node name="GreenskinsWin" type="AudioStreamPlayer" parent="."]

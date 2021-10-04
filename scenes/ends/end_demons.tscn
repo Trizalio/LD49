@@ -76,17 +76,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="DemonsCastle" type="AnimatedSprite" parent="parts/centered"]
-position = Vector2( 265.203, 241.536 )
-scale = Vector2( 4.13951, 4.02059 )
+position = Vector2( 258, 125 )
+scale = Vector2( 2.425, 2.425 )
 frames = SubResource( 5 )
-frame = 1
 playing = true
-
-[node name="Label" type="Label" parent="parts/centered"]
-margin_left = 251.0
-margin_top = 107.0
-margin_right = 259.0
-margin_bottom = 145.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="parts"]
 margin_top = 320.0

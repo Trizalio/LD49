@@ -30,7 +30,7 @@ animations = [ {
 "speed": 1.0
 } ]
 
-[sub_resource type="DynamicFont" id=1502]
+[sub_resource type="DynamicFont" id=6]
 size = 30
 font_data = ExtResource( 5 )
 
@@ -53,13 +53,13 @@ __meta__ = {
 margin_left = 15.0
 margin_top = 15.0
 margin_right = 525.0
-margin_bottom = 945.0
+margin_bottom = 735.0
 
 [node name="parts" type="VBoxContainer" parent="."]
 margin_left = 15.0
 margin_top = 15.0
 margin_right = 525.0
-margin_bottom = 945.0
+margin_bottom = 735.0
 
 [node name="Label" type="Label" parent="parts"]
 margin_right = 510.0
@@ -71,23 +71,23 @@ align = 1
 [node name="centered" type="CenterContainer" parent="parts"]
 margin_top = 63.0
 margin_right = 510.0
-margin_bottom = 526.0
+margin_bottom = 316.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="UndeadCastle" type="AnimatedSprite" parent="parts/centered"]
-position = Vector2( 265.203, 241.536 )
-scale = Vector2( 4.13951, 4.02059 )
+position = Vector2( 258, 125 )
+scale = Vector2( 2.425, 2.425 )
 frames = SubResource( 5 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="parts"]
-margin_top = 530.0
+margin_top = 320.0
 margin_right = 510.0
-margin_bottom = 930.0
+margin_bottom = 720.0
 rect_min_size = Vector2( 0, 400 )
-custom_fonts/normal_font = SubResource( 1502 )
+custom_fonts/normal_font = SubResource( 6 )
 bbcode_enabled = true
 bbcode_text = "[center]Victory!
 Undeads occupied the castle.

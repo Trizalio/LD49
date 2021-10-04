@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://resources/characters/undead/skeleton.png" type="Texture" id=1]
 [ext_resource path="res://units/skeleton.gd" type="Script" id=2]
 [ext_resource path="res://resources/sounds/units/spawn/skeleton_spawn.mp3" type="AudioStream" id=3]
+[ext_resource path="res://resources/sounds/units/death/skeleton_die.mp3" type="AudioStream" id=4]
+[ext_resource path="res://resources/sounds/units/victory/skeleton_vic_2.mp3" type="AudioStream" id=5]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
@@ -27,6 +29,12 @@ script = ExtResource( 2 )
 frames = SubResource( 3 )
 playing = true
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="spawn" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 autoplay = true
+
+[node name="victory" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="death" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )

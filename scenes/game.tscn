@@ -113,7 +113,7 @@ stream = ExtResource( 8 )
 volume_db = -20.0
 autoplay = true
 
-[node name="MarginContainer" parent="." instance=ExtResource( 11 )]
+[node name="hint" parent="." instance=ExtResource( 11 )]
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0

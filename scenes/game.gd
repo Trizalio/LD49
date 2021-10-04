@@ -48,10 +48,16 @@ func _prepare_battlefield():
 			var new_tile = Tile.instance()
 			map.add_child(new_tile)
 			new_tile.set_name(str(x) + str(y))
+			new_tile.connect('hover', self, 'show_hint', [Vector2(x, y)])
 			
 	units = Node2D.new()
 	units.set_name('units')
 	map.add_child(units)
+	
+func show_hint(position: Vector2) -> void:
+	print('show_hint')
+	$hint.show_unit_hint(Matrix.get_cell(position).unit)
+#	$hint.visible = true
 
 func put_into_animate_queue(arg_1, arg_2 ,arg_3, arg_4, method_name):
 	_animate_queue.append([method_name, arg_1, arg_2, arg_3, arg_4])

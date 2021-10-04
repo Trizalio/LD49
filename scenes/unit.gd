@@ -136,6 +136,7 @@ func check_status():
 	return true
 
 func interact_status():
+
 	if _status == "frozen":
 		if _staid_frozen < _stay_frozen_for:
 			_staid_frozen +=1
@@ -144,6 +145,8 @@ func interact_status():
 			_staid_frozen = 0
 			change_status(self, null)
 	elif _status == "burning":
+		if _race == "demon":
+			return
 		take_damage("burning")
 		
 	
@@ -181,6 +184,8 @@ func take_damage(from):
 
 
 func change_status(from, status):
+	if _race == "melted_frost_shard_unit"  or _race == "frost_shard_unit":
+		return
 	print("unit: "  + str(self) + " changed status from " + str(_status) + " to " + str(status) )
 	if _status:
 		var inst_1 = self.get_node(_current_status_name)

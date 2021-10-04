@@ -1,5 +1,10 @@
 extends Unit
 
+var hint = ('Unit: daemon \nRace: daemons \nMove: move to one of 3 tiles'+
+'ahead\n Properties: if not way - attack not the demon on 1 of the 3 front tiles')
+
+
+
 func _ready():
 	self._race =  "demon"
 	self._tier =  2
@@ -19,3 +24,4 @@ func _act():
 			return
 
 	move_straight()
+

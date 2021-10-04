@@ -2,6 +2,12 @@ extends Unit
 
 #var _race = "undead"
 
+var hint = ("Unit: skeleton \nRace: undead \nMove: 'madly', in any direction"+
+"to next three tiles, if no way - move to random way"+
+"\nProperties: if no way - attack random non-undead unit")
+
+
+
 func _ready():
 	self._race =  "undead"
 	self._tier =  2

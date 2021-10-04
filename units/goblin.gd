@@ -1,5 +1,10 @@
 extends Unit
 
+var hint = ("Unit: goblin \nRace: greenskins \nMove: only straight walk, "+
+"Properties: agressive, attack each other; can sprint (move through two" +
+"tiles, if it's free ahead), if no way - attack unit in front")
+
+
 func _ready():
 	self._race =  "greenskin"
 	self._tier =  1

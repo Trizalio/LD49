@@ -2,6 +2,12 @@ extends Unit
 
 #var _race = "undead"
 
+var hint = ("Unit: vampire \nRace: undead \nMove: 'madly', in any direction"+
+"to next three tiles, if no way - move to random way"+
+"\nProperties: every 3 turns become weak; if weak - freeze random "+
+"non-undead neighbour unit and returns to normal")
+
+
 func _ready():
 	self._race =  "undead"
 	self._tier =  3

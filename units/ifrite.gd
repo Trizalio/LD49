@@ -1,5 +1,10 @@
 extends Unit
 
+var hint = ('Unit: efreet \nRace: daemons \nMove: move to one of 3 tiles'+
+'ahead\n Properties: if no way - charge itself, burn all neighboors at the next turn')
+
+
+
 func _ready():
 	self._race =  "demon"
 	self._tier =  2

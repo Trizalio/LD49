@@ -79,6 +79,7 @@ size_flags_vertical = 3
 position = Vector2( 258, 125 )
 scale = Vector2( 2.425, 2.425 )
 frames = SubResource( 5 )
+frame = 1
 playing = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="parts"]

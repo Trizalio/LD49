@@ -1,6 +1,6 @@
 extends Spell
 
-
+var hint = ('Spell: frost circle \nProperties: kills units in a circle from the selected tile')
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"

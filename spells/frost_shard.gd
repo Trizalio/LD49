@@ -1,4 +1,7 @@
 extends Spell
+
+var hint = ('Spell: frost shard \nProperties: closes the way through the tile')
+
 onready var FrostShardUnit = preload("res://units/frost_shard_unit.tscn")
 
 func cast(target_position: Vector2):

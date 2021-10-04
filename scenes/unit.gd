@@ -109,7 +109,6 @@ func change_status(from, status):
 	print("unit: "  + str(self) + " changed status from " + str(_status) + " to " + str(status) )
 	if _status:
 		var inst_1 = self.get_node(_current_status_name)
-#		self.remove_child(status_node)
 		var action_1 = "remove_child"
 		emit_signal("status_changed", self, action_1, inst_1, from)
 		
@@ -134,10 +133,16 @@ func change_status(from, status):
 		inst = self.get_node(_current_status_name)
 #		self.remove_child(status_node)
 		action = "remove_child"
+	elif status == "stunned":
+		print("unit stunned")
+		inst = Burning.instance()
+		inst.set_name(_current_status_name)
+		action = "add_child"
+		
 	else:
 		print('Unexpected status')
 		assert(false)
-	print("emititng status_changed")
+	print("emititng status_changed for: " + str(self))
 	emit_signal("status_changed", self, action, inst, from)
 	
 	

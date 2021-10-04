@@ -16,19 +16,26 @@ func _act():
 	var coordinates = Matrix.get_unit_coordinates(self)
 	var neighbors = Matrix.get_neighbors(coordinates)
 	var target_unit = neighbors.bottom_neighbor
-	print("ogr target_unit" + str(target_unit))
 	if _target_coordinates:
-		print(" before cell_interacted emit")
-		var cell = Matrix.get_cell(_target_coordinates)
-		emit_signal("interact_with_cell", self, cell, "smash")
-		_target_coordinates = null
+		smash()
 		return
 	elif target_unit:
-		print(" ready to smaaaasssh")
+		print("ogr ready to smaaaasssh")
 		_target_coordinates = Matrix.get_unit_coordinates(target_unit)
 		return
 		
 	move_straight()
 
 
-#func smash()
+func smash():
+	print("ogr smaaaaaaaash")
+	var cell = Matrix.get_cell(_target_coordinates)
+	emit_signal("interact_with_cell", self, cell, "take_damage")
+	var neighbors = Matrix.get_neighbors(_target_coordinates)
+	var exist_neighbors = neighbors.get_exist_neighbors()
+	for neighbor in exist_neighbors:
+		if neighbor != self:
+			neighbor.change_status(null, "stunned")
+	_target_coordinates = null
+	return
+	

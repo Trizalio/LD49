@@ -18,7 +18,9 @@ class Cell:
 		var unit_ = unit
 		unit = null
 		return unit_
-	
+		
+	func get_coordinates():
+		return _coordinates
 #	func interact(from, action):
 #		print("cell" + str(self) +  "interacted: from" + str(from) + " action: " + str(action))
 #		if action == "smash":
@@ -41,6 +43,7 @@ signal unit_interacted(from, to_unit, action)
 signal unit_status_changed(unit, action, inst, from)
 signal unit_replaced(old_unit, new_unit)
 signal damage_taken(unit)
+signal cell_interacted(from, to_cell, action)
 
 
 var matrix_width: int = 3
@@ -146,11 +149,16 @@ func interact_with_unit(from, to_unit: Unit, action: String, arg_1 = null, arg_2
 		to_unit.call(action)	
 
 func interact_with_cell_(from, to_cell: Cell, action: String):
-#	emit_signal("cell_interacted", from, to_cell, action)
 	print('cell_interacted:' + str(to_cell))
-	to_cell.interact(from, action)
-#	if action == "take_damage":
-#		to_unit.call(action, from)
+#	if sig
+	var unit = to_cell.unit
+#	to_cell.interact(from, action)
+	if unit: 
+		if action == "take_damage":
+			unit.call(action, from)
+			
+	emit_signal("cell_interacted", from, to_cell, action)
+	
 #	else:
 #		to_unit.call(action)
 func get_neighbors(position: Vector2):

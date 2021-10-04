@@ -11,10 +11,11 @@ onready var Ork = preload("res://units/ork.tscn")
 var faction_to_units = {}
 func _ready():
 	faction_to_units = {
-		'undead': [Zombie, UndeadSkeleton, Vampire], 
-		'orc': [Goblin, Ork, Ogre],
+#		'undead': [Zombie, UndeadSkeleton, Vampire], 
+		'undead': [Zombie, Zombie, Zombie], 
+		'orc': [Ogre, Ogre, Ogre],
 #		'orc': [Goblin, Goblin, Goblin],
-		'demon': [Imp, Imp, Imp]
+#		'demon': [Imp, Imp, Imp]
 	}
 
 

@@ -22,18 +22,11 @@ func _act():
 	print( "zooooooobie acting")
 	var coordinates = Matrix.get_unit_coordinates(self)
 	var neighbors = Matrix.get_neighbors(coordinates)
-	if not wander_move():
-		# attack
-		pass
-#	else:
-#		var exist_neighbors = neighbors.get_exist_neighbors()
-#		if exist_neighbors.size():
-#		var neighbor = exist_neighbors[randi() % exist_neighbors.size()]
-#			interact_to_unit(self, neighbors.right_neighbor, "take_damage")
-#			interact_to_unit(self, neighbors.right_neighbor, "take_damage")
-#			if neighbors.right_neighbor.get_status() != "frozen":
-#				neighbors.right_neighbor.change_status(self, "frozen")
-#				emit_signal("interact", self, neighbors.left_neighbor, "change_status", "frozen")
-#				return
+	var mooved = wander_move()
+	if !mooved:
+		var traget = neighbors.bottom_neighbor
+		if traget:
+			interact_to_unit(self, traget, "take_damage")
+			return
 
 	

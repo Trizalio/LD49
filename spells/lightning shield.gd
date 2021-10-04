@@ -16,6 +16,7 @@ func cast(target_position: Vector2):
 	var target_unit = target_cell.unit
 	if target_unit != null:
 		target_unit.change_status(null, "lightning_shield")
+		$LightningShield.play()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

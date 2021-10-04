@@ -17,7 +17,7 @@ func cast(target_position: Vector2):
 	var target_unit = target_cell.unit
 	if target_unit != null:
 		Matrix.interact_with_unit(self, target_unit, "take_damage")
-
+		$FireballSpell.play()
 		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

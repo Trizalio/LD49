@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://units/imp.gd" type="Script" id=1]
 [ext_resource path="res://resources/characters/small_demon.png" type="Texture" id=2]
+[ext_resource path="res://resources/sounds/units/spawn/imp_spawn.mp3" type="AudioStream" id=3]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
@@ -27,3 +28,7 @@ frames = SubResource( 3 )
 animation = "imp"
 frame = 1
 playing = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+autoplay = true

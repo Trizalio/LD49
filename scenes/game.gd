@@ -29,6 +29,7 @@ func _ready():
 	if GameState.god_mode:
 		$parts/next_turn.visible = true
 	GameState.start_new_game()
+	render_exited_amount()
 
 func show_spells(spells: Array):
 	if GameState.god_mode:
@@ -109,8 +110,17 @@ func unit_moved(__, position_to: Vector2, unit: Unit, ___ ):
 	var duration = _get_duration()
 	Animator.animate(unit, "position", final_position, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 
+
+func render_exited_amount():
+	var total_exited_units = 0
+	for current_race in GameState.unit_race_to_amount_exit.keys():
+		total_exited_units += GameState.unit_race_to_amount_exit[current_race]
+	$parts/score/capacity_value.text = str(GameState.castle_capacity)
+	$parts/score/exited_value.text = str(total_exited_units)
+
 func unit_exited(unit,  __  ,___ ,____):
 	print('GUI.unit_exited(unit=' + str(unit) + ')')
+	render_exited_amount()
 	var final_position: Vector2 = unit.position + matrix_to_map(Vector2(1, 2)) - matrix_to_map(Vector2(1, 1))
 	var duration = _get_duration()
 	Animator.animate(unit, "position", final_position, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)

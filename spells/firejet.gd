@@ -10,7 +10,13 @@ extends Spell
 func _ready():
 	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func cast(target_position: Vector2):
+	print('cast firejet: ', target_position)
+	var line_x = target_position.x
+	for cell_y in range(Matrix.matrix_height -1, -1, -1):
+		
+		var target_cell = Matrix.get_cell(Vector2(line_x, cell_y))
+		var target_unit = target_cell.unit
+		if target_unit != null:
+			target_unit.change_status("firejet", "burning")
+#	$FireballSpell.play()

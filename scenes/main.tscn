@@ -61,9 +61,9 @@ size_flags_vertical = 3
 
 [node name="buttons" type="VBoxContainer" parent="parts/centered"]
 margin_left = 202.0
-margin_top = 102.0
+margin_top = 134.0
 margin_right = 308.0
-margin_bottom = 224.0
+margin_bottom = 193.0
 alignment = 1
 
 [node name="start" type="Button" parent="parts/centered/buttons"]
@@ -76,6 +76,7 @@ enabled_focus_mode = 0
 text = "Start"
 
 [node name="Hints" type="Button" parent="parts/centered/buttons"]
+visible = false
 margin_top = 63.0
 margin_right = 106.0
 margin_bottom = 122.0

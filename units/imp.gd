@@ -17,11 +17,11 @@ func get_tier():
 func _act():
 	var coordinates = Matrix.get_unit_coordinates(self)
 	var neighbors = Matrix.get_neighbors(coordinates)
-	if neighbors.left_neighbor:
-		if neighbors.left_neighbor.get_race() != self._race:
-#			emit_signal("interact", self, neighbors.left_neighbor, "take_damage")
-#			interact_to_unit(self, neighbors.left_neighbor, "take_damage")
+	var target = neighbors.bottom_neighbor
+	if target:
+		if target.get_race() != self._race:
+			target.change_status(self, "burning")
 			return
 
-	move_straight()
-	self.change_status(self, "frozen")
+	nimble_move()
+	

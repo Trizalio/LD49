@@ -46,8 +46,8 @@ signal damage_taken(unit)
 signal cell_interacted(from, to_cell, action)
 
 
-var matrix_width: int = 6
-var matrix_height: int = 6
+var matrix_width: int = 4
+var matrix_height: int = 4
 var matrix = []
 
 

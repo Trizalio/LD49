@@ -13,10 +13,10 @@ var faction_to_units = {}
 func _ready():
 	faction_to_units = {
 #		'undead': [Zombie, UndeadSkeleton, Vampire], 
-#		'undead': [Zombie, Zombie, Zombie], 
+		'undead': [Zombie, Zombie, Zombie], 
 #		'orc': [Ogre, Ogre, Ogre],
 #		'orc': [Goblin, Goblin, Goblin],
-		'demon': [Ifrite, Ifrite, Ifrite]
+#		'demon': [Ifrite, Ifrite, Ifrite]
 	}
 
 
@@ -33,7 +33,7 @@ func get_unit(column_index):
 	var column_fill_factor = float(units_in_column) / Matrix.matrix_height
 	
 	var fill_factor = float(units_on_field) / float(matrix_capacity)
-	var spawn_chance = (0.4 + (1 - fill_factor * 1.0)  * 0.3) * (1 - column_fill_factor * 0.5)
+	var spawn_chance = (0.0 + (1 - fill_factor * 10000.0)  * 1.0) * (1 - column_fill_factor * 0.5)
 	if not Rand.check(spawn_chance):
 #		print('skip spawn')
 		return 

@@ -62,9 +62,9 @@ func _generate_cells():
 			matrix_line.append(Cell.new(Vector2(x, y)))
 		matrix.append(matrix_line)
 func is_in_matix(position: Vector2):
-	if position.x > matrix_width -1:
+	if position.x > matrix_width -1 or  position.x < 0 :
 		return false
-	if position.y > matrix_height - 1:
+	if position.y > matrix_height - 1 or  position.y < 0:
 		return false
 	return true
 	
@@ -170,40 +170,52 @@ func interact_with_cell_(from, to_cell: Cell, action: String):
 func get_neighbors(position: Vector2):
 	var column_pos = position.x
 	var line_pos = position.y
+	var coordinates = position
+	
 	var top_neighbor = null
-	if line_pos != 0:
-		top_neighbor = matrix[line_pos - 1][column_pos].unit
-	
 	var top_right_neighbor = null
-	if line_pos != 0 and column_pos != matrix_height - 1:
-		top_right_neighbor = matrix[line_pos - 1][column_pos + 1].unit
-		
-		
 	var right_neighbor = null
-	if column_pos != matrix_height - 1:
-		right_neighbor = matrix[line_pos][column_pos + 1].unit
-	
 	var bottom_right_neighbor = null
-	if  column_pos != matrix_height - 1 and  line_pos != matrix_width -1:
-		bottom_right_neighbor = matrix[line_pos + 1][column_pos + 1].unit
-		
 	var bottom_neighbor = null
-	if line_pos != matrix_width -1:
-		bottom_neighbor = matrix[line_pos + 1][column_pos].unit
-		
-	
 	var bottom_left_neighbor = null
-	if column_pos != 0 and  line_pos != matrix_width -1:
-		bottom_left_neighbor =  matrix[line_pos + 1][column_pos - 1].unit
-	
 	var left_neighbor = null
-	if column_pos != 0:
-		left_neighbor = matrix[line_pos][column_pos - 1].unit
-		
-	
 	var top_left_neighbor = null
-	if column_pos != 0 and line_pos != 0:
-		top_left_neighbor = matrix[line_pos -1][column_pos - 1].unit
+	var target_coord = null	
+	
+	target_coord = (coordinates + Vector2(0, -1))
+	if Matrix.is_in_matix(target_coord):
+		top_neighbor = get_cell(target_coord).unit
+	
+	target_coord = (coordinates + Vector2(1, -1))
+	if Matrix.is_in_matix(target_coord):
+		top_right_neighbor = get_cell(target_coord).unit
+
+	target_coord = (coordinates +  Vector2(1, 0))
+	if Matrix.is_in_matix(target_coord):
+		right_neighbor = get_cell(target_coord).unit
+#
+	
+	target_coord = (coordinates +  Vector2(1, -1))
+	if Matrix.is_in_matix(target_coord):
+		bottom_right_neighbor = get_cell(target_coord).unit
+#
+	
+	target_coord = (coordinates +  Vector2(0, 1))
+	if Matrix.is_in_matix(target_coord):
+		bottom_neighbor = get_cell(target_coord).unit
+#
+			
+	target_coord = (coordinates +  Vector2(-1, 1))
+	if Matrix.is_in_matix(target_coord):
+		bottom_left_neighbor = get_cell(target_coord).unit
+#
+	target_coord = (coordinates +  Vector2(-1, 0))
+	if Matrix.is_in_matix(target_coord):
+		left_neighbor = get_cell(target_coord).unit
+#
+	target_coord = (coordinates +  Vector2(-1, -1))
+	if Matrix.is_in_matix(target_coord):
+		top_left_neighbor = get_cell(target_coord).unit
 		
 	return NeighborsClass.UnitNeighbors.new(
 		top_neighbor,
@@ -221,3 +233,57 @@ func get_neighbors(position: Vector2):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+#func get_neighbors(position: Vector2):
+#	var column_pos = position.x
+#	var line_pos = position.y
+#	var top_neighbor = null
+#	if line_pos != 0:
+#		top_neighbor = matrix[line_pos - 1][column_pos].unit
+#
+#	var top_right_neighbor = null
+#	if line_pos != 0 and column_pos != matrix_height - 1:
+#		top_right_neighbor = matrix[line_pos - 1][column_pos + 1].unit
+#
+#
+#	var right_neighbor = null
+#	if column_pos != matrix_height - 1:
+#		right_neighbor = matrix[line_pos][column_pos + 1].unit
+#
+#	var bottom_right_neighbor = null
+#	if  column_pos != matrix_height - 1 and  line_pos != matrix_width -1:
+#		bottom_right_neighbor = matrix[line_pos + 1][column_pos + 1].unit
+#
+#	var bottom_neighbor = null
+#	if line_pos != matrix_width -1:
+#		bottom_neighbor = matrix[line_pos + 1][column_pos].unit
+#
+#
+#	var bottom_left_neighbor = null
+#	if column_pos != 0 and  line_pos != matrix_width -1:
+#		bottom_left_neighbor =  matrix[line_pos + 1][column_pos - 1].unit
+#
+#	var left_neighbor = null
+#	if column_pos != 0:
+#		left_neighbor = matrix[line_pos][column_pos - 1].unit
+#
+#
+#	var top_left_neighbor = null
+#	if column_pos != 0 and line_pos != 0:
+#		top_left_neighbor = matrix[line_pos -1][column_pos - 1].unit
+#
+#	return NeighborsClass.UnitNeighbors.new(
+#		top_neighbor,
+#		top_right_neighbor,
+#		right_neighbor,
+#		bottom_right_neighbor,
+#		bottom_neighbor,
+#		bottom_left_neighbor,
+#		left_neighbor,
+#		top_left_neighbor
+#	)
+#
+#
+#
+## Called every frame. 'delta' is the elapsed time since the previous frame.
+##func _process(delta):
+##	pass

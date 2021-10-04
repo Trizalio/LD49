@@ -27,13 +27,13 @@ __meta__ = {
 margin_left = 15.0
 margin_top = 15.0
 margin_right = 525.0
-margin_bottom = 945.0
+margin_bottom = 735.0
 
 [node name="parts" type="VBoxContainer" parent="."]
 margin_left = 15.0
 margin_top = 15.0
 margin_right = 525.0
-margin_bottom = 945.0
+margin_bottom = 735.0
 
 [node name="Label" type="Label" parent="parts"]
 margin_right = 510.0
@@ -45,7 +45,7 @@ align = 1
 [node name="texture" type="TextureRect" parent="parts"]
 margin_top = 63.0
 margin_right = 510.0
-margin_bottom = 494.0
+margin_bottom = 389.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 2 )
@@ -53,17 +53,17 @@ expand = true
 stretch_mode = 6
 
 [node name="centered" type="CenterContainer" parent="parts"]
-margin_top = 498.0
+margin_top = 393.0
 margin_right = 510.0
-margin_bottom = 930.0
+margin_bottom = 720.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="buttons" type="VBoxContainer" parent="parts/centered"]
 margin_left = 202.0
-margin_top = 123.0
+margin_top = 134.0
 margin_right = 308.0
-margin_bottom = 308.0
+margin_bottom = 193.0
 alignment = 1
 
 [node name="start" type="Button" parent="parts/centered/buttons"]
@@ -76,6 +76,7 @@ enabled_focus_mode = 0
 text = "Start"
 
 [node name="Hints" type="Button" parent="parts/centered/buttons"]
+visible = false
 margin_top = 63.0
 margin_right = 106.0
 margin_bottom = 122.0
@@ -83,6 +84,7 @@ custom_fonts/font = SubResource( 1 )
 text = "Hints"
 
 [node name="Exit" type="Button" parent="parts/centered/buttons"]
+visible = false
 margin_top = 126.0
 margin_right = 106.0
 margin_bottom = 185.0

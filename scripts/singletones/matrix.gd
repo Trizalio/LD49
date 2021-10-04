@@ -61,7 +61,13 @@ func _generate_cells():
 		for x in matrix_width:
 			matrix_line.append(Cell.new(Vector2(x, y)))
 		matrix.append(matrix_line)
-		
+func is_in_matix(position: Vector2):
+	if position.x > matrix_width -1:
+		return false
+	if position.y > matrix_height - 1:
+		return false
+	return true
+	
 func call_on_all_units(method: String):
 	for y in range(matrix_height - 1, -1, -1):
 		for x in range(matrix_width - 1, -1, -1):

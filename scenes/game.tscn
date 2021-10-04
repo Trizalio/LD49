@@ -70,33 +70,33 @@ margin_right = 510.0
 margin_bottom = 720.0
 alignment = 1
 
-[node name="background" parent="parts/spells" instance=ExtResource( 4 )]
+[node name="fireball" parent="parts/spells" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 53.0
 margin_right = 117.0
 margin_bottom = 64.0
 
-[node name="Spell" parent="parts/spells" instance=ExtResource( 3 )]
+[node name="firejet" parent="parts/spells" instance=ExtResource( 3 )]
 margin_left = 121.0
 margin_right = 185.0
 margin_bottom = 64.0
 
-[node name="spell" parent="parts/spells" instance=ExtResource( 6 )]
+[node name="lightning_shield" parent="parts/spells" instance=ExtResource( 6 )]
 margin_left = 189.0
 margin_right = 253.0
 margin_bottom = 64.0
 
-[node name="chain_lightning_spell" parent="parts/spells" instance=ExtResource( 10 )]
+[node name="chain_lightning" parent="parts/spells" instance=ExtResource( 10 )]
 margin_left = 257.0
 margin_right = 321.0
 margin_bottom = 64.0
 
-[node name="Spell2" parent="parts/spells" instance=ExtResource( 9 )]
+[node name="frost_circle" parent="parts/spells" instance=ExtResource( 9 )]
 margin_left = 325.0
 margin_right = 389.0
 
-[node name="frost_shard_spell" parent="parts/spells" instance=ExtResource( 1 )]
+[node name="frost_shard" parent="parts/spells" instance=ExtResource( 1 )]
 margin_left = 393.0
 margin_right = 457.0
 margin_bottom = 64.0

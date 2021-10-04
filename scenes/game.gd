@@ -24,10 +24,18 @@ func _ready():
 	Matrix.connect("damage_taken", self, 'put_into_animate_queue', [null, null, null,"damage_taken"])
 	Matrix.connect("unit_status_changed", self, 'put_into_animate_queue', ["unit_status_changed"])
 	Matrix.connect("cell_interacted", self, 'put_into_animate_queue', [null, "cell_interacted"])
+	GameState.connect("active_spells_changed", self, 'show_spells')
 	_fetch_queue()
 	if GameState.god_mode:
 		$parts/next_turn.visible = true
 	GameState.start_new_game()
+
+func show_spells(spells: Array):
+	if GameState.god_mode:
+		return
+		
+	for child in $parts/spells.get_children():
+		child.visible = spells.find(child.get_name()) != -1
 	
 func _get_duration():
 	return Rand.randf_range(min_time_step, max_time_step)

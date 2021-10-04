@@ -1,8 +1,15 @@
 extends Node
 
+signal active_spells_changed(spell_names)
 #onready var UnitClass = load("res://scenes/unit.gd")
 var turn_number: int = 0
 var god_mode: bool = false
+var element_to_spell_names = {
+	"fire": ['fireball', 'firejet'],
+	"lightning": ['lightning_shield', 'chain_lightning'],
+	"frost": ['frost_circle', 'frost_shard'],
+}
+var current_element: String = ''
 
 var unit_race_to_amount_spawned: Dictionary = {}
 var unit_race_to_amount_field: Dictionary = {}
@@ -17,6 +24,14 @@ func cast_spell(spell: Spell, destination: Vector2) -> void:
 	spell.cast(destination)
 	if not god_mode:
 		_next_turn()
+		
+func roll_spells():
+	var possible_elements = []
+	for element in element_to_spell_names:
+		if element != current_element:
+			possible_elements.append(element)
+	current_element = Rand.rand_choice(possible_elements)
+	emit_signal('active_spells_changed', element_to_spell_names[current_element])
 
 func unit_exited_count(unit):
 	var race = unit.get_race()
@@ -51,6 +66,7 @@ func start_new_game():
 	_next_turn()
 
 func _next_turn():
+	roll_spells()
 	print('-----===== Units turn =====------')
 #	Matrix.print_matrix()
 	Matrix.call_on_all_units('act')

@@ -14,7 +14,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="spell" type="CenterContainer"]
+[node name="firejet_spell" type="CenterContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_right = 40.0
 margin_bottom = 40.0

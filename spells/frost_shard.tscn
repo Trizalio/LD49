@@ -16,7 +16,6 @@ shader_param/pulse_frequency = 5.0
 shader_param/power = 2.0
 
 [sub_resource type="AtlasTexture" id=2]
-flags = 4
 atlas = ExtResource( 5 )
 region = Rect2( 0, 0, 50, 50 )
 

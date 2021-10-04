@@ -11,13 +11,14 @@ var _race = null
 var _tier = null
 var _current_status_name = "current_status"
 
-var _stay_frozen_for = 2
+var _stay_frozen_for = 5
 var _staid_frozen = 0
  
 signal interact(from_unit, to_unit, action)
 signal status_changed(unit, action, inst)
 signal replace_unit(old_unit, new_unit)
 signal damage_taken(unit)
+signal interact_with_cell(from, to_cell, action)
 
 func move():
 	print("Move")
@@ -142,4 +143,8 @@ func change_status(from, status):
 	
 func interact_to_unit(from_unit: Unit, to_unit: Unit, action: String):
 	print("unit: "  + str(from_unit) + " interact to " + str(to_unit) + " action " + str(action) )
-	emit_signal("interact", from_unit, to_unit, action)
+	emit_signal("interact", from_unit, to_unit, action)	
+	
+func interact_to_cell(from_unit: Unit, to_cell: Unit, action: String):
+	print("unit: "  + str(from_unit) + " interact to " + str(to_cell) + " action " + str(action) )
+	emit_signal("interact_with_cell", from_unit, to_cell, action)

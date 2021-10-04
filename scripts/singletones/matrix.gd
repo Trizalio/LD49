@@ -5,8 +5,11 @@ const NeighborsClass = preload("res://utils/unit_neighbors.gd")
 
 class Cell:
 	var unit
-	func _init():
+	var _coordinates
+	func _init(coordinates):
 		unit = null
+		_coordinates = coordinates
+		print("Cell inited with coord:" + str(_coordinates))
 	
 	func asgin_unit(new_unit):
 		unit = new_unit
@@ -15,6 +18,17 @@ class Cell:
 		var unit_ = unit
 		unit = null
 		return unit_
+	
+#	func interact(from, action):
+#		print("cell" + str(self) +  "interacted: from" + str(from) + " action: " + str(action))
+#		if action == "smash":
+#			var neighbors = Matrix.get_neighbors(_coordinates)
+#			var _exist_neighbors = neighbors.get_exist_neighbors()
+#			for neighbor in _exist_neighbors:
+#				if neighbor != from:
+#					neighbor.take_damage(from)
+#			print(str(_exist_neighbors))
+		pass
 	
 	func _to_string():
 		return 'Cell(id=' + str(get_instance_id()) + ', unit=' + str(unit) + ')' 
@@ -42,7 +56,7 @@ func _generate_cells():
 	for y in matrix_height:
 		var matrix_line = []
 		for x in matrix_width:
-			matrix_line.append(Cell.new())
+			matrix_line.append(Cell.new(Vector2(x, y)))
 		matrix.append(matrix_line)
 		
 func call_on_all_units(method: String):
@@ -84,6 +98,7 @@ func enter_matrix(position: Vector2, unit: Unit) -> void:
 	unit.connect("status_changed", self, 'raise_unit_status_changed')
 	unit.connect("replace_unit", self, 'replace_unit')
 	unit.connect("damage_taken", self, 'damage_taken')
+	unit.connect("interact_with_cell", self, 'interact_with_cell_')
 	emit_signal("unit_entered", position)
 
 func get_unit_coordinates(unit) -> Vector2:
@@ -128,7 +143,16 @@ func interact_with_unit(from, to_unit: Unit, action: String, arg_1 = null, arg_2
 	if action == "take_damage":
 		to_unit.call(action, from)
 	else:
-		to_unit.call(action)
+		to_unit.call(action)	
+
+func interact_with_cell_(from, to_cell: Cell, action: String):
+#	emit_signal("cell_interacted", from, to_cell, action)
+	print('cell_interacted:' + str(to_cell))
+	to_cell.interact(from, action)
+#	if action == "take_damage":
+#		to_unit.call(action, from)
+#	else:
+#		to_unit.call(action)
 func get_neighbors(position: Vector2):
 	var column_pos = position.x
 	var line_pos = position.y

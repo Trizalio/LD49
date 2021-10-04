@@ -32,10 +32,6 @@ class UnitNeighbors:
 		bottom_left_neighbor = _bottom_left_neighbor
 		left_neighbor = _left_neighbor
 		top_left_neighbor = _top_left_neighbor
-		var list = self.get_property_list()
-		for d in list:
-			print("> " + d["name"])
-			print("> " + str(d))
 		
 	func get_exist_neighbors():
 		var exist_neighbors = []

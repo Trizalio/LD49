@@ -11,18 +11,24 @@ func get_tier():
 	return 3
 
 var _ready_to_attak = 	false
-
+var _target_coordinates = null
 func _act():
 	var coordinates = Matrix.get_unit_coordinates(self)
 	var neighbors = Matrix.get_neighbors(coordinates)
-	
-	if neighbors.bottom_neighbor:
-		if _ready_to_attak:
-#			emit_signal("interact", self, neighbors.left_neighbor, "take_damage")
-			interact_to_unit(self, neighbors.bottom_neighbor, "take_damage")
-			_ready_to_attak = false
-		else:
-			_ready_to_attak = true
-				
+	var target_unit = neighbors.bottom_neighbor
+	print("ogr target_unit" + str(target_unit))
+	if _target_coordinates:
+		print(" before cell_interacted emit")
+		var cell = Matrix.get_cell(_target_coordinates)
+		emit_signal("interact_with_cell", self, cell, "smash")
+		_target_coordinates = null
 		return
+	elif target_unit:
+		print(" ready to smaaaasssh")
+		_target_coordinates = Matrix.get_unit_coordinates(target_unit)
+		return
+		
 	move_straight()
+
+
+#func smash()

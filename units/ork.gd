@@ -3,7 +3,7 @@ extends Unit
 func _ready():
 	self._race =  "greenskin"
 	self._tier =  2
-	self.change_status(self, "frozen")
+#	self.change_status(self, "frozen")
 
 func get_race():
 	return "greenskin"

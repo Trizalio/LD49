@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://resources/characters/demons/demon.png" type="Texture" id=1]
 [ext_resource path="res://resources/sounds/units/spawn/daemon_spawn.mp3" type="AudioStream" id=2]
+[ext_resource path="res://resources/sounds/units/death/daemon_death.mp3" type="AudioStream" id=3]
+[ext_resource path="res://resources/sounds/units/victory/daemon_vic.mp3" type="AudioStream" id=4]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
@@ -23,9 +25,14 @@ animations = [ {
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
-frame = 1
 playing = true
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="spawn" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
 autoplay = true
+
+[node name="victory" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="death" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )

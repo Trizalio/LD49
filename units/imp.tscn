@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://units/imp.gd" type="Script" id=1]
 [ext_resource path="res://resources/characters/small_demon.png" type="Texture" id=2]
 [ext_resource path="res://resources/sounds/units/spawn/imp_spawn.mp3" type="AudioStream" id=3]
+[ext_resource path="res://resources/sounds/units/victory/imp_vic.mp3" type="AudioStream" id=4]
+[ext_resource path="res://resources/sounds/units/death/imp_die.mp3" type="AudioStream" id=5]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
@@ -29,6 +31,12 @@ animation = "imp"
 frame = 1
 playing = true
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="spawn" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 autoplay = true
+
+[node name="victory" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="death" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )

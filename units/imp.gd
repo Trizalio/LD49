@@ -19,3 +19,4 @@ func _act():
 			return
 
 	move_straight()
+	self.change_status(self, "frozen")

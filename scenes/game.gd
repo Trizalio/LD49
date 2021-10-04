@@ -22,6 +22,7 @@ func _ready():
 	Matrix.connect("unit_interacted", self, 'put_into_animate_queue', [null,"unit_interacted"])
 	Matrix.connect("damage_taken", self, 'put_into_animate_queue', [null, null, null,"damage_taken"])
 	Matrix.connect("unit_status_changed", self, 'put_into_animate_queue', ["unit_status_changed"])
+	Matrix.connect("cell_interacted", self, 'put_into_animate_queue', [null, "cell_interacted"])
 	_fetch_queue()
 	GameState.start_new_game()
 	
@@ -53,12 +54,15 @@ func _fetch_queue():
 	_fetch_queue()
 	
 func unit_status_changed(unit, action, inst, from):
-	print("changing unit status: " + str(unit))
-	if from:
-		if unit is Unit:
-			if unit != from:
-				_attack_unit_to_unit(from, unit)
-	unit.call(action, inst)
+	print("changing unit status: " + str(unit) + "action " + str(action) + "inst: " + str(inst))
+	if unit:
+		if from:
+			if unit is Unit and from is Unit:
+				if unit != from:
+					if action != "stunned":
+						_attack_unit_to_target(from, unit)
+		
+		unit.call(action, inst)
 	
 func matrix_to_map(matrix_position: Vector2) -> Vector2:
 	var node_name = str(matrix_position.x) + str(matrix_position.y)
@@ -107,18 +111,32 @@ func unit_interacted(from, to_unit, action ,____):
 	print('GUI.unit_interact(from' + str(from) + ' to_unit= ' + str(to_unit) + ')')
 	if from is Unit:
 		if action == "take_damage":
-			_attack_unit_to_unit(from, to_unit)
+			_attack_unit_to_target(from, to_unit)
+	
+func cell_interacted(from, to_cell, action ,____):
+	print('GUI.cell_interacte(from' + str(from) + ' to_cell= ' + str(to_cell) + ')')
+	if from is Unit:
+		if action == "take_damage":
+			_attack_unit_to_target(from, to_cell)
 	
 func damage_taken(unit,  __  ,___ ,____):
 	print('GUI.unit took damage(' + str(unit) + ')')
 	
-func _attack_unit_to_unit(from_unit, to_unit):
-		print('GUI.unit_to_unit_attak(from' + str(from_unit) + ' to_unit= ' + str(to_unit) + ')')
+func _attack_unit_to_target(from_unit, to_target):
+		print('GUI.unit_to_unit_attak(from' + str(from_unit) + ' to_target= ' + str(to_target) + ')')
 #		var from_coordinates: Vector2  = Matrix.get_unit_coordinates(from_unit)
 #		var matrix_from_coordinates: Vector2 = matrix_to_map(from_coordinates)
 		var matrix_from_coordinates: Vector2  = from_unit.get_position()
-		var matrix_to_coordinates: Vector2 = to_unit.get_position()
-		
+		var matrix_to_coordinates: Vector2 = Vector2(-1, -1)
+		if to_target is Unit:
+			matrix_to_coordinates = to_target.get_position()
+		else:
+#			TODO import cell to this file 
+			matrix_to_coordinates = matrix_to_map(to_target.get_coordinates())
+			pass
+#		else:
+#			print('Unexpected to_target'  + str(to_target))
+#			assert(false)
 		var duration_first_step = _get_duration()
 		var first_step = Animator.AnimationStep.new((matrix_to_coordinates * 2 + matrix_from_coordinates) / 3, duration_first_step)
 		

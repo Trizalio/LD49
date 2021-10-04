@@ -18,7 +18,7 @@ func cast(target_position: Vector2):
 	if target_unit != null:
 		Matrix.interact_with_unit(self, target_unit, "take_damage")
 		$FireballSpell.play()
-		
+#		$AnimatedFireball.play()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

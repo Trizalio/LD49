@@ -20,12 +20,18 @@ func _act():
 	if moved:
 		return
 	else:
-		enraged = true
-	
-	var coordinates = Matrix.get_unit_coordinates(self)
-	var neighbors = Matrix.get_neighbors(coordinates)
-	var exist_neighbors = neighbors.get_exist_neighbors()
-	print("ifrite actin ", self)
+		if not enraged: 
+			enraged = true
+			return
+		else: 
+			var coordinates = Matrix.get_unit_coordinates(self)
+			var neighbors = Matrix.get_neighbors(coordinates)
+			var exist_neighbors = neighbors.get_exist_neighbors()
+			for traget in exist_neighbors:
+				if traget:
+					if traget.get_race() != self._race:
+						traget.change_status(null, "burning")
+				
 #	move_straight()
 	
 	

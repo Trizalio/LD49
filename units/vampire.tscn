@@ -27,7 +27,7 @@ animations = [ {
 [node name="vampire" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
 frame = 1
 playing = true

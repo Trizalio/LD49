@@ -8,6 +8,7 @@ onready var Goblin = preload("res://units/goblin.tscn")
 onready var Ogre = preload("res://units/ogre.tscn")
 onready var Ork = preload("res://units/ork.tscn")
 onready var Ifrite = preload("res://units/ifrite.tscn")
+onready var Demon = preload("res://units/demon.tscn")
 
 var faction_to_units = {}
 func _ready():
@@ -17,6 +18,7 @@ func _ready():
 #		'orc': [Ogre, Ogre, Ogre],
 #		'orc': [Goblin, Goblin, Goblin],
 #		'demon': [Ifrite, Ifrite, Ifrite]
+		'demon': [Demon, Demon, Demon]
 	}
 
 
@@ -33,7 +35,7 @@ func get_unit(column_index):
 	var column_fill_factor = float(units_in_column) / Matrix.matrix_height
 	
 	var fill_factor = float(units_on_field) / float(matrix_capacity)
-	var spawn_chance = (0.0 + (1 - fill_factor * 10000.0)  * 1.0) * (1 - column_fill_factor * 0.5)
+	# var spawn_chance = (0.0 + (1 - fill_factor * 10000.0)  * 1.0) * (1 - column_fill_factor * 0.5)
 	if not Rand.check(spawn_chance):
 #		print('skip spawn')
 		return 

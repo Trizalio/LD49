@@ -20,5 +20,5 @@ func _act():
 			if neighbors.right_neighbor.get_status() != "frozen":
 				neighbors.right_neighbor.change_status(self, "frozen")
 
-	move_straight()
+	wander_move()
 	

@@ -7,7 +7,7 @@
 [ext_resource path="res://resources/spell/frost ring.png" type="Texture" id=5]
 [ext_resource path="res://resources/sounds/effects/spell_frozen_circle.mp3" type="AudioStream" id=6]
 
-[sub_resource type="ShaderMaterial" id=1]
+[sub_resource type="ShaderMaterial" id=3]
 shader = ExtResource( 2 )
 shader_param/selected_glow = Color( 1, 0.941176, 0.552941, 1 )
 shader_param/max_steps = 5
@@ -16,11 +16,10 @@ shader_param/pulse_frequency = 5.0
 shader_param/power = 2.0
 
 [sub_resource type="AtlasTexture" id=2]
-flags = 4
 atlas = ExtResource( 5 )
 region = Rect2( 0, 0, 50, 50 )
 
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="SpriteFrames" id=4]
 animations = [ {
 "frames": [ SubResource( 2 ) ],
 "loop": true,
@@ -37,12 +36,12 @@ __meta__ = {
 }
 
 [node name="background" parent="." instance=ExtResource( 4 )]
-material = SubResource( 1 )
+material = SubResource( 3 )
 
 [node name="sprite" type="AnimatedSprite" parent="."]
 material = ExtResource( 3 )
 position = Vector2( 36.0045, 29.1629 )
-frames = SubResource( 3 )
+frames = SubResource( 4 )
 
 [node name="FrostCircleSpell" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )

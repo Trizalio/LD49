@@ -23,6 +23,81 @@ signal interact_with_cell(from, to_cell, action)
 func move():
 	print("Move")
 
+##############################################
+# --> power_move
+
+func shift_by(position: Vector2, shifts: Array) -> Array:
+	var results: Array = []
+	for shift in shifts:
+		assert(shift is Vector2)
+		results.append(position + shift)
+	return results
+
+var right = Vector2(1, 0)
+var bot = Vector2(0, 1)
+var left = -right
+var top = -bot
+
+func filter_existent_positions(positions: Array) -> Array:
+	var results: Array = []
+	for pos in positions:
+		
+		results.append(pos)
+	return results
+
+func filter_positions(positions: Array) -> Array:
+	var results: Array = []
+	for pos in positions:
+		if pos.x < 0 or pos.y < 0:
+			continue
+		if pos.x >= Matrix.matrix_width or pos.y >= Matrix.matrix_height:
+			continue
+		if Matrix.get_cell(pos).unit != null:
+			continue
+		results.append(pos)
+	return results
+
+func power_move(best_shifts: Array, other_shifts: Array) -> bool:
+	var pos = Matrix.get_unit_coordinates(self)
+	if Matrix.is_next_to_town(pos):
+		Matrix.exit_from(pos)
+		return true
+	
+	var target_position = null
+	var best_positions = filter_positions(shift_by(pos, best_shifts))
+	if best_positions:
+		print('power_move from ', pos, ' to best_positions:', best_positions)
+		target_position = Rand.rand_choice(best_positions)
+	
+	if target_position == null:
+		var other_positions = filter_positions(shift_by(pos, other_shifts))
+		if other_positions:
+			print('power_move from ', pos, ' to best_positions:', other_positions)
+			target_position = Rand.rand_choice(other_positions)
+		
+	if target_position:
+		Matrix.move_unit(pos, target_position)
+		return true
+	return false
+
+func wander_move() -> bool:
+	print('wander_move')
+	var best_shifts = [bot + left, bot, bot + right]
+	var other_shifts = [left, left + top, top, right + top, right]
+	return power_move(best_shifts, other_shifts)
+
+func nimble_move() -> bool:
+	var best_shifts = [bot + left, bot, bot + right]
+	var other_shifts = []
+	return power_move(best_shifts, other_shifts)
+	
+func straight_move() -> bool:
+	var best_shifts = [bot]
+	var other_shifts = []
+	return power_move(best_shifts, other_shifts)
+	
+# <-- power_move
+##############################################
 
 
 func _to_string():

@@ -16,10 +16,11 @@ func _act():
 	print( "zooooooobie acting")
 	var coordinates = Matrix.get_unit_coordinates(self)
 	var neighbors = Matrix.get_neighbors(coordinates)
-	if not neighbors.bottom_neighbor:
-		move_straight()
-	else:
-		var exist_neighbors = neighbors.get_exist_neighbors()
+	if not wander_move():
+		# attack
+		pass
+#	else:
+#		var exist_neighbors = neighbors.get_exist_neighbors()
 #		if exist_neighbors.size():
 #		var neighbor = exist_neighbors[randi() % exist_neighbors.size()]
 #			interact_to_unit(self, neighbors.right_neighbor, "take_damage")

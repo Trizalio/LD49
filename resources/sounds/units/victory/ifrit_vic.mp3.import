@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ifrit_vic.mp3-9693aa10afd89859d8e218918d3abfad.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/units/victory/ifrit_vic.mp3"
+dest_files=[ "res://.import/ifrit_vic.mp3-9693aa10afd89859d8e218918d3abfad.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

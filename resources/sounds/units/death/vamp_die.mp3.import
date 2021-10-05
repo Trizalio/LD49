@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/vamp_die.mp3-2a31ffc3c4d53ff5581676524127c785.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/units/death/vamp_die.mp3"
+dest_files=[ "res://.import/vamp_die.mp3-2a31ffc3c4d53ff5581676524127c785.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

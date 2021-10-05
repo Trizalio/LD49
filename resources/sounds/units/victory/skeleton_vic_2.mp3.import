@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/skeleton_vic_2.mp3-da87e27a6ed35f5f571bdee839fc67d3.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/units/victory/skeleton_vic_2.mp3"
+dest_files=[ "res://.import/skeleton_vic_2.mp3-da87e27a6ed35f5f571bdee839fc67d3.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

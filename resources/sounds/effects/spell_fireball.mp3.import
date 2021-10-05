@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/spell_fireball.mp3-4fe28b8fbd03eda28e9967cf8e510595.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/effects/spell_fireball.mp3"
+dest_files=[ "res://.import/spell_fireball.mp3-4fe28b8fbd03eda28e9967cf8e510595.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/main scene (mp3cut.net).mp3-4fa61487bdf6e54529bacb9dd75a024d.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/main scene (mp3cut.net).mp3"
+dest_files=[ "res://.import/main scene (mp3cut.net).mp3-4fa61487bdf6e54529bacb9dd75a024d.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

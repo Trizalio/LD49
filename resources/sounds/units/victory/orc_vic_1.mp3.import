@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/orc_vic_1.mp3-2c48650ca64e1ca9a24ce83c80dd1042.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/units/victory/orc_vic_1.mp3"
+dest_files=[ "res://.import/orc_vic_1.mp3-2c48650ca64e1ca9a24ce83c80dd1042.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

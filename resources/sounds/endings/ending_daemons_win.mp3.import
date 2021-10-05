@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ending_daemons_win.mp3-756bb72e4d1f096522185c977c9b7d77.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/endings/ending_daemons_win.mp3"
+dest_files=[ "res://.import/ending_daemons_win.mp3-756bb72e4d1f096522185c977c9b7d77.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

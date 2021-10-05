@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/spell_firejet.mp3-d8b5999f3f0f02b30c30af3f885dbaec.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/effects/spell_firejet.mp3"
+dest_files=[ "res://.import/spell_firejet.mp3-d8b5999f3f0f02b30c30af3f885dbaec.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

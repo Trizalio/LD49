@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/vampire_spawn.mp3-273948733a6613d60ae3f5ee272e6bd6.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/units/spawn/vampire_spawn.mp3"
+dest_files=[ "res://.import/vampire_spawn.mp3-273948733a6613d60ae3f5ee272e6bd6.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/daemon_death.mp3-3c01de0928a65c0341cb3588ef362ff2.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/units/death/daemon_death.mp3"
+dest_files=[ "res://.import/daemon_death.mp3-3c01de0928a65c0341cb3588ef362ff2.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

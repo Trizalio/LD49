@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/goblin_vic.mp3-cd21e0a1ef6bd5f1335202edbc09c715.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/units/victory/goblin_vic.mp3"
+dest_files=[ "res://.import/goblin_vic.mp3-cd21e0a1ef6bd5f1335202edbc09c715.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

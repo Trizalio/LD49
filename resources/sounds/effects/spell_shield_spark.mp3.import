@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/spell_shield_spark.mp3-1b3e4bfe43bd56a86d18d2e2451b5e2a.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/effects/spell_shield_spark.mp3"
+dest_files=[ "res://.import/spell_shield_spark.mp3-1b3e4bfe43bd56a86d18d2e2451b5e2a.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

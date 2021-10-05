@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/spell_chain_ightning.mp3-06e675fcc5a7305e090b23c7b5422fa8.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/effects/spell_chain_ightning.mp3"
+dest_files=[ "res://.import/spell_chain_ightning.mp3-06e675fcc5a7305e090b23c7b5422fa8.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

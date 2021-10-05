@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/orc_die.mp3-e1a32fe9e025c4e63f50b1f1daddbf2d.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/units/death/orc_die.mp3"
+dest_files=[ "res://.import/orc_die.mp3-e1a32fe9e025c4e63f50b1f1daddbf2d.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/vampire_vic.mp3-dbeff407ad434d14a3453e987cfd812e.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/units/victory/vampire_vic.mp3"
+dest_files=[ "res://.import/vampire_vic.mp3-dbeff407ad434d14a3453e987cfd812e.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

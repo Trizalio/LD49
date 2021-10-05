@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ifrit_death.mp3-5c323c2fa8aa84b3f2f2f4893853fc96.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/units/death/ifrit_death.mp3"
+dest_files=[ "res://.import/ifrit_death.mp3-5c323c2fa8aa84b3f2f2f4893853fc96.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

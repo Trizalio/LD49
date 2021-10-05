@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ifrit_spawn.mp3-d338fd8bee6c91738958915b53fd4b8d.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/units/spawn/ifrit_spawn.mp3"
+dest_files=[ "res://.import/ifrit_spawn.mp3-d338fd8bee6c91738958915b53fd4b8d.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/orc_spawn.mp3-2d3dfe09fb680b4e377e71dae7be00a5.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/units/spawn/orc_spawn.mp3"
+dest_files=[ "res://.import/orc_spawn.mp3-2d3dfe09fb680b4e377e71dae7be00a5.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

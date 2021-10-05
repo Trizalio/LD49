@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ogre_vic.mp3-695ff23b1d091b8fd0d9279e74ad04de.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/units/victory/ogre_vic.mp3"
+dest_files=[ "res://.import/ogre_vic.mp3-695ff23b1d091b8fd0d9279e74ad04de.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

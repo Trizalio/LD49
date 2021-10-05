@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/intro (mp3cut.net).mp3-f2ae5cd4098b0b7dbf3062c7c99514a9.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/intro (mp3cut.net).mp3"
+dest_files=[ "res://.import/intro (mp3cut.net).mp3-f2ae5cd4098b0b7dbf3062c7c99514a9.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

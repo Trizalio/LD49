@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/spell_shield_cast.mp3-8f2b5f2177c8a23f76814a02bb67b64c.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/effects/spell_shield_cast.mp3"
+dest_files=[ "res://.import/spell_shield_cast.mp3-8f2b5f2177c8a23f76814a02bb67b64c.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

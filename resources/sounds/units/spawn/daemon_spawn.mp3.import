@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/daemon_spawn.mp3-ad843e84f53ebd1cc351d9a7fec2adf8.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/units/spawn/daemon_spawn.mp3"
+dest_files=[ "res://.import/daemon_spawn.mp3-ad843e84f53ebd1cc351d9a7fec2adf8.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

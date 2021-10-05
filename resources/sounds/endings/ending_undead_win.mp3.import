@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ending_undead_win.mp3-101776803ce45b61f621b863764db389.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/endings/ending_undead_win.mp3"
+dest_files=[ "res://.import/ending_undead_win.mp3-101776803ce45b61f621b863764db389.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

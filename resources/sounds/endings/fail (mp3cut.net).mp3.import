@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/fail (mp3cut.net).mp3-460d663ef982063a3a5a24e520587210.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/endings/fail (mp3cut.net).mp3"
+dest_files=[ "res://.import/fail (mp3cut.net).mp3-460d663ef982063a3a5a24e520587210.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

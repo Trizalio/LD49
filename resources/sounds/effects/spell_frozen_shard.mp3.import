@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/spell_frozen_shard.mp3-1d13e3fd8ab095b8d75a0f50b8e5583f.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/effects/spell_frozen_shard.mp3"
+dest_files=[ "res://.import/spell_frozen_shard.mp3-1d13e3fd8ab095b8d75a0f50b8e5583f.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ending_greenskins_win.mp3-c4b17be02c4fb377324a6f745d51a816.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/endings/ending_greenskins_win.mp3"
+dest_files=[ "res://.import/ending_greenskins_win.mp3-c4b17be02c4fb377324a6f745d51a816.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

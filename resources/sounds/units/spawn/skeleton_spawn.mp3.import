@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/skeleton_spawn.mp3-0c982b9969578a0dd0bd15da5189db0f.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/units/spawn/skeleton_spawn.mp3"
+dest_files=[ "res://.import/skeleton_spawn.mp3-0c982b9969578a0dd0bd15da5189db0f.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -3,8 +3,17 @@ extends Node
 signal active_spells_changed(spell_names)
 #onready var UnitClass = load("res://scenes/unit.gd")
 var turn_number: int = 0
-var god_mode: bool = false
+var god_mode: bool = true
 var castle_capacity = 20
+
+var base_time_step = 0.5
+var duration_deviation_fraction = 0.2
+var game = null
+
+func get_rand_animation_duration() -> float:
+	var min_time_step = base_time_step * (1 - duration_deviation_fraction)
+	var max_time_step = base_time_step * (1 + duration_deviation_fraction)
+	return Rand.float_in_range(min_time_step, max_time_step)
 
 var element_to_spell_names = {
 	"fire": ['fireball', 'firejet'],
@@ -32,7 +41,7 @@ func roll_spells():
 	for element in element_to_spell_names:
 		if element != current_element:
 			possible_elements.append(element)
-	current_element = Rand.rand_choice(possible_elements)
+	current_element = Rand.choice(possible_elements)
 	emit_signal('active_spells_changed', element_to_spell_names[current_element])
 
 func _end_game():
@@ -86,15 +95,17 @@ func start_new_game():
 	turn_number = 0
 	Matrix._generate_cells()
 	self._subsctibe()
-	_next_turn()
+	if not god_mode:
+		_next_turn()
 
 func _next_turn():
+	turn_number += 1
 	roll_spells()
 	print('-----===== Units turn =====------')
 #	Matrix.print_matrix()
 	Matrix.call_on_all_units('act')
-	_add_units_on_top_row()
-	turn_number += 1
+	if not god_mode:
+		_add_units_on_top_row()
 	print('-----===== Player turn =====------')
 #	Matrix.print_matrix()
 	

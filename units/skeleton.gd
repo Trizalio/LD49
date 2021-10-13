@@ -19,15 +19,16 @@ func get_tier():
 	return 2
 
 func _act():
-	print( "zooooooobie acting")
-	var coordinates = Matrix.get_unit_coordinates(self)
-	var neighbors = Matrix.get_neighbors(coordinates)
-	var mooved = wander_move()
-	if !mooved:
-		var traget = neighbors.bottom_neighbor
-		if traget:
-			if traget.get_race() != self._race:
-				interact_to_unit(self, traget, "take_damage")
-				return
+	return
+#	print("zooooooobie acting")
+#	var coordinates = Matrix.get_unit_coordinates(self)
+#	var neighbors = Matrix.get_neighbors(coordinates)
+#	var mooved = wander_move()
+#	if !mooved:
+#		var traget = neighbors.bottom_neighbor
+#		if traget:
+#			if traget.get_race() != self._race:
+#				interact_to_unit(self, traget, "take_damage")
+#				return
 
 	

@@ -16,7 +16,6 @@ shader_param/pulse_frequency = 5.0
 shader_param/power = 2.0
 
 [sub_resource type="AtlasTexture" id=2]
-flags = 4
 atlas = ExtResource( 5 )
 region = Rect2( 0, 0, 50, 50 )
 
@@ -41,7 +40,7 @@ material = SubResource( 1 )
 
 [node name="sprite" type="AnimatedSprite" parent="."]
 material = ExtResource( 4 )
-position = Vector2( 36.0045, 29.1629 )
+position = Vector2( 36.0045, 29.3613 )
 frames = SubResource( 3 )
 
 [node name="FrostShardSpell" type="AudioStreamPlayer" parent="."]

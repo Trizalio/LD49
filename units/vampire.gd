@@ -12,8 +12,11 @@ var turn_counter = 0
 var max_turn_counter = 3
 
 func _ready():
+	self._type_name = 'Vampire'
 	self._race =  "undead"
 	self._tier =  3
+	
+
 #	change_status(self ,"lightning_shield")
 func get_race():
 	return "undead"
@@ -33,8 +36,8 @@ func _act():
 #				if cell.unit.get_race() != self._race:
 #					not_undead_neighbors.append(cell.unit)
 #
-#		var neighbor_pos = Rand.rand_choice(neighbors_pos)
-#		var target =  Rand.rand_choice(not_undead_neighbors)
+#		var neighbor_pos = Rand.choice(neighbors_pos)
+#		var target =  Rand.choice(not_undead_neighbors)
 #		if target:
 #			target.change_status(self, "frozen")
 

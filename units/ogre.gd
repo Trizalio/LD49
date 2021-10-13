@@ -29,7 +29,7 @@ func _act():
 		_target_coordinates = Matrix.get_unit_coordinates(target_unit)
 		return
 		
-	move_straight()
+	straight_move()
 
 
 func smash():

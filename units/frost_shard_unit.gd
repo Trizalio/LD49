@@ -1,29 +1,18 @@
 extends Unit
 
-var hint = ('Spell: frost shard \nProperties: closes the way through the tile')
+var hint = 'Does not mov.\nMelts turn by turn.'
+var _lifespan = 1
+var _state = 0
 
-var _turn_counter = 0
-var _replace_after_turn = 1
-func _ready():
-	self._race =  "frost_shard_unit"
-	self._tier =  0
+func _init().(UnitUtils.Race.Special, 0, "Frost shard"):
+	_state = 0
 
-func get_race():
-	return "frost_shard_unit"
-
-func get_tier():
-	return 0
-	
 func _act():
-#	var inst = MeltedFrostShardUnit.instance()
-	print("frost_shard_unit acting", _turn_counter)
-	if _turn_counter >= _replace_after_turn:
-		var position = Matrix.get_unit_coordinates(self)
-		print(" turn into demon")
-		var inst = UnitsGenerator.MeltedFrostShardUnit.instance()
-		emit_signal("replace_unit", self, null)
-#		emit_signal("replace_unit", self, inst)
-		Matrix.enter_matrix(position, inst)
+	if _state == 0:
+		_state += 1
+		emit_animate(self, "change_state", _state)
 	else:
-		_turn_counter +=1
-	
+		die()
+
+func animate_change_state(state):
+	$sprite.frame = state

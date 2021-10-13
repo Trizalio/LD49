@@ -1,28 +1,20 @@
 extends Unit
 
-var hint = ("Unit: goblin \nRace: greenskins \nMove: only straight walk, "+
-"Properties: agressive, attack each other; can sprint (move through two" +
-"tiles, if it's free ahead), if no way - attack unit in front")
+var hint = (
+	"Move: only straight\n" +
+	"Sprint: can move two times in a row\n" + 
+	"Blocked: attack unit in front (even other greenskins)"
+)
 
+func _init().("greenskin", 1, "goblin"):
+	pass
 
 func _ready():
-	self._race =  "greenskin"
-	self._tier =  1
-
-func get_race():
-	return "greenskin"
+	pass
 	
-func get_tier():
-	return 1
 func _act():
-	var coordinates = Matrix.get_unit_coordinates(self)
-	var neighbors = Matrix.get_neighbors(coordinates)
-	if !neighbors.bottom_neighbor:
-		move_straight()
-		var neighbors_second_step = Matrix.get_neighbors(Matrix.get_unit_coordinates(self))
-		if !neighbors_second_step.bottom_neighbor:
-			move_straight()
-	else :
-		interact_to_unit(self, neighbors.bottom_neighbor, "take_damage")
-		return
-
+	if straight_move():
+		straight_move()
+	else:
+		attack(MatrixUtils.get_units_by_shifts(self, MatrixUtils.front_1)[0])
+	

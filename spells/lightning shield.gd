@@ -1,23 +1,20 @@
 extends Spell
 
-var hint = ('Spell: lightning shield \nProperties: protect unit from attack, '+
-'kills the attacking unit')
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+var hint = (
+	'Spell: lightning shield \nProperties: protect unit from attack, '+
+	'kills the attacking unit'
+)
+var LightningShield = preload("res://statuses/lightning shield.tscn")
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
 func cast(target_position: Vector2):
 	print('cast lightning_shield: ', target_position)
-	var target_cell = Matrix.get_cell(target_position)
-	var target_unit = target_cell.unit
-	if target_unit != null:
-		target_unit.change_status(null, "lightning_shield")
-		$LightningShield.play()
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	
+	var target_unit = Matrix.get_cell(target_position).unit
+	if target_unit == null:
+		return false
+
+	var done = target_unit.change_status(self, LightningShield.instance())
+	return done

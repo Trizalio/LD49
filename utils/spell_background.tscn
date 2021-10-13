@@ -1,19 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://resources/shaders/glow.shader" type="Shader" id=1]
+[ext_resource path="res://resources/spell/spell_background.tres" type="Material" id=1]
 [ext_resource path="res://resources/spell/background.png" type="Texture" id=2]
-
-[sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 1 )
-shader_param/selected_glow = Color( 1, 0.941176, 0.552941, 1 )
-shader_param/max_steps = 5
-shader_param/shift_per_step = 1.0
-shader_param/pulse_frequency = 5.0
-shader_param/power = 2.0
 
 [node name="background" type="TextureRect"]
 self_modulate = Color( 1, 1, 1, 0.588235 )
-material = SubResource( 1 )
+material = ExtResource( 1 )
 margin_right = 64.0
 margin_bottom = 64.0
 rect_min_size = Vector2( 64, 64 )

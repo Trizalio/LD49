@@ -15,12 +15,18 @@ _global_script_classes=[ {
 "path": "res://scenes/spell.gd"
 }, {
 "base": "Node2D",
+"class": "Status",
+"language": "GDScript",
+"path": "res://statuses/status.gd"
+}, {
+"base": "Node2D",
 "class": "Unit",
 "language": "GDScript",
 "path": "res://scenes/unit.gd"
 } ]
 _global_script_class_icons={
 "Spell": "",
+"Status": "",
 "Unit": ""
 }
 
@@ -38,6 +44,12 @@ GameState="*res://scripts/singletones/game_state.gd"
 Animator="*res://scripts/singletones/animator.gd"
 Rand="*res://scripts/singletones/rand.gd"
 UnitsGenerator="*res://scripts/singletones/units_generator.gd"
+MatrixUtils="*res://scripts/singletones/matrix_utils.gd"
+Utils="*res://scripts/singletones/utils.gd"
+Damage="*res://scripts/singletones/damage.gd"
+StatusUtils="*res://scripts/singletones/status_utils.gd"
+UnitUtils="*res://scripts/singletones/unit_utils.gd"
+EffectUtils="*res://scripts/singletones/effect_utils.gd"
 
 [display]
 

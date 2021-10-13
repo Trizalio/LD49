@@ -5,11 +5,13 @@ var rand = RandomNumberGenerator.new()
 func _ready():
 	rand.randomize()
 
-func randf_range(from: float, to: float):
+func float_in_range(from: float, to: float):
 	return rand.randf_range(from, to)
 	
 func check(chance: float) -> bool:
-	return chance >= randf_range(0, 1)
+	return chance >= float_in_range(0, 1)
 
-func rand_choice(options: Array):
+func choice(options):
+	if options == null:
+		return null
 	return options[rand.randi() % options.size()]

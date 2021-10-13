@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://spells/frost_shard.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resources/main_style.tres" type="Theme" id=2]
@@ -11,6 +11,11 @@
 [ext_resource path="res://spells/frost_circle.tscn" type="PackedScene" id=9]
 [ext_resource path="res://spells/chain_lightning.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/unit_hint.tscn" type="PackedScene" id=11]
+[ext_resource path="res://resources/fonts/Galiver Sans.ttf" type="DynamicFontData" id=12]
+
+[sub_resource type="DynamicFont" id=1]
+size = 8
+font_data = ExtResource( 12 )
 
 [node name="game" type="MarginContainer"]
 anchor_right = 1.0
@@ -74,7 +79,7 @@ align = 2
 [node name="texture" type="TextureRect" parent="parts"]
 margin_top = 42.0
 margin_right = 510.0
-margin_bottom = 341.0
+margin_bottom = 317.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 7 )
@@ -82,27 +87,27 @@ expand = true
 stretch_mode = 6
 
 [node name="centered" type="CenterContainer" parent="parts"]
-margin_top = 345.0
+margin_top = 321.0
 margin_right = 510.0
-margin_bottom = 644.0
+margin_bottom = 596.0
 size_flags_vertical = 3
 
 [node name="map" type="GridContainer" parent="parts/centered"]
 margin_left = 255.0
-margin_top = 149.0
+margin_top = 137.0
 margin_right = 255.0
-margin_bottom = 149.0
+margin_bottom = 137.0
 columns = 3
 
 [node name="HSeparator" type="HSeparator" parent="parts"]
-margin_top = 648.0
+margin_top = 600.0
 margin_right = 510.0
-margin_bottom = 652.0
+margin_bottom = 604.0
 
 [node name="spells" type="HBoxContainer" parent="parts"]
-margin_top = 656.0
+margin_top = 608.0
 margin_right = 510.0
-margin_bottom = 720.0
+margin_bottom = 672.0
 alignment = 1
 
 [node name="fireball" parent="parts/spells" instance=ExtResource( 4 )]
@@ -136,12 +141,104 @@ margin_left = 393.0
 margin_right = 457.0
 margin_bottom = 64.0
 
-[node name="next_turn" type="Button" parent="parts"]
-visible = false
-margin_top = 682.0
+[node name="root_buttons" type="HBoxContainer" parent="parts"]
+margin_top = 676.0
 margin_right = 510.0
 margin_bottom = 720.0
+
+[node name="next_turn" type="Button" parent="parts/root_buttons"]
+margin_right = 111.0
+margin_bottom = 44.0
 text = "Next turn"
+
+[node name="spawn" type="Button" parent="parts/root_buttons"]
+margin_left = 115.0
+margin_right = 195.0
+margin_bottom = 44.0
+text = "Spawn"
+
+[node name="unit_type" type="Label" parent="parts/root_buttons"]
+margin_left = 199.0
+margin_top = 3.0
+margin_right = 366.0
+margin_bottom = 41.0
+size_flags_horizontal = 3
+text = "imp"
+
+[node name="x_controls2" type="VBoxContainer" parent="parts/root_buttons"]
+margin_left = 370.0
+margin_right = 386.0
+margin_bottom = 44.0
+
+[node name="next" type="Button" parent="parts/root_buttons/x_controls2"]
+margin_right = 16.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 1 )
+text = ">"
+
+[node name="last" type="Button" parent="parts/root_buttons/x_controls2"]
+margin_top = 24.0
+margin_right = 16.0
+margin_bottom = 44.0
+custom_fonts/font = SubResource( 1 )
+text = "<"
+
+[node name="at" type="Label" parent="parts/root_buttons"]
+margin_left = 390.0
+margin_top = 3.0
+margin_right = 420.0
+margin_bottom = 41.0
+text = "at"
+
+[node name="x" type="Label" parent="parts/root_buttons"]
+margin_left = 424.0
+margin_top = 3.0
+margin_right = 443.0
+margin_bottom = 41.0
+text = "0"
+
+[node name="x_controls" type="VBoxContainer" parent="parts/root_buttons"]
+margin_left = 447.0
+margin_right = 465.0
+margin_bottom = 44.0
+
+[node name="inc" type="Button" parent="parts/root_buttons/x_controls"]
+margin_right = 18.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 1 )
+text = "+"
+
+[node name="decr" type="Button" parent="parts/root_buttons/x_controls"]
+margin_top = 24.0
+margin_right = 18.0
+margin_bottom = 44.0
+custom_fonts/font = SubResource( 1 )
+text = "-"
+
+[node name="y" type="Label" parent="parts/root_buttons"]
+margin_left = 469.0
+margin_top = 3.0
+margin_right = 488.0
+margin_bottom = 41.0
+text = "0"
+
+[node name="y_controls" type="VBoxContainer" parent="parts/root_buttons"]
+margin_left = 492.0
+margin_right = 510.0
+margin_bottom = 44.0
+
+[node name="inc" type="Button" parent="parts/root_buttons/y_controls"]
+margin_right = 18.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 1 )
+text = "+"
+
+[node name="decr" type="Button" parent="parts/root_buttons/y_controls"]
+margin_top = 24.0
+margin_right = 18.0
+margin_bottom = 44.0
+custom_fonts/font = SubResource( 1 )
+text = "-"
 
 [node name="Background" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
@@ -157,4 +254,11 @@ margin_top = 15.0
 margin_right = 525.0
 margin_bottom = 735.0
 
-[connection signal="pressed" from="parts/next_turn" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="parts/root_buttons/next_turn" to="." method="_on_next_turn_pressed"]
+[connection signal="pressed" from="parts/root_buttons/spawn" to="." method="_on_spawn_imp_pressed"]
+[connection signal="pressed" from="parts/root_buttons/x_controls2/next" to="." method="_on_change_selected_unit_type" binds= [ 1 ]]
+[connection signal="pressed" from="parts/root_buttons/x_controls2/last" to="." method="_on_change_selected_unit_type" binds= [ -1 ]]
+[connection signal="pressed" from="parts/root_buttons/x_controls/inc" to="." method="_change_x" binds= [ 1 ]]
+[connection signal="pressed" from="parts/root_buttons/x_controls/decr" to="." method="_change_x" binds= [ -1 ]]
+[connection signal="pressed" from="parts/root_buttons/y_controls/inc" to="." method="_change_y" binds= [ 1 ]]
+[connection signal="pressed" from="parts/root_buttons/y_controls/decr" to="." method="_change_y" binds= [ -1 ]]

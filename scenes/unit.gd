@@ -2,17 +2,18 @@ extends Node2D
 class_name Unit
 
 var Frozen = preload("res://statuses/frozen.tscn")
-var Burning = preload("res://statuses/burning.tscn")
-var LightningShield = preload("res://statuses/lightning shield.tscn")
-
 
 var _status = null
 var _race = null
 var _tier = null
+var _type_name: String = 'Unit'
 var _current_status_name = "current_status"
 
 var _stay_frozen_for = 5
 var _staid_frozen = 0
+var _created_on_turn = null
+var _acted_at_turn = null
+var _dead = false
  
 signal interact(from_unit, to_unit, action)
 signal status_changed(unit, action, inst)
@@ -20,93 +21,83 @@ signal replace_unit(old_unit, new_unit)
 signal damage_taken(unit)
 signal interact_with_cell(from, to_cell, action)
 
-func move():
-	print("Move")
+#signal change_status(unit, new_status)
+signal animate(target, method_name, arg)
 
 ##############################################
 # --> power_move
 
-func shift_by(position: Vector2, shifts: Array) -> Array:
-	var results: Array = []
-	for shift in shifts:
-		assert(shift is Vector2)
-		results.append(position + shift)
-	return results
+func move(target_position):
+	Matrix.get_cell(Matrix.get_unit_coordinates(self)).unit  = null
+	Matrix.get_cell(target_position).unit = self
+	emit_animate(self, "move", target_position)
 
-var right = Vector2(1, 0)
-var bot = Vector2(0, 1)
-var left = -right
-var top = -bot
-
-func filter_existent_positions(positions: Array) -> Array:
-	var results: Array = []
-	for pos in positions:
-		
-		results.append(pos)
-	return results
-
-func filter_positions(positions: Array) -> Array:
-	var results: Array = []
-	for pos in positions:
-		if pos.x < 0 or pos.y < 0:
-			continue
-		if pos.x >= Matrix.matrix_width or pos.y >= Matrix.matrix_height:
-			continue
-		if Matrix.get_cell(pos).unit != null:
-			continue
-		results.append(pos)
-	return results
+func exit():
+	Matrix.get_cell(Matrix.get_unit_coordinates(self)).unit = null
 
 func power_move(best_shifts: Array, other_shifts: Array) -> bool:
 	var pos = Matrix.get_unit_coordinates(self)
 	if Matrix.is_next_to_town(pos):
-		Matrix.exit_from(pos)
+		emit_animate(self, "exit")
+		exit()
+#		Matrix.exit_from(pos)
 		return true
 	
 	var target_position = null
-	var best_positions = filter_positions(shift_by(pos, best_shifts))
+	var best_positions = MatrixUtils.filter_empty_existent_positions(MatrixUtils.shift_by(pos, best_shifts))
 	if best_positions:
-		print('power_move from ', pos, ' to best_positions:', best_positions)
-		target_position = Rand.rand_choice(best_positions)
+#		print('power_move from ', pos, ' to best_positions:', best_positions)
+		target_position = Rand.choice(best_positions)
 	
 	if target_position == null:
-		var other_positions = filter_positions(shift_by(pos, other_shifts))
+		var other_positions = MatrixUtils.filter_empty_existent_positions(MatrixUtils.shift_by(pos, other_shifts))
 		if other_positions:
-			print('power_move from ', pos, ' to best_positions:', other_positions)
-			target_position = Rand.rand_choice(other_positions)
+#			print('power_move from ', pos, ' to other_positions:', other_positions)
+			target_position = Rand.choice(other_positions)
 		
 	if target_position:
-		Matrix.move_unit(pos, target_position)
+		move(target_position)
+#		Matrix.move_unit(pos, target_position)
 		return true
 	return false
 
-func wander_move() -> bool:
-	print('wander_move')
-	var best_shifts = [bot + left, bot, bot + right]
-	var other_shifts = [left, left + top, top, right + top, right]
-	return power_move(best_shifts, other_shifts)
 
+var wander_best_shifts = MatrixUtils.front_3
+var wander_other_shifts = Utils.set_diff(MatrixUtils.all_neighbours, wander_best_shifts)
+func wander_move() -> bool:
+	return power_move(wander_best_shifts, wander_other_shifts)
+
+var nimble_best_shifts = MatrixUtils.front_1
+var nimble_other_shifts = Utils.set_diff(MatrixUtils.front_3, nimble_best_shifts)
 func nimble_move() -> bool:
-	var best_shifts = [bot + left, bot, bot + right]
-	var other_shifts = []
-	return power_move(best_shifts, other_shifts)
+	print('nimble_move')
+	return power_move(nimble_best_shifts, nimble_other_shifts)
 	
+var straight_best_shifts = [MatrixUtils.front_1]
+var straight_other_shifts = []
 func straight_move() -> bool:
-	var best_shifts = [bot]
-	var other_shifts = []
-	return power_move(best_shifts, other_shifts)
+	return power_move(straight_best_shifts, straight_other_shifts)
 	
 # <-- power_move
 ##############################################
 
-
 func _to_string():
-	return 'Unit(id=' + str(get_instance_id()) + ')' 
-#func try_move():
+	return _type_name + '(id=' + str(get_instance_id()) + ')' 
 
+func _init(race, tier, type_name):
+	self._created_on_turn = GameState.turn_number
+	self._race = race
+	self._tier = tier
+	self._type_name =  type_name
+	self._acted_at_turn = GameState.turn_number
+	self._status = StatusUtils.Normal()
+	self._status.name = STATUS_NAME
 
 func get_race():
 	return _race
+	
+func get_type_name() -> String:
+	return _type_name
 	
 func get_tier():
 	return _tier
@@ -114,122 +105,143 @@ func get_tier():
 func get_status():
 	return _status
 	
-func move_straight():
-	var position =  Matrix.get_unit_coordinates(self)
-	if position.x == -1 or position.y == -1:
-		return 
-	print('move_straight from ', position)
-	
-			
-	if Matrix.is_next_to_town(position):
-		Matrix.exit_from(position)
-		return
-	
-	var desired_position = position + Vector2(0, 1)
-#	print('move_straight desired_position ', desired_position)
-	if Matrix.get_cell(desired_position).unit == null:
-		Matrix.move_unit(position, desired_position)
-		
-func check_status():
-	if _status == "frozen":
-		return false
-	return true
-
-func interact_status():
-
-	if _status == "frozen":
-		if _staid_frozen < _stay_frozen_for:
-			_staid_frozen +=1
-			return
-		else:
-			_staid_frozen = 0
-			change_status(self, null)
-	elif _status == "burning":
-		if _race == "demon":
-			return
-		take_damage("burning")
-		
-	
-	pass
-
-#func _do_act(unit, action_name):
-#	if self.check_status():
-#		unit.call(action_name)
-#	self.interact_status()
 func act():
-	if self.check_status():
-		_act()
-	self.interact_status()
+	print('act, _acted_at_turn: ', _acted_at_turn, ", GameState.turn_number:", GameState.turn_number)
+	if _acted_at_turn < GameState.turn_number:
+		_acted_at_turn = GameState.turn_number
+		
+		if _status.on_turn_start():
+			_act()
+		if _status.on_turn_end():
+			_act()
 
 func _act():
 	pass
 
-func take_damage(from):
+func take_damage(damage: Damage.Damage):
+#	print("unit: "  + str(self) + " took damage:" + str(damage))
+	if damage.type == Damage.Types.Lightning:
+		self_animate("take_lightning_damage", null, damage.delay)
+	if _status.on_take_damage(damage):
+		die(damage.delay)
+#		emit_signal("damage_taken", damage)
+#		emit_signal("replace_unit", self, null)
+
+
+func change_status(reason, status: Status) -> bool:
+	if _status.on_changed(status):
+#		print("unit: "  + str(self) + " changed status from " + str(_status) + " to " + str(status) )
+		emit_animate(self, "change_status", status)
+		_status = status
+		_status.apply(self)
+		return true
+	return false
+#
+#func interact_to_unit(from_unit: Unit, to_unit: Unit, action: String):
+#	print("unit: "  + str(from_unit) + " interact to " + str(to_unit) + " action " + str(action) )
+#	emit_signal("interact", from_unit, to_unit, action)	
+#
+#func interact_to_cell(from_unit: Unit, to_cell: Unit, action: String):
+#	print("unit: "  + str(from_unit) + " interact to " + str(to_cell) + " action " + str(action) )
+#	emit_signal("interact_with_cell", from_unit, to_cell, action)
 	
-	print("unit: "  + str(self) + " took damage form" + str(from))
-#	if from is Unit:
-#		and from != self
+func emit_animate(target, method_name, arg=null, wait: bool = true):
+	GameState.game.put_into_animate_queue(target, method_name, arg, wait)
+#	emit_signal("animate", target, method_name, arg)
 
-	if _status == "lightning_shield":
-		print(str(from))
-		if from is CenterContainer:
-			return
-		print("unit: "  + str(self) + " emited lightning_shield" + str(from))
-		if from.get_status() != "lightning_shield":
-			emit_signal("interact", "lightning_shield", from, "take_damage")
-		pass
-	else:
-		emit_signal("damage_taken", self)
-		emit_signal("replace_unit", self, null)
+func self_animate(method_name, arg=null, wait: bool = true):
+	emit_animate(self, method_name, arg, wait)
+	
 
-
-func change_status(from, status):
-	if _race == "melted_frost_shard_unit"  or _race == "frost_shard_unit":
+func attack(target_unit):
+	if target_unit == null:
 		return
-	print("unit: "  + str(self) + " changed status from " + str(_status) + " to " + str(status) )
-	if _status:
-		var inst_1 = self.get_node(_current_status_name)
-		var action_1 = "remove_child"
-		emit_signal("status_changed", self, action_1, inst_1, from)
+	emit_animate(self, "interact", target_unit)
+	target_unit.take_damage(Damage.damage(Damage.Types.Physical, self))
+
+func apply_status(target_unit, status):
+	if target_unit == null or status == null:
+		return
 		
-	_status = status
-	var action = null
-	var inst = null
-	if status == "frozen":
-		inst = Frozen.instance()
-		inst.set_name(_current_status_name)
-		inst.playing = true
-		action = "add_child"
-	elif status == "burning":
-		inst = Burning.instance()
-		inst.set_name(_current_status_name)
-		action = "add_child"
-	elif status == 'lightning_shield':
-		inst = LightningShield.instance()
-		inst.set_name(_current_status_name)
-		action = "add_child"
-#		self.add_child(inst)
-	elif status == null:
-		inst = self.get_node(_current_status_name)
-#		self.remove_child(status_node)
-		action = "remove_child"
-	elif status == "stunned":
-		print("unit stunned")
-		inst = Burning.instance()
-		inst.set_name(_current_status_name)
-		action = "add_child"
+	emit_animate(self, "interact", target_unit)
+	if target_unit.change_status(status):
+		emit_animate(status, "appied")
+#
+#func change_state(target_unit, new_state):
+#	if target_unit == null:
+#		return 
+#
+#	target_unit.change_state(new_state)
+#	emit_animate(target_unit, "change_state")
+
+func die(delay: bool = true):
+	if _dead:
+		return
+	_dead = true
+	Matrix.get_cell(Matrix.get_unit_coordinates(self)).unit = null
+	emit_animate(self, "death", null, delay)
+
+###########################################################################
+
+func on_enter_matrix():
+	emit_animate(self, "enter_matrix")
+
+###########################################################################
+# --> animations
+
+func matrix_to_map(matrix_position: Vector2) -> Vector2:
+	return GameState.game.matrix_to_map(matrix_position)
+
+func _interpolate(object: Object, property: NodePath, final_val, destroy:bool = false):
+	var duration = GameState.get_rand_animation_duration()
+	Animator.animate(object, property, final_val, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, destroy)
+	
+func _multi_interpolate(object: Object, property: NodePath, values: Array, destroy:bool = false):
+	var animation_steps = []
+	for val in values:
+		animation_steps.append(Animator.AnimationStep.new(val, GameState.get_rand_animation_duration()))
+	Animator.multi_animate(object, property, animation_steps, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, destroy)
+
+func animate_death(__):
+	_interpolate(self, "modulate", Color(1, 1, 1, 0))
+
+func animate_interact(target_cell_or_unit):
+	var target_position = null
+	if target_cell_or_unit is Node2D:
+		target_position = target_cell_or_unit.get_position()
+	elif target_cell_or_unit is Matrix.Cell:
+		target_position = matrix_to_map(target_cell_or_unit.get_coordinates())
+
+	var start_position = self.get_position()
+	var first_step = (target_position * 2 + start_position) / 3
 		
+	_multi_interpolate(self, "position", [first_step, start_position])
+	
+func animate_move(target_cell_or_position):
+	var target_cell = null
+	if target_cell_or_position is Vector2:
+		target_cell = Matrix.get_cell(target_cell_or_position)
+	elif target_cell_or_position is Matrix.Cell:
+		target_cell = target_cell_or_position
 	else:
-		print('Unexpected status')
-		assert(false)
-	print("emititng status_changed for: " + str(self))
-	emit_signal("status_changed", self, action, inst, from)
+		assert(false, "animate_move got: " + str(target_cell_or_position))
+	_interpolate(self, "position", matrix_to_map(target_cell.get_coordinates()))
 	
+var STATUS_NAME = "status"
+func animate_change_status(new_status: Status):
+	remove_child(get_node(STATUS_NAME))
+	new_status.name = STATUS_NAME
+	add_child(new_status)
 	
-func interact_to_unit(from_unit: Unit, to_unit: Unit, action: String):
-	print("unit: "  + str(from_unit) + " interact to " + str(to_unit) + " action " + str(action) )
-	emit_signal("interact", from_unit, to_unit, action)	
+func animate_enter_matrix(__):
+	print('animate_enter_matrix')
+	GameState.game.append_unit(self)
+	self.position = matrix_to_map(Matrix.get_unit_coordinates(self))
+	self.modulate = Color(1, 1, 1, 0)
+	_interpolate(self, "modulate", Color(1, 1, 1, 1))
+
+func animate_exit(__):
+	_interpolate(self, "modulate", Color(1, 1, 1, 0), true)
 	
-func interact_to_cell(from_unit: Unit, to_cell: Unit, action: String):
-	print("unit: "  + str(from_unit) + " interact to " + str(to_cell) + " action " + str(action) )
-	emit_signal("interact_with_cell", from_unit, to_cell, action)
+func animate_take_lightning_damage(__):
+	self.add_child(EffectUtils.LightningDamage())

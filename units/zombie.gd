@@ -6,44 +6,38 @@ var hint = ("Unit: zombie \nRace: undead \nMove: 'madly', in any direction"+
 "to next three tiles, if no way - move to random way"+
 "\nProperties: if no way - charge himself, if charged - attacks the front tile") 
 
-var inraged = false
+var enraged = false
 
-func _ready():
-	self._race =  "undead"
-	self._tier =  1
-#	change_status(self ,"burning")
-	
-func get_race():
-	return "undead"
-	
-func get_tier():
-	return 1
+func _init().("undead", 1, "zombie"):
+	pass
 
 func _act():
-	print( "zooooooobie acting")
-	var coordinates = Matrix.get_unit_coordinates(self)
-	var neighbors = Matrix.get_neighbors(coordinates)
-	var exist_neighbors = neighbors.get_exist_neighbors()
-#	if neighbors.right_neighbor:
-#		if neighbors.right_neighbor.get_race() != self._race:
-##			interact_to_unit(self, neighbors.right_neighbor, "take_damage")
-##			interact_to_unit(self, neighbors.right_neighbor, "take_damage")
-#			if neighbors.right_neighbor.get_status() != "frozen":
-#				neighbors.right_neighbor.change_status(self, "frozen")
-#				emit_signal("interact", self, neighbors.left_neighbor, "change_status", "frozen")
-#				return
-	if inraged:
-		var traget = neighbors.bottom_neighbor
-		if traget:
-			interact_to_unit(self, traget, "take_damage")
-			inraged = false
-			return
-			
-	var mooved = wander_move()
-	if !mooved:
-		inraged = true
-#	_move_crazy(coordinates, neighbors)
-#	self.change_status(self, "frozen")
+	wander_move()
+	return
+#	print( "zooooooobie acting")
+#	var coordinates = Matrix.get_unit_coordinates(self)
+#	var neighbors = Matrix.get_neighbors(coordinates)
+#	var exist_neighbors = neighbors.get_exist_neighbors()
+##	if neighbors.right_neighbor:
+##		if neighbors.right_neighbor.get_race() != self._race:
+###			interact_to_unit(self, neighbors.right_neighbor, "take_damage")
+###			interact_to_unit(self, neighbors.right_neighbor, "take_damage")
+##			if neighbors.right_neighbor.get_status() != "frozen":
+##				neighbors.right_neighbor.change_status(self, "frozen")
+##				emit_signal("interact", self, neighbors.left_neighbor, "change_status", "frozen")
+##				return
+#	if inraged:
+#		var traget = neighbors.bottom_neighbor
+#		if traget:
+#			interact_to_unit(self, traget, "take_damage")
+#			inraged = false
+#			return
+#
+#	var mooved = wander_move()
+#	if !mooved:
+#		inraged = true
+##	_move_crazy(coordinates, neighbors)
+##	self.change_status(self, "frozen")
 
 
 #

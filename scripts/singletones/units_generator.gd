@@ -15,13 +15,16 @@ onready var Demon = preload("res://units/demon.tscn")
 var faction_to_units = {}
 func _ready():
 	faction_to_units = {
-		'undead': [Zombie, UndeadSkeleton, Vampire], 
+#		'undead': [Zombie, UndeadSkeleton, Vampire], 
 #		'undead': [Zombie, Zombie, Zombie], 
-		'orc': [Goblin, Ork, Ogre],
+#		'orc': [Goblin, Ork, Ogre],
 #		'orc': [Goblin, Goblin, Goblin],
+		'undead': [Zombie], 
+		'demon': [Imp]
 #		'demon': [Ifrite, Ifrite, Ifrite]
 #		'demon': [Demon, Demon, Demon]
 	}
+	
 
 
 func get_unit(column_index):
@@ -43,7 +46,7 @@ func get_unit(column_index):
 #		print('skip spawn')
 		return 
 	
-	var faction = Rand.rand_choice(faction_to_units.keys())
+	var faction = Rand.choice(faction_to_units.keys())
 	var faction_types = faction_to_units[faction]
 	var upgrade_chance = 0.5
 	var type_index = 0

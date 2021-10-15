@@ -47,8 +47,8 @@ signal cell_interacted(from, to_cell, action)
 
 signal animate2(unit, method, arg)
 
-var matrix_width: int = 4
-var matrix_height: int = 4
+var matrix_width: int = 5
+var matrix_height: int = 5
 var matrix = []
 
 func _generate_cells():

@@ -12,9 +12,9 @@ func cast(target_position: Vector2):
 	if target_unit == null:
 		return false
 	
-	target_unit.take_damage (Damage.damage(Damage.Fire, self))
+	target_unit.take_damage (Damage.damage(Damage.Types.Fire, self))
 	
-	var coords = Matrix.get_unit_coordinates(target_position)
+	var coords = target_position
 	for neighbour in [target_unit] + MatrixUtils.get_units_by_shifts(coords, MatrixUtils.all_neighbours):
 		neighbour.change_status(self, Burning.instance())
 	

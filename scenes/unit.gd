@@ -122,6 +122,8 @@ func take_damage(damage: Damage.Damage):
 #	print("unit: "  + str(self) + " took damage:" + str(damage))
 	if damage.type == Damage.Types.Lightning:
 		self_animate("take_lightning_damage", null, damage.delay)
+	if damage.type == Damage.Types.Fire:
+		self_animate("take_fire_damage", null, damage.delay)
 	if _status.on_take_damage(damage):
 		die(damage.delay)
 #		emit_signal("damage_taken", damage)
@@ -245,3 +247,6 @@ func animate_exit(__):
 	
 func animate_take_lightning_damage(__):
 	self.add_child(EffectUtils.LightningDamage())
+	
+func animate_take_fire_damage(__):
+	self.add_child(EffectUtils.FireDamage())

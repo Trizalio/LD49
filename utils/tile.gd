@@ -1,4 +1,5 @@
 extends TextureRect
+class_name Tile
 
 signal hover
 # Called when the node enters the scene tree for the first time.

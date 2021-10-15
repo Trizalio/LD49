@@ -3,10 +3,10 @@ extends Node
 signal active_spells_changed(spell_names)
 #onready var UnitClass = load("res://scenes/unit.gd")
 var turn_number: int = 0
-var god_mode: bool = true
+var god_mode: bool = false
 var castle_capacity = 20
 
-var base_time_step = 0.5
+var base_time_step = 0.4
 var duration_deviation_fraction = 0.2
 var game = null
 
@@ -105,7 +105,8 @@ func _next_turn():
 #	Matrix.print_matrix()
 	Matrix.call_on_all_units('act')
 	if not god_mode:
-		_add_units_on_top_row()
+#		_add_units_on_top_row()
+		pass
 	print('-----===== Player turn =====------')
 #	Matrix.print_matrix()
 	

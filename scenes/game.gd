@@ -3,27 +3,51 @@ extends MarginContainer
 onready var map: GridContainer = $parts/centered/map
 var units = null
 
-onready var Tile = preload("res://utils/tile.tscn")
+onready var TileScene = preload("res://utils/tile.tscn")
 
 
 # TODO: get from map
 onready var separation: Vector2 = Vector2(4, 4)
 var _animate_queue = []
-var base_time_step = 0.1
-var duration_deviation_fraction = 0.2
-var min_time_step = base_time_step * (1 - duration_deviation_fraction)
-var max_time_step = base_time_step * (1 + duration_deviation_fraction)
+#var base_time_step = 0.1
+#var duration_deviation_fraction = 0.2
+#var min_time_step = base_time_step * (1 - duration_deviation_fraction)
+#var max_time_step = base_time_step * (1 + duration_deviation_fraction)
 
 func _ready():
 	_prepare_battlefield()
 #	Matrix.connect("animate2", self, 'put_into_animate_queue')
 	GameState.connect("active_spells_changed", self, 'show_spells')
 	_fetch_queue()
-	if GameState.god_mode:
-		$parts/root_buttons.visible = true
-	GameState.start_new_game()
+	$parts/root_buttons.visible = GameState.god_mode
 	render_exited_amount()
 	GameState.game = self
+	GameState.start_new_game()
+#	set_hints_visibility(true)
+	
+func set_hints_visibility(is_visible: bool):
+	for hint in get_tree().get_nodes_in_group("hints"):
+		hint.visible = is_visible
+		if is_visible:
+			hint.rescale()
+	
+	if not is_visible:
+		return
+		
+	var spells_panel = $parts/spells
+	var max_x = 0
+	for child in spells_panel.get_children():
+		if child is Spell and child.visible:
+			max_x = max(max_x, child.get_rect().end.x)
+	$parts/spells/hint.allowed_width = spells_panel.rect_size.x - max_x
+	
+#	max_x = 0
+#	for child in map.get_children():
+#		if child is Tile and child.visible:
+#			print(child.get_rect().end.x)
+#			max_x = max(max_x, child.get_rect().end.x)
+#	print('max_x:', max_x)
+	$parts/centered/hint.allowed_width = $parts/centered.rect_size.x - map.get_rect().end.x
 
 func show_spells(spells: Array):
 	if GameState.god_mode:
@@ -32,15 +56,18 @@ func show_spells(spells: Array):
 	for child in $parts/spells.get_children():
 		child.visible = spells.find(child.get_name()) != -1
 	
-func _get_duration():
-	return Rand.float_in_range(min_time_step, max_time_step)
+	call_deferred('set_hints_visibility', GameState.turn_number == 1 and not GameState.god_mode)
+#	set_hints_visibility(false)
+#
+#func _get_duration():
+#	return Rand.float_in_range(min_time_step, max_time_step)
 	
 
 func _prepare_battlefield():
 	map.set_columns(Matrix.matrix_width)
 	for y in range(Matrix.matrix_height - 1, -1, -1):
 		for x in range(Matrix.matrix_width - 1, -1, -1):
-			var new_tile = Tile.instance()
+			var new_tile = TileScene.instance()
 			map.add_child(new_tile)
 			new_tile.set_name(str(x) + str(y))
 			new_tile.connect('hover', self, 'show_hint', [Vector2(x, y)])
@@ -68,7 +95,7 @@ func _fetch_queue():
 		task[0].call("animate_" + task[1], task[2])
 #		call(task[0], task[1], task[2], task[3])
 	if wait:
-		yield(get_tree().create_timer(duration_deviation_fraction), "timeout")
+		yield(get_tree().create_timer(GameState.base_time_step), "timeout")
 	call_deferred("_fetch_queue")
 #
 #func call_animate(target, method_name, arg):

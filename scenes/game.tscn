@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://spells/frost_shard.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resources/main_style.tres" type="Theme" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://spells/chain_lightning.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/unit_hint.tscn" type="PackedScene" id=11]
 [ext_resource path="res://resources/fonts/Galiver Sans.ttf" type="DynamicFontData" id=12]
+[ext_resource path="res://scenes/extender.tscn" type="PackedScene" id=13]
 
 [sub_resource type="DynamicFont" id=1]
 size = 8
@@ -86,6 +87,12 @@ texture = ExtResource( 7 )
 expand = true
 stretch_mode = 6
 
+[node name="hint" parent="parts/texture" groups=[
+"hints",
+] instance=ExtResource( 13 )]
+title = "Castle"
+description = "Units crave to get here at any cost"
+
 [node name="centered" type="CenterContainer" parent="parts"]
 margin_top = 321.0
 margin_right = 510.0
@@ -98,6 +105,12 @@ margin_top = 137.0
 margin_right = 255.0
 margin_bottom = 137.0
 columns = 3
+
+[node name="hint" parent="parts/centered" groups=[
+"hints",
+] instance=ExtResource( 13 )]
+title = "Plains"
+description = "Drag spells here to help or harm units"
 
 [node name="HSeparator" type="HSeparator" parent="parts"]
 margin_top = 600.0
@@ -140,6 +153,13 @@ margin_right = 389.0
 margin_left = 393.0
 margin_right = 457.0
 margin_bottom = 64.0
+
+[node name="hint" parent="parts/spells" groups=[
+"hints",
+] instance=ExtResource( 13 )]
+position = Vector2( 0, -1.12244 )
+title = "Spells"
+description = "Drag to plains"
 
 [node name="root_buttons" type="HBoxContainer" parent="parts"]
 margin_top = 676.0

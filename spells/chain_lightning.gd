@@ -3,6 +3,10 @@ extends Spell
 var chain_lighting_counter = 0
 var max_jumps = 5
 var _target_race = null
+var hint = (
+	'Spell: chain lightning \n' + 
+	'Deals lightning damage to target and up to 5 connected units of the same type'
+)
 
 func _ready():
 	pass # Replace with function body.

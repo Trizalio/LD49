@@ -17,11 +17,13 @@ var _animate_queue = []
 func _ready():
 	_prepare_battlefield()
 	GameState.connect("active_spells_changed", self, 'show_spells')
+	GameState.connect("unit_exited", self, 'render_exited_amount')
 	_fetch_queue()
 	$parts/root_buttons.visible = GameState.god_mode
 	render_exited_amount()
 	GameState.game = self
 	GameState.start_new_game()
+	prepare_spell_hints()
 #	set_hints_visibility(true)
 	call_deferred('set_hints_visibility', not GameState.god_mode)
 	
@@ -41,13 +43,12 @@ func set_hints_visibility(is_visible: bool):
 			max_x = max(max_x, child.get_rect().end.x)
 	$parts/spells/hint.allowed_width = spells_panel.rect_size.x - max_x
 	
-#	max_x = 0
-#	for child in map.get_children():
-#		if child is Tile and child.visible:
-#			print(child.get_rect().end.x)
-#			max_x = max(max_x, child.get_rect().end.x)
-#	print('max_x:', max_x)
 	$parts/centered/hint.allowed_width = $parts/centered.rect_size.x - map.get_rect().end.x
+
+func prepare_spell_hints():
+	for child in $parts/spells.get_children():
+		if child is Spell:
+			add_hint_to_control(child, 'show_spell_hint', [child])
 
 func show_spells(spells: Array):
 	if GameState.god_mode:
@@ -65,7 +66,7 @@ func show_spells(spells: Array):
 func set_tiles_modulate(positions: Array, color: Color):
 	for pos in positions:
 		var tile: Tile = map.get_node(str(pos.x) + str(pos.y))
-		tile.modulate = color
+		tile.self_modulate = color
 
 var very_bad_color = Color(0.7, 0.4, 0.4, 1)
 var bad_color = Color(0.8, 0.6, 0.6, 1)
@@ -92,17 +93,29 @@ func _prepare_battlefield():
 			var new_tile = TileScene.instance()
 			map.add_child(new_tile)
 			new_tile.set_name(str(x) + str(y))
-			new_tile.connect('hover', self, 'show_hint', [Vector2(x, y)])
+			add_hint_to_control(new_tile, 'show_unit_hint', [Vector2(x, y)])
 			new_tile.connect('mouse_exited', self, 'render_spell_targets')
 			
 	units = Node2D.new()
 	units.set_name('units')
 	map.add_child(units)
 	
-func show_hint(position: Vector2) -> void:
-	print('show_hint')
-	$hint.show_unit_hint(Matrix.get_cell(position).unit)
-#	$hint.visible = true
+func add_hint_to_control(target: Control, method_name: String, args):
+	var timer = Timer.new()
+	timer.wait_time = 0.3
+	timer.one_shot = true
+	target.add_child(timer)
+	target.connect("mouse_entered", timer, "start")
+	target.connect("mouse_exited", timer, "stop")
+	timer.connect("timeout", self, method_name, args)
+	
+func show_spell_hint(spell: Spell) -> void:
+	print('show_spell_hint')
+	$parts/texture/main_hint.show_spell_hint(spell)
+	
+func show_unit_hint(position: Vector2) -> void:
+	print('show_unit_hint')
+	$parts/texture/main_hint.show_unit_hint(Matrix.get_cell(position).unit)
 
 func put_into_animate_queue(arg_1, arg_2, arg_3, arg_4=true):
 	print("put_into_animate_queue(", arg_1, ", ", arg_2, ", ", arg_3, ", ", arg_4, ")")
@@ -120,22 +133,7 @@ func _fetch_queue():
 	if wait:
 		yield(get_tree().create_timer(GameState.base_time_step), "timeout")
 	call_deferred("_fetch_queue")
-#
-#func call_animate(target, method_name, arg):
-#	target.call("animate_" + method_name, arg)
-#
-#
-#func unit_status_changed(unit, action, inst, from):
-#	print("changing unit status: " + str(unit) + "action " + str(action) + "inst: " + str(inst))
-#	if unit:
-#		if from:
-#			if unit is Unit and from is Unit:
-#				if unit != from:
-#					if action != "stunned":
-#						_attack_unit_to_target(from, unit)
-#
-#		unit.call(action, inst)
-#
+
 func matrix_to_map(matrix_position: Vector2) -> Vector2:
 	var node_name = str(matrix_position.x) + str(matrix_position.y)
 	var tile: TextureRect = map.get_node(node_name)
@@ -145,93 +143,16 @@ func matrix_to_map(matrix_position: Vector2) -> Vector2:
 	
 func append_unit(unit: Unit):
 	units.add_child(unit)
-	
-#
-#func unit_entered(unit_matrix_position: Vector2):
-#	print('GUI.unit_appeared(position=' + str(unit_matrix_position) + ')')
-#	var unit: Node2D = Matrix.get_cell(unit_matrix_position).unit
-#	units.add_child(unit)
-#	var final_position: Vector2 = matrix_to_map(unit_matrix_position)
-#	var delta = matrix_to_map(unit_matrix_position + Vector2(0, 1)) - final_position
-#	var start_position: Vector2 = final_position - delta
-#	unit.set_position(start_position)
-#	unit.set_modulate(Color(1, 1, 1, 0))
-#	var duration = _get_duration()
-#	Animator.animate(unit, "position", final_position, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-#	Animator.animate(unit, "modulate", Color(1, 1, 1, 1), duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-##
-#func unit_moved(__, position_to: Vector2, unit: Unit, ___ ):
-#	print('GUI.unit_moved(unit=' + str(unit) + ')')
-##	var unit: Node2D = Matrix.get_cell(position_to).unit
-#	var final_position: Vector2 = matrix_to_map(position_to)
-##	var final_position = unit.get_position()
-#	var duration = _get_duration()
-#	Animator.animate(unit, "position", final_position, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-#
+
+var exited = 0
+
+func increase_exited_amount(unit):
+	exited += 1
+	render_exited_amount()
 
 func render_exited_amount():
-	var total_exited_units = 0
-	for current_race in GameState.unit_race_to_amount_exit.keys():
-		total_exited_units += GameState.unit_race_to_amount_exit[current_race]
 	$parts/score/capacity_value.text = str(GameState.castle_capacity)
-	$parts/score/exited_value.text = str(total_exited_units)
-#
-#func unit_exited(unit,  __  ,___ ,____):
-#	print('GUI.unit_exited(unit=' + str(unit) + ')')
-#	render_exited_amount()
-#	var final_position: Vector2 = unit.position + matrix_to_map(Vector2(1, 2)) - matrix_to_map(Vector2(1, 1))
-#	var duration = _get_duration()
-#	Animator.animate(unit, "position", final_position, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-#	Animator.animate(unit, "modulate", Color(1, 1, 1, 0), duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, true)
-#
-#func unit_replaced(old_unit, new_unit, __ ,____):
-#	print('GUI.unit_replaced(from_unit=' + str(old_unit) + ' to_unit=' + str(new_unit) + ')')
-#	var coordinates: Vector2  = Matrix.get_unit_coordinates(old_unit)
-#	var duration = _get_duration()
-#	if not new_unit:
-#		Animator.animate(old_unit, "modulate", Color(1, 1, 1, 0), duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, true)
-#
-#
-#func unit_interacted(from, to_unit, action ,____):
-#	print('GUI.unit_interact(from' + str(from) + ' to_unit= ' + str(to_unit) + ')')
-#	if from is Unit:
-#		if action == "take_damage":
-#			_attack_unit_to_target(from, to_unit)
-#
-#func cell_interacted(from, to_cell, action ,____):
-#	print('GUI.cell_interacte(from' + str(from) + ' to_cell= ' + str(to_cell) + ')')
-#	if from is Unit:
-#		if action == "take_damage":
-#			_attack_unit_to_target(from, to_cell)
-#
-#func damage_taken(unit,  __  ,___ ,____):
-#	print('GUI.unit took damage(' + str(unit) + ')')
-#
-#func _attack_unit_to_target(from_unit, to_target):
-#		print('GUI.unit_to_unit_attak(from' + str(from_unit) + ' to_target= ' + str(to_target) + ')')
-##		var from_coordinates: Vector2  = Matrix.get_unit_coordinates(from_unit)
-##		var matrix_from_coordinates: Vector2 = matrix_to_map(from_coordinates)
-#		var matrix_from_coordinates: Vector2  = from_unit.get_position()
-#		var matrix_to_coordinates: Vector2 = Vector2(-1, -1)
-#		if to_target is Unit:
-#			matrix_to_coordinates = to_target.get_position()
-#		else:
-##			TODO import cell to this file 
-#			matrix_to_coordinates = matrix_to_map(to_target.get_coordinates())
-#			pass
-##		else:
-##			print('Unexpected to_target'  + str(to_target))
-##			assert(false)
-#		var duration_first_step = _get_duration()
-#		var first_step = Animator.AnimationStep.new((matrix_to_coordinates * 2 + matrix_from_coordinates) / 3, duration_first_step)
-#
-#		var duration_last_step = _get_duration()
-#		var last_step = Animator.AnimationStep.new(matrix_from_coordinates, duration_last_step)
-#
-#		Animator.multi_animate(from_unit, "position", [first_step, last_step], Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-#		print( "unit_to_unit_attak finished")
-#
-# TODO: Remove later
+	$parts/score/exited_value.text = str(exited)
 
 var spawn_position = Vector2(0, 0)
 func _change_x(change: int):

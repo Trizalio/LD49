@@ -30,16 +30,16 @@ func can_drop_data(position, data):
 
 
 func _on_background_mouse_entered():
-	$timer.start()
+#	$timer.start()
 	pass # Replace with function body.
 
 
 func _on_background_mouse_exited():
-	$timer.stop()
+#	$timer.stop()
 	pass # Replace with function body.
 
 
 func _on_Timer_timeout():
 	print('show hint')
-	emit_signal('hover')
+#	emit_signal('hover')
 	pass # Replace with function body.

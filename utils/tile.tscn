@@ -4,7 +4,7 @@
 [ext_resource path="res://utils/tile.gd" type="Script" id=2]
 
 [node name="background" type="TextureRect"]
-modulate = Color( 1, 1, 1, 0.588235 )
+self_modulate = Color( 1, 1, 1, 0.588235 )
 margin_right = 64.0
 margin_bottom = 64.0
 rect_min_size = Vector2( 64, 64 )
@@ -17,7 +17,7 @@ __meta__ = {
 }
 
 [node name="timer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 0.2
 one_shot = true
 
 [connection signal="mouse_entered" from="." to="." method="_on_background_mouse_entered"]

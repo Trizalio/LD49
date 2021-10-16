@@ -38,4 +38,8 @@ rect_min_size = Vector2( 90, 0 )
 mouse_filter = 2
 custom_styles/normal = SubResource( 2 )
 bbcode_enabled = true
+bbcode_text = "[center][/center]
+[color=#a0ffffff][/color]"
+text = "
+"
 scroll_active = false

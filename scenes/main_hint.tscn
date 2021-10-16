@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://utils/tile.tscn" type="PackedScene" id=1]
+[ext_resource path="res://resources/characters/zombie.png" type="Texture" id=3]
+[ext_resource path="res://scenes/main_hint.gd" type="Script" id=5]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 50, 50 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ SubResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="main_hint" type="Node2D"]
+visible = false
+script = ExtResource( 5 )
+
+[node name="field" type="MarginContainer" parent="."]
+margin_right = 510.0
+margin_bottom = 275.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="panel" type="Panel" parent="field"]
+margin_right = 510.0
+margin_bottom = 275.0
+
+[node name="hbox" type="HBoxContainer" parent="field"]
+margin_right = 510.0
+margin_bottom = 275.0
+custom_constants/separation = 10
+
+[node name="cener" type="CenterContainer" parent="field/hbox"]
+margin_right = 64.0
+margin_bottom = 275.0
+
+[node name="background" parent="field/hbox/cener" instance=ExtResource( 1 )]
+margin_top = 105.0
+margin_bottom = 169.0
+
+[node name="sprite" type="AnimatedSprite" parent="field/hbox/cener/background"]
+position = Vector2( 8, 8 )
+frames = SubResource( 2 )
+centered = false
+
+[node name="label" type="RichTextLabel" parent="field/hbox"]
+margin_left = 74.0
+margin_right = 510.0
+margin_bottom = 275.0
+size_flags_horizontal = 3

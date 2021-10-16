@@ -48,7 +48,7 @@ func on_changed(new_status) -> bool:
 	return true
 
 func vanish():
-	_owner.change_status(self, StatusUtils.Normal())
+	_owner.change_status(self, null)
 
 ###############################
 # -> Animate

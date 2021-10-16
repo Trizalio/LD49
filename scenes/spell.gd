@@ -26,6 +26,11 @@ func get_drag_data(position):
 func cast(target_position: Vector2):
 	print('cast: ', target_position)
 	pass
+
+func _cast(target_position: Vector2):
+	var result = cast(target_position)
+	GameState.game.render_spell_targets(SpellTargets.new())
+	return result
 	
 func animate_wait(__):
 	pass

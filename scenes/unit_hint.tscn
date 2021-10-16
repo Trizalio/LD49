@@ -6,7 +6,7 @@
 [ext_resource path="res://scenes/unit_hint.gd" type="Script" id=4]
 [ext_resource path="res://resources/fonts/Galiver Sans.ttf" type="DynamicFontData" id=5]
 
-[sub_resource type="StyleBoxFlat" id=6]
+[sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.2, 0.231373, 0.305882, 1 )
 
 [sub_resource type="AtlasTexture" id=2]
@@ -46,7 +46,7 @@ margin_left = 70.0
 margin_top = 120.0
 margin_right = 470.0
 margin_bottom = 640.0
-custom_styles/panel = SubResource( 6 )
+custom_styles/panel = SubResource( 1 )
 
 [node name="parts" type="VBoxContainer" parent="."]
 margin_left = 70.0

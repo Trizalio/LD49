@@ -33,6 +33,7 @@ func move(target_position):
 
 func exit():
 	Matrix.get_cell(Matrix.get_unit_coordinates(self)).unit = null
+	GameState.unit_exited(self)
 
 func power_move(best_shifts: Array, other_shifts: Array) -> bool:
 	var pos = Matrix.get_unit_coordinates(self)
@@ -89,8 +90,7 @@ func _init(race, tier, type_name):
 	self._tier = tier
 	self._type_name =  type_name
 	self._acted_at_turn = GameState.turn_number
-	self._status = StatusUtils.Normal()
-	self._status.name = STATUS_NAME
+	self._status = null
 
 func get_race():
 	return _race
@@ -109,9 +109,9 @@ func act():
 	if _acted_at_turn < GameState.turn_number:
 		_acted_at_turn = GameState.turn_number
 		
-		if _status.on_turn_start():
+		if _status == null or _status.on_turn_start():
 			_act()
-		if _status.on_turn_end():
+		if _status != null and _status.on_turn_end():
 			_act()
 
 func _act():
@@ -123,21 +123,22 @@ func take_damage(damage: Damage.Damage):
 		self_animate("take_lightning_damage", null, damage.delay)
 	if damage.type == Damage.Types.Fire:
 		self_animate("take_fire_damage", null, damage.delay)
-	if _status.on_take_damage(damage):
+	if _status == null or _status.on_take_damage(damage):
 		die(damage.delay)
 #		emit_signal("damage_taken", damage)
 #		emit_signal("replace_unit", self, null)
 
 
-func change_status(reason, status: Status, delay: bool = true) -> bool:
+func change_status(reason, new_status: Status, delay: bool = true) -> bool:
 	if _dead:
 		return false
 		
-	if _status._on_changed(status):
+	if _status == null or _status._on_changed(new_status):
 #		print("unit: "  + str(self) + " changed status from " + str(_status) + " to " + str(status) )
-		emit_animate(self, "change_status", status, delay)
-		_status = status
-		_status.apply(self)
+		emit_animate(self, "change_status", new_status, delay)
+		_status = new_status
+		if _status != null:
+			_status.apply(self)
 		return true
 	return false
 #
@@ -231,10 +232,7 @@ func animate_move(target_cell_or_position):
 		assert(false, "animate_move got: " + str(target_cell_or_position))
 	_interpolate(self, "position", matrix_to_map(target_cell.get_coordinates()))
 	
-var STATUS_NAME = "status"
 func animate_change_status(new_status: Status):
-#	remove_child(get_node(STATUS_NAME))
-#	new_status.name = STATUS_NAME
 	add_child(new_status)
 	
 func animate_enter_matrix(__):
@@ -245,6 +243,7 @@ func animate_enter_matrix(__):
 	_interpolate(self, "modulate", Color(1, 1, 1, 1))
 
 func animate_exit(__):
+	GameState.game.increase_exited_amount(self)
 	_interpolate(self, "modulate", Color(1, 1, 1, 0), true)
 	
 func animate_take_lightning_damage(__):

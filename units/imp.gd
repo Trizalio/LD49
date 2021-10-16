@@ -5,7 +5,7 @@ var hint = (
 	'Blocked: swaps with a non-demon on one of the front tiles'
 )
 
-func _init().("demon", 1, "imp"):
+func _init().("demon", 1, "imp", hint):
 	pass
 
 func _act():

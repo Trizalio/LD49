@@ -31,7 +31,7 @@ func on_changed(new_status: Status) -> bool:
 	if new_status != null and new_status._name == self._name:
 		var target_position = Matrix.get_unit_coordinates(_owner)
 		_owner.die()
-		Matrix.enter_matrix(target_position, UnitsGenerator.FrostShardUnit.instance())
+		Matrix.enter_matrix(target_position, UnitsGenerator.FrostShardUnit.instance(), true, true)
 	return true
 
 func animate_melt(life: int):

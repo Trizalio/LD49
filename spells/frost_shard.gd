@@ -12,7 +12,7 @@ func cast(target_position: Vector2):
 	var cell = Matrix.get_cell(target_position)
 	if cell.unit != null:
 		cell.unit.die()
-	Matrix.enter_matrix(target_position, FrostShardUnit.instance())
+	Matrix.enter_matrix(target_position, FrostShardUnit.instance(), true, true)
 	return true
 
 func render_targets(target_position: Vector2):

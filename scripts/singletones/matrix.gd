@@ -65,8 +65,10 @@ func _generate_cells():
 #	return true
 	
 func call_on_all_units(method: String):
-	for y in range(matrix_height - 1, -1, -1):
-		for x in range(matrix_width - 1, -1, -1):
+#	for y in range(matrix_height - 1, -1, -1):
+#		for x in range(matrix_width - 1, -1, -1):
+	for y in range(matrix_height):
+		for x in range(matrix_width):
 			var cell: Cell = get_cell(Vector2(x, y))
 			if cell.unit:
 				cell.unit.call(method)
@@ -95,12 +97,16 @@ func is_next_to_town(position: Vector2):
 #	cell_to.unit = unit
 #	emit_signal("unit_moved", position_from, position_to, unit)
 
-func enter_matrix(position: Vector2, unit, delay: bool = true) -> void:
+func enter_matrix(position: Vector2, unit, delay: bool = true, force: bool = false) -> void:
 #	assert(position.y == 0)
 	assert(unit != null)
 	var cell = get_cell(position)
 #	print('Matrix.enter_matrix(cell=' + str(cell) + ', unit=' + str(unit) + ')')
-	assert(cell.unit == null)
+	if force and cell.unit != null:
+		cell.unit.die()
+		
+	if cell.unit != null:
+		return
 	cell.unit = unit
 	unit.on_enter_matrix(delay)
 #	emit_signal("animate2", unit, 'enter_matrix', null)

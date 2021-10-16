@@ -12,6 +12,6 @@ func check(chance: float) -> bool:
 	return chance >= float_in_range(0, 1)
 
 func choice(options):
-	if options == null:
+	if options == null or len(options) == 0:
 		return null
 	return options[rand.randi() % options.size()]

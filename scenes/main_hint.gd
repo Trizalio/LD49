@@ -1,6 +1,7 @@
 extends Node2D
 
 func _ready():
+	get_tree().root.connect("size_changed", self, "rescale")
 	rescale()
 
 func rescale():
@@ -8,7 +9,6 @@ func rescale():
 	var rect: Rect2 = parent.get_rect()
 	var field: Control = $field
 	field.rect_size = rect.size
-	get_tree().root.connect("size_changed", self, "rescale")
 #	call_deferred("rescale")
 
 func show_spell_hint(spell):

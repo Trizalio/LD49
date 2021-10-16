@@ -74,7 +74,7 @@ func nimble_move() -> bool:
 	print('nimble_move')
 	return power_move(nimble_best_shifts, nimble_other_shifts)
 	
-var straight_best_shifts = [MatrixUtils.front_1]
+var straight_best_shifts = MatrixUtils.front_1
 var straight_other_shifts = []
 func straight_move() -> bool:
 	return power_move(straight_best_shifts, straight_other_shifts)
@@ -184,17 +184,23 @@ func apply_status(target_unit, status):
 #	target_unit.change_state(new_state)
 #	emit_animate(target_unit, "change_state")
 
+func die_extension(self_position: Vector2, delay: bool = true):
+	pass
+
 func die(delay: bool = true):
 	if _dead:
 		return
 	_dead = true
-	Matrix.get_cell(Matrix.get_unit_coordinates(self)).unit = null
+	var self_position = Matrix.get_unit_coordinates(self)
+	var cell = Matrix.get_cell(self_position)
+	cell.unit = null
 	emit_animate(self, "death", null, delay)
+	die_extension(self_position, delay)
 
 ###########################################################################
 
 func on_enter_matrix(delay: bool = true):
-	emit_animate(self, "enter_matrix", null, delay)
+	emit_animate(self, "enter_matrix", Matrix.get_unit_coordinates(self), delay)
 
 ###########################################################################
 # --> animations
@@ -240,10 +246,10 @@ func animate_move(target_cell_or_position):
 func animate_change_status(new_status: Status):
 	add_child(new_status)
 	
-func animate_enter_matrix(__):
+func animate_enter_matrix(matrix_position):
 #	print('animate_enter_matrix')
 	GameState.game.append_unit(self)
-	self.position = matrix_to_map(Matrix.get_unit_coordinates(self))
+	self.position = matrix_to_map(matrix_position)
 	self.modulate = Color(1, 1, 1, 0)
 	_interpolate(self, "modulate", Color(1, 1, 1, 1))
 

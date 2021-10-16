@@ -5,7 +5,7 @@ var max_jumps = 5
 var _target_race = null
 var hint = (
 	'Spell: chain lightning \n' + 
-	'Deals lightning damage to target and up to 5 connected units of the same type'
+	'Deals lightning damage to target and up to 4 more connected units of the same type'
 )
 
 func _ready():

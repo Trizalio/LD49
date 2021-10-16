@@ -1,7 +1,10 @@
 extends Spell
 
 var Burning = preload("res://statuses/burning.tscn")
-var hint = ('Spell: fireball \nProperties: kills unit on the tile')
+var hint = (
+	'Spell: Fireball \n' + 
+	'Deals fire damage to target, ignites it and all neighbours'
+)
 
 func _ready():
 	pass # Replace with function body.

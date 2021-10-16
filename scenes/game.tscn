@@ -95,6 +95,7 @@ title = "Castle"
 description = "Units crave to get here at any cost"
 
 [node name="main_hint" parent="parts/texture" instance=ExtResource( 14 )]
+visible = false
 
 [node name="centered" type="CenterContainer" parent="parts"]
 margin_top = 321.0

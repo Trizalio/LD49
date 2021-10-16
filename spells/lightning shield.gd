@@ -1,9 +1,11 @@
 extends Spell
 
 var hint = (
-	'Spell: lightning shield \nProperties: protect unit from attack, '+
-	'kills the attacking unit'
+	'Spell: Lightning shield \n' + 
+	'Provides target unit with lightning shield'
 )
+
+
 var LightningShield = preload("res://statuses/lightning shield.tscn")
 
 func _ready():

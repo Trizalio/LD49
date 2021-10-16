@@ -26,6 +26,7 @@ func _ready():
 	prepare_spell_hints()
 #	set_hints_visibility(true)
 	call_deferred('set_hints_visibility', not GameState.god_mode)
+	$parts/texture/main_hint.call_deferred("rescale")
 	
 func set_hints_visibility(is_visible: bool):
 	for hint in get_tree().get_nodes_in_group("hints"):

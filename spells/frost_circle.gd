@@ -1,8 +1,10 @@
 extends Spell
 
 var Frozen = preload("res://statuses/frozen.tscn")
-var hint = ('Spell: frost circle \nProperties: kills units in a circle from the selected tile')
-
+var hint = (
+	'Spell: Frost circle \n' + 
+	'Freezes all neighbours of target tile'
+)
 func _ready():
 	pass # Replace with function body.
 

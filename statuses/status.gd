@@ -10,6 +10,9 @@ func _init(name: String, hint: String = "<hint>"):
 	_name = name
 	_hint = hint
 	
+func get_hint() -> String:
+	return _hint
+	
 func _ready():
 	call_deferred('animate_applied', null)
 

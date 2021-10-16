@@ -2,13 +2,11 @@ extends Unit
 
 #var _race = "undead"
 
-var hint = ("Unit: zombie \nRace: undead \nMove: 'madly', in any direction"+
-"to next three tiles, if no way - move to random way"+
-"\nProperties: if no way - charge himself, if charged - attacks the front tile") 
+var hint = ("On blocked: wanders around") 
 
 var enraged = false
 
-func _init().("undead", 1, "zombie"):
+func _init().("undead", 1, "zombie", hint):
 	pass
 
 func _act():

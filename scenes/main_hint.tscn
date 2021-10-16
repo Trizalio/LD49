@@ -17,7 +17,6 @@ animations = [ {
 } ]
 
 [node name="main_hint" type="Node2D"]
-visible = false
 script = ExtResource( 5 )
 
 [node name="field" type="MarginContainer" parent="."]
@@ -31,26 +30,57 @@ __meta__ = {
 margin_right = 510.0
 margin_bottom = 275.0
 
-[node name="hbox" type="HBoxContainer" parent="field"]
+[node name="vbox" type="VBoxContainer" parent="field"]
 margin_right = 510.0
 margin_bottom = 275.0
+
+[node name="unit_or_spell" type="HBoxContainer" parent="field/vbox"]
+margin_right = 510.0
+margin_bottom = 135.0
+size_flags_vertical = 3
 custom_constants/separation = 10
 
-[node name="cener" type="CenterContainer" parent="field/hbox"]
+[node name="cener" type="CenterContainer" parent="field/vbox/unit_or_spell"]
 margin_right = 64.0
-margin_bottom = 275.0
+margin_bottom = 135.0
 
-[node name="background" parent="field/hbox/cener" instance=ExtResource( 1 )]
-margin_top = 105.0
-margin_bottom = 169.0
+[node name="background" parent="field/vbox/unit_or_spell/cener" instance=ExtResource( 1 )]
+margin_top = 35.0
+margin_bottom = 99.0
 
-[node name="sprite" type="AnimatedSprite" parent="field/hbox/cener/background"]
+[node name="sprite" type="AnimatedSprite" parent="field/vbox/unit_or_spell/cener/background"]
 position = Vector2( 8, 8 )
 frames = SubResource( 2 )
 centered = false
 
-[node name="label" type="RichTextLabel" parent="field/hbox"]
+[node name="label" type="RichTextLabel" parent="field/vbox/unit_or_spell"]
 margin_left = 74.0
 margin_right = 510.0
+margin_bottom = 135.0
+size_flags_horizontal = 3
+
+[node name="status" type="HBoxContainer" parent="field/vbox"]
+margin_top = 139.0
+margin_right = 510.0
 margin_bottom = 275.0
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="cener" type="CenterContainer" parent="field/vbox/status"]
+margin_right = 64.0
+margin_bottom = 136.0
+
+[node name="background" parent="field/vbox/status/cener" instance=ExtResource( 1 )]
+margin_top = 36.0
+margin_bottom = 100.0
+
+[node name="sprite" type="AnimatedSprite" parent="field/vbox/status/cener/background"]
+position = Vector2( 8, 8 )
+frames = SubResource( 2 )
+centered = false
+
+[node name="label" type="RichTextLabel" parent="field/vbox/status"]
+margin_left = 74.0
+margin_right = 510.0
+margin_bottom = 136.0
 size_flags_horizontal = 3

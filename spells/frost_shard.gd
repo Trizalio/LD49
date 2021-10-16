@@ -1,6 +1,9 @@
 extends Spell
 
-var hint = ('Spell: frost shard \nProperties: closes the way through the tile')
+var hint = (
+	'Spell: Frost shard \n' + 
+	'Creates frost shard, blocking path; kills unit, if present'
+)
 
 onready var FrostShardUnit = preload("res://units/frost_shard_unit.tscn")
 

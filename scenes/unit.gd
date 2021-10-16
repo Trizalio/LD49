@@ -6,6 +6,7 @@ var Frozen = preload("res://statuses/frozen.tscn")
 var _status = null
 var _race = null
 var _tier = null
+var _hint = null
 var _type_name: String = 'Unit'
 var _current_status_name = "current_status"
 
@@ -84,13 +85,14 @@ func straight_move() -> bool:
 func _to_string():
 	return _type_name + '(id=' + str(get_instance_id()) + ')' 
 
-func _init(race, tier, type_name):
+func _init(race, tier, type_name, new_hint: String = ""):
 	self._created_on_turn = GameState.turn_number
 	self._race = race
 	self._tier = tier
 	self._type_name =  type_name
 	self._acted_at_turn = GameState.turn_number
 	self._status = null
+	self._hint = race + ": " + type_name + "\n" + new_hint
 
 func get_race():
 	return _race
@@ -103,6 +105,9 @@ func get_tier():
 		
 func get_status():
 	return _status
+		
+func get_hint():
+	return _hint
 	
 func act():
 	print('act, _acted_at_turn: ', _acted_at_turn, ", GameState.turn_number:", GameState.turn_number)

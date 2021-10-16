@@ -1,7 +1,10 @@
 extends Spell
 
 var Burning = preload("res://statuses/burning.tscn")
-var hint = ('Spell: fireball \nProperties: kills units in column')
+var hint = (
+	'Spell: Firejet \n' + 
+	'Applies burning to first unit in a column 5 times'
+)
 var charges: int = 5
 
 func _ready():

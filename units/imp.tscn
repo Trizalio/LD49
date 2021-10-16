@@ -1,12 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://units/imp.gd" type="Script" id=1]
 [ext_resource path="res://resources/characters/small_demon.png" type="Texture" id=2]
 [ext_resource path="res://resources/sounds/units/spawn/imp_spawn.mp3" type="AudioStream" id=3]
 [ext_resource path="res://resources/sounds/units/victory/imp_vic.mp3" type="AudioStream" id=4]
 [ext_resource path="res://resources/sounds/units/death/imp_die.mp3" type="AudioStream" id=5]
-[ext_resource path="res://statuses/normal.tscn" type="PackedScene" id=6]
-[ext_resource path="res://resources/characters/pixel_glow.tres" type="Material" id=7]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
@@ -28,8 +26,8 @@ animations = [ {
 script = ExtResource( 1 )
 
 [node name="sprite" type="AnimatedSprite" parent="."]
-material = ExtResource( 7 )
 frames = SubResource( 3 )
+frame = 1
 playing = true
 
 [node name="spawn" type="AudioStreamPlayer" parent="."]
@@ -40,5 +38,3 @@ stream = ExtResource( 4 )
 
 [node name="death" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
-
-[node name="status" parent="." instance=ExtResource( 6 )]

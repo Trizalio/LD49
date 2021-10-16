@@ -25,7 +25,7 @@ func on_take_damage(damage: Damage.Damage) -> bool:
 				neighbour.take_damage(my_damage)
 		return true
 		
-	if damage.attacker != null:
+	if damage.attacker != null and damage.attacker is Unit:
 		damage.attacker.take_damage(my_damage)
 	return false
 

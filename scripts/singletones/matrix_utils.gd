@@ -36,17 +36,23 @@ func filter_existent_positions(positions: Array) -> Array:
 		results.append(pos)
 	return results
 
-func filter_empty_positions(positions: Array) -> Array:
+func filter_empty_positions(positions: Array, expect_empty: bool = true) -> Array:
 	var results: Array = []
 	for pos in positions:
-		if Matrix.get_cell(pos).unit != null:
-			continue
-		results.append(pos)
+		var is_empty = Matrix.get_cell(pos).unit == null
+		if expect_empty and is_empty or not expect_empty and not is_empty:
+			results.append(pos)
 	return results
 
 func filter_empty_existent_positions(positions: Array) -> Array:
 	return filter_empty_positions(filter_existent_positions(positions))
 
+func get_positions_by_shifts(position, shifts: Array) -> Array:
+	return filter_existent_positions(shift_by(position, shifts))
+	
+func get_positions_by_shifts_with_units(position, shifts: Array, expect_empty: bool = false) -> Array:
+	return filter_empty_positions(get_positions_by_shifts(position, shifts), expect_empty)
+	
 func get_units_by_positions(positions: Array) -> Array:
 	var results: Array = []
 	for pos in filter_existent_positions(positions):

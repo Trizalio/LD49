@@ -18,3 +18,8 @@ func cast(target_position: Vector2):
 
 	var done = target_unit.change_status(self, LightningShield.instance())
 	return done
+
+func render_targets(target_position: Vector2):
+	var targets = SpellTargets.new()
+	targets.good_positions = [target_position]
+	GameState.game.render_spell_targets(targets)

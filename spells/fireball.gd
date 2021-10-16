@@ -9,14 +9,22 @@ func _ready():
 func cast(target_position: Vector2):
 	print('cast fireball: ', target_position)
 	var target_unit = Matrix.get_unit(target_position)
-	if target_unit == null:
-		return false
+	var unit_to_burn = MatrixUtils.get_units_by_shifts(target_position, MatrixUtils.all_neighbours)
+	if target_unit != null:
+		target_unit.take_damage (Damage.damage(Damage.Types.Fire, self))
+		target_unit.change_status(self, Burning.instance(), true)
+		unit_to_burn = [target_unit] + unit_to_burn
 	
-	target_unit.take_damage (Damage.damage(Damage.Types.Fire, self))
+	for neighbour in unit_to_burn:
+		neighbour.change_status(self, Burning.instance(), false)
 	
-	var coords = target_position
-	for neighbour in [target_unit] + MatrixUtils.get_units_by_shifts(coords, MatrixUtils.all_neighbours):
-		neighbour.change_status(self, Burning.instance())
-	
+	GameState.game.put_into_animate_queue(self, 'wait', null)
 #	$FireballSpell.play()
 	return true
+
+
+func render_targets(coords: Vector2):
+	var targets = SpellTargets.new()
+	targets.very_bad_positions = [coords]
+	targets.bad_positions = MatrixUtils.get_positions_by_shifts(coords, MatrixUtils.all_neighbours)
+	GameState.game.render_spell_targets(targets)

@@ -95,14 +95,14 @@ func is_next_to_town(position: Vector2):
 #	cell_to.unit = unit
 #	emit_signal("unit_moved", position_from, position_to, unit)
 
-func enter_matrix(position: Vector2, unit) -> void:
+func enter_matrix(position: Vector2, unit, delay: bool = true) -> void:
 #	assert(position.y == 0)
 	assert(unit != null)
 	var cell = get_cell(position)
-	print('Matrix.enter_matrix(cell=' + str(cell) + ', unit=' + str(unit) + ')')
+#	print('Matrix.enter_matrix(cell=' + str(cell) + ', unit=' + str(unit) + ')')
 	assert(cell.unit == null)
 	cell.unit = unit
-	unit.on_enter_matrix()
+	unit.on_enter_matrix(delay)
 #	emit_signal("animate2", unit, 'enter_matrix', null)
 #	unit.connect("animate", self, 'reemit_animate')
 #	unit.connect("interact", self, 'interact_with_unit')

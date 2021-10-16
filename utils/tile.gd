@@ -6,13 +6,18 @@ signal hover
 func _ready():
 	pass # Replace with function body.
 
+func get_my_posiiton() -> Vector2:
+	var name = get_name()
+	var position = Vector2(int(name[0]), int(name[1]))
+	return position
+
 func drop_data(__, spell):	
 	print('drop_data(spell=', spell)
-	var name = get_name()
-	var destination = Vector2(int(name[0]), int(name[1]))
-	GameState.cast_spell(spell, destination)
+	GameState.cast_spell(spell, get_my_posiiton())
 
 func can_drop_data(position, data):
+	if data is Spell:
+		data.render_targets(get_my_posiiton())
 	return data is Spell
 #	return true
 #	# Check position if it is relevant to you

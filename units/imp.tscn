@@ -31,7 +31,6 @@ script = ExtResource( 1 )
 material = ExtResource( 7 )
 frames = SubResource( 3 )
 animation = "imp"
-frame = 1
 playing = true
 
 [node name="spawn" type="AudioStreamPlayer" parent="."]

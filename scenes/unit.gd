@@ -21,7 +21,6 @@ signal replace_unit(old_unit, new_unit)
 signal damage_taken(unit)
 signal interact_with_cell(from, to_cell, action)
 
-#signal change_status(unit, new_status)
 signal animate(target, method_name, arg)
 
 ##############################################
@@ -130,10 +129,13 @@ func take_damage(damage: Damage.Damage):
 #		emit_signal("replace_unit", self, null)
 
 
-func change_status(reason, status: Status) -> bool:
-	if _status.on_changed(status):
+func change_status(reason, status: Status, delay: bool = true) -> bool:
+	if _dead:
+		return false
+		
+	if _status._on_changed(status):
 #		print("unit: "  + str(self) + " changed status from " + str(_status) + " to " + str(status) )
-		emit_animate(self, "change_status", status)
+		emit_animate(self, "change_status", status, delay)
 		_status = status
 		_status.apply(self)
 		return true
@@ -185,8 +187,8 @@ func die(delay: bool = true):
 
 ###########################################################################
 
-func on_enter_matrix():
-	emit_animate(self, "enter_matrix")
+func on_enter_matrix(delay: bool = true):
+	emit_animate(self, "enter_matrix", null, delay)
 
 ###########################################################################
 # --> animations
@@ -231,12 +233,12 @@ func animate_move(target_cell_or_position):
 	
 var STATUS_NAME = "status"
 func animate_change_status(new_status: Status):
-	remove_child(get_node(STATUS_NAME))
-	new_status.name = STATUS_NAME
+#	remove_child(get_node(STATUS_NAME))
+#	new_status.name = STATUS_NAME
 	add_child(new_status)
 	
 func animate_enter_matrix(__):
-	print('animate_enter_matrix')
+#	print('animate_enter_matrix')
 	GameState.game.append_unit(self)
 	self.position = matrix_to_map(Matrix.get_unit_coordinates(self))
 	self.modulate = Color(1, 1, 1, 0)

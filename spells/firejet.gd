@@ -20,5 +20,11 @@ func cast(target_position: Vector2):
 		var unit = find_first_unit_in_column(target_position.x)
 		if unit == null:
 			break
+		print(i, " - ", unit)
 		unit.change_status(self,  Burning.instance())	
-	
+
+func render_targets(coords: Vector2):
+	var targets = SpellTargets.new()
+	for y in range(Matrix.matrix_height):
+		targets.very_bad_positions.append(Vector2(coords.x, y))
+	GameState.game.render_spell_targets(targets)

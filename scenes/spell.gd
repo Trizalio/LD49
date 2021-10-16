@@ -27,3 +27,22 @@ func cast(target_position: Vector2):
 	print('cast: ', target_position)
 	pass
 	
+func animate_wait(__):
+	pass
+
+
+class SpellTargets:
+	var very_bad_positions: Array = []
+	var bad_positions: Array = []
+	var good_positions: Array = []
+	var very_good_positions: Array = []
+	
+	func _init():
+		pass
+	
+
+func render_targets(target_position: Vector2):
+	pass
+#	var targets = GameState.game.SpellTargets.new()
+#	targets.good_positions = [target_position]
+#	GameState.game.render_spell_targets(targets)

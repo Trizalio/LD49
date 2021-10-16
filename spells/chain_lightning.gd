@@ -6,6 +6,8 @@ var _target_race = null
 
 func _ready():
 	pass # Replace with function body.
+	
+
 
 func cast(coords: Vector2):
 	print('cast chain lighting: ', coords)
@@ -23,25 +25,40 @@ func cast(coords: Vector2):
 	for i in range(max_jumps):
 		print('chain step: ', i, ", coords: ", coords)
 		Matrix.get_unit(coords).take_damage(my_damage)
-		var positions = MatrixUtils.shift_by(coords, MatrixUtils.all_neighbours)
-		positions = MatrixUtils.filter_existent_positions(positions)
+		affected_positions.append(coords)
+		var positions = MatrixUtils.get_positions_by_shifts_with_units(coords, MatrixUtils.all_neighbours)
 		var possible_target_positions = []
 		for pos in positions:
-			print('pos: ', pos)
-			if pos in affected_positions:
-				print('skip affected:', pos)
-				continue
-			var posiible_unit = Matrix.get_unit(pos)
-			print('posiible_unit:', posiible_unit)
-			if posiible_unit != null:
-				print('posiible_unit:', posiible_unit)
-				if posiible_unit.get_type_name() == target_type:
-					possible_target_positions.append(pos)
+			if not (pos in affected_positions) and Matrix.get_unit(pos).get_type_name() == target_type:
+				possible_target_positions.append(pos)
 				
-		print('possible_target_positions:', possible_target_positions)
 		if not possible_target_positions:
-			return
+			break
 			
 		coords = Rand.choice(possible_target_positions)
 		
 	return true
+
+func render_targets(coords: Vector2):
+	var targets = SpellTargets.new()
+#	targets.very_bad_positions = [target_position]
+
+	var unit = Matrix.get_unit(coords)
+	if unit == null:
+		return false
+	var target_type = unit.get_type_name()
+	var affected_positions = []
+	for i in range(max_jumps):
+		affected_positions.append(coords)
+		var positions = MatrixUtils.get_positions_by_shifts_with_units(coords, MatrixUtils.all_neighbours)
+		var possible_target_positions = []
+		for pos in positions:
+			if not (pos in affected_positions) and Matrix.get_unit(pos).get_type_name() == target_type:
+				possible_target_positions.append(pos)
+				
+		if not possible_target_positions:
+			break
+			
+		coords = Rand.choice(possible_target_positions)
+	targets.very_bad_positions = affected_positions
+	GameState.game.render_spell_targets(targets)

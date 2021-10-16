@@ -20,7 +20,7 @@ func on_turn_end() -> bool:
 	return false
 	
 func on_changed(new_status: Status) -> bool:
-	if new_status._name == StatusUtils.Frozen().name:
+	if new_status._name == StatusUtils.Frozen()._name:
 		vanish()
 		return false
 	if new_status._name == self._name:

@@ -55,5 +55,10 @@ animations = [ {
 position = Vector2( 1, 0 )
 script = ExtResource( 2 )
 
+[node name="bg_sprite" type="AnimatedSprite" parent="."]
+visible = false
+frames = SubResource( 11 )
+frame = 5
+
 [node name="sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 11 )

@@ -11,3 +11,8 @@ func cast(target_position: Vector2):
 		cell.unit.die()
 	Matrix.enter_matrix(target_position, FrostShardUnit.instance())
 	return true
+
+func render_targets(target_position: Vector2):
+	var targets = SpellTargets.new()
+	targets.very_bad_positions = [target_position]
+	GameState.game.render_spell_targets(targets)

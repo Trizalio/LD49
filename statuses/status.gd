@@ -9,9 +9,12 @@ var _name = "<name>"
 func _init(name: String, hint: String = "<hint>"):
 	_name = name
 	_hint = hint
+	
+func _ready():
+	call_deferred('animate_applied', null)
 
-func emit_animate(target, method_name, arg=null):
-	GameState.game.put_into_animate_queue(target, method_name, arg)
+func emit_animate(target, method_name, arg=null, delay: bool = true):
+	GameState.game.put_into_animate_queue(target, method_name, arg, delay)
 
 func apply(unit):
 	_owner = unit
@@ -19,7 +22,7 @@ func apply(unit):
 	on_applied()
 
 func on_applied():
-	emit_animate(self, "applied")
+#	emit_animate(self, "applied")
 	pass
 
 # false means to end turn, true - to coninue
@@ -34,6 +37,12 @@ func on_turn_end() -> bool:
 func on_take_damage(damage: Damage.Damage) -> bool:
 	return true
 
+func _on_changed(new_status) -> bool:
+	var remove = on_changed(new_status)
+	if remove:
+		emit_animate(self, 'on_changed', null, false)
+	return remove
+		
 # false means to not apply new status, true - apply
 func on_changed(new_status) -> bool:
 	return true
@@ -46,3 +55,8 @@ func vanish():
 
 func animate_applied(__):
 	pass
+
+func animate_on_changed(__):
+	var parent = get_parent()
+	if parent:
+		parent.remove_child(self)

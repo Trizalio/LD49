@@ -16,7 +16,6 @@ var _animate_queue = []
 
 func _ready():
 	_prepare_battlefield()
-#	Matrix.connect("animate2", self, 'put_into_animate_queue')
 	GameState.connect("active_spells_changed", self, 'show_spells')
 	_fetch_queue()
 	$parts/root_buttons.visible = GameState.god_mode
@@ -24,6 +23,7 @@ func _ready():
 	GameState.game = self
 	GameState.start_new_game()
 #	set_hints_visibility(true)
+	call_deferred('set_hints_visibility', not GameState.god_mode)
 	
 func set_hints_visibility(is_visible: bool):
 	for hint in get_tree().get_nodes_in_group("hints"):
@@ -61,7 +61,29 @@ func show_spells(spells: Array):
 #
 #func _get_duration():
 #	return Rand.float_in_range(min_time_step, max_time_step)
-	
+
+func set_tiles_modulate(positions: Array, color: Color):
+	for pos in positions:
+		var tile: Tile = map.get_node(str(pos.x) + str(pos.y))
+		tile.modulate = color
+
+var very_bad_color = Color(0.7, 0.4, 0.4, 1)
+var bad_color = Color(0.8, 0.6, 0.6, 1)
+var good_color = Color(0.6, 0.8, 0.6, 1) # Color(0.8, 0.9, 0.8, 1)
+var very_good_color = Color(0.4, 0.7, 0.4, 1)
+var default_color = Color(1, 1, 1, 0.59)
+
+func render_spell_targets(targets: Spell.SpellTargets = null):
+	var all_position = []
+	for y in range(Matrix.matrix_height):
+		for x in range(Matrix.matrix_width):
+			all_position.append(Vector2(x, y))
+	set_tiles_modulate(all_position, default_color)
+	if targets != null:
+		set_tiles_modulate(targets.very_bad_positions, very_bad_color)
+		set_tiles_modulate(targets.bad_positions, bad_color)
+		set_tiles_modulate(targets.good_positions, good_color)
+		set_tiles_modulate(targets.very_good_positions, very_good_color)
 
 func _prepare_battlefield():
 	map.set_columns(Matrix.matrix_width)
@@ -71,6 +93,7 @@ func _prepare_battlefield():
 			map.add_child(new_tile)
 			new_tile.set_name(str(x) + str(y))
 			new_tile.connect('hover', self, 'show_hint', [Vector2(x, y)])
+			new_tile.connect('mouse_exited', self, 'render_spell_targets')
 			
 	units = Node2D.new()
 	units.set_name('units')
@@ -81,7 +104,7 @@ func show_hint(position: Vector2) -> void:
 	$hint.show_unit_hint(Matrix.get_cell(position).unit)
 #	$hint.visible = true
 
-func put_into_animate_queue(arg_1, arg_2, arg_3, arg_4=false):
+func put_into_animate_queue(arg_1, arg_2, arg_3, arg_4=true):
 	print("put_into_animate_queue(", arg_1, ", ", arg_2, ", ", arg_3, ", ", arg_4, ")")
 	_animate_queue.append([arg_1, arg_2, arg_3, arg_4])
 
@@ -252,8 +275,11 @@ func _on_next_turn_pressed():
 	GameState._next_turn()
 
 func _on_spawn_imp_pressed():
-	var cell = Matrix.get_cell(spawn_position)
-	if cell.unit != null:
-		return
-	var new_unit = selected_unit.instance()
-	Matrix.enter_matrix(spawn_position, new_unit)
+	for y in range(Matrix.matrix_height - 1, -1, -1):
+		for x in range(Matrix.matrix_width - 1, -1, -1):
+			spawn_position = Vector2(x, y)
+			var cell = Matrix.get_cell(spawn_position)
+			if cell.unit != null:
+				return
+			var new_unit = selected_unit.instance()
+			Matrix.enter_matrix(spawn_position, new_unit, false)

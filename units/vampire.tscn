@@ -7,7 +7,7 @@
 [ext_resource path="res://resources/sounds/units/victory/vampire_vic.mp3" type="AudioStream" id=5]
 [ext_resource path="res://resources/shaders/gray.shader" type="Shader" id=6]
 
-[sub_resource type="ShaderMaterial" id=1]
+[sub_resource type="ShaderMaterial" id=6]
 shader = ExtResource( 6 )
 shader_param/grayness = 0.0
 shader_param/fade = 0.0
@@ -44,7 +44,7 @@ animations = [ {
 script = ExtResource( 2 )
 
 [node name="sprite" type="AnimatedSprite" parent="."]
-material = SubResource( 1 )
+material = SubResource( 6 )
 frames = SubResource( 5 )
 playing = true
 

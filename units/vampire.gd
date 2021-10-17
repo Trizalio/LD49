@@ -33,6 +33,6 @@ func _take_damage(damage: Damage.Damage):
 	
 func animate_weak(is_weak: bool):
 	self.add_child(EffectUtils.BlackCloud())
-	$sprite.get_material().set_shader_param("grayness", 0.8 * int(is_weak))
-	$sprite.get_material().set_shader_param("fade", 0.4 * int(is_weak))
+	$sprite.get_material().set_shader_param("grayness", 1.0 * int(is_weak))
+	$sprite.get_material().set_shader_param("fade", 0.6 * int(is_weak))
 	

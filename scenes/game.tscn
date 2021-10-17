@@ -287,6 +287,10 @@ margin_top = 15.0
 margin_right = 525.0
 margin_bottom = 735.0
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
 [connection signal="pressed" from="parts/root_buttons/next_turn" to="." method="_on_next_turn_pressed"]
 [connection signal="pressed" from="parts/root_buttons/spawn" to="." method="_on_spawn_imp_pressed"]
 [connection signal="pressed" from="parts/root_buttons/spawn_full" to="." method="_on_spawn_full_pressed"]
@@ -296,3 +300,4 @@ margin_bottom = 735.0
 [connection signal="pressed" from="parts/root_buttons/x_controls/decr" to="." method="_change_x" binds= [ -1 ]]
 [connection signal="pressed" from="parts/root_buttons/y_controls/inc" to="." method="_change_y" binds= [ 1 ]]
 [connection signal="pressed" from="parts/root_buttons/y_controls/decr" to="." method="_change_y" binds= [ -1 ]]
+[connection signal="timeout" from="Timer" to="." method="_spawn_drag_hint"]

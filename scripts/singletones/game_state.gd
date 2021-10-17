@@ -3,7 +3,7 @@ extends Node
 signal active_spells_changed(spell_names)
 #onready var UnitClass = load("res://scenes/unit.gd")
 var turn_number: int
-const god_mode: bool = true
+const god_mode: bool = false
 const castle_capacity = 10
 
 const base_time_step = 0.4

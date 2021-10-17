@@ -4,17 +4,12 @@ onready var map: GridContainer = $parts/centered/map
 var units = null
 
 onready var TileScene = preload("res://utils/tile.tscn")
-
-
-# TODO: get from map
-onready var separation: Vector2 = Vector2(4, 4)
-var _animate_queue = []
-#var base_time_step = 0.1
-#var duration_deviation_fraction = 0.2
-#var min_time_step = base_time_step * (1 - duration_deviation_fraction)
-#var max_time_step = base_time_step * (1 + duration_deviation_fraction)
+var _animate_queue: Array
+var _hints_enabled: bool = true
 
 func _ready():
+	_animate_queue = []
+	_hints_enabled = true
 	_prepare_battlefield()
 	GameState.connect("active_spells_changed", self, 'show_spells')
 	GameState.connect("unit_exited", self, 'render_exited_amount')
@@ -28,8 +23,12 @@ func _ready():
 	$parts/texture/main_hint.call_deferred("rescale")
 	set_spells_lock(true)
 	_on_change_selected_unit_type(0)
+	call_deferred('_spawn_drag_hint')
+	
+	
 	
 func set_hints_visibility(is_visible: bool):
+	_hints_enabled = is_visible
 	for hint in get_tree().get_nodes_in_group("hints"):
 		hint.visible = is_visible
 		if is_visible:
@@ -245,3 +244,16 @@ func _on_spawn_imp_pressed():
 		return
 	var new_unit = selected_unit.instance()
 	Matrix.enter_matrix(spawn_position, new_unit, false)
+
+const DragHint = preload("res://scenes/drag_hint.tscn")
+
+func _spawn_drag_hint():
+	if not _hints_enabled:
+		return
+	print('spawn_drag_hint')
+	var hint = DragHint.instance()
+	var map_rect = $parts/centered.get_rect()
+	var spells_rect = $parts/spells.get_rect()
+	hint.position = spells_rect.position + spells_rect.size / 2
+	$parts.add_child(hint)
+	hint.move_to(map_rect.position + map_rect.size / 2, $Timer.wait_time)

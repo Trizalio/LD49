@@ -27,6 +27,7 @@ func _ready():
 #	set_hints_visibility(true)
 	call_deferred('set_hints_visibility', not GameState.god_mode)
 	$parts/texture/main_hint.call_deferred("rescale")
+	set_spells_lock(true)
 	
 func set_hints_visibility(is_visible: bool):
 	for hint in get_tree().get_nodes_in_group("hints"):
@@ -122,15 +123,21 @@ func put_into_animate_queue(arg_1, arg_2, arg_3, arg_4=true):
 	print("put_into_animate_queue(", arg_1, ", ", arg_2, ", ", arg_3, ", ", arg_4, ")")
 	_animate_queue.append([arg_1, arg_2, arg_3, arg_4])
 
+func set_spells_lock(boolean: bool):
+	$parts/spells.modulate = Color(1, 1, 1, 0.5 + 0.5 * int(!boolean))
+	
 	
 func _fetch_queue():
 	var wait = true
 	if _animate_queue.size() > 0:
+		set_spells_lock(true)
 		var task = _animate_queue.pop_front()
 		print('task: ', task)
 		wait = task[3]
 		task[0].call("animate_" + task[1], task[2])
 #		call(task[0], task[1], task[2], task[3])
+	else:
+		set_spells_lock(false)
 	if wait:
 		yield(get_tree().create_timer(GameState.base_time_step), "timeout")
 	call_deferred("_fetch_queue")

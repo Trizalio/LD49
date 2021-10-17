@@ -220,6 +220,7 @@ func _multi_interpolate(object: Object, property: NodePath, values: Array, destr
 
 func animate_death(__):
 	_interpolate(self, "modulate", Color(1, 1, 1, 0))
+	$death.play()
 
 func animate_interact(target_cell_or_unit):
 	var target_position = null
@@ -252,10 +253,12 @@ func animate_enter_matrix(matrix_position):
 	self.position = matrix_to_map(matrix_position)
 	self.modulate = Color(1, 1, 1, 0)
 	_interpolate(self, "modulate", Color(1, 1, 1, 1))
+	$spawn.play()
 
 func animate_exit(__):
 	GameState.game.increase_exited_amount(self)
 	_interpolate(self, "modulate", Color(1, 1, 1, 0), true)
+	$victory.play()
 	
 func animate_take_lightning_damage(__):
 	self.add_child(EffectUtils.LightningDamage())

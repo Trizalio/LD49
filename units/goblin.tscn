@@ -34,7 +34,6 @@ playing = true
 
 [node name="spawn" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
-autoplay = true
 
 [node name="victory" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )

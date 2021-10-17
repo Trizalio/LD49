@@ -42,6 +42,10 @@ config/name="Ld 49"
 run/main_scene="res://scenes/main.tscn"
 config/icon="res://resources/characters/goblin-on-tile.png"
 
+[audio]
+
+output_latency.web=200
+
 [autoload]
 
 SceneChanger="*res://scripts/singletones/scene_changer.gd"

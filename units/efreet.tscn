@@ -29,11 +29,11 @@ script = ExtResource( 5 )
 
 [node name="sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
+frame = 1
 playing = true
 
 [node name="spawn" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
-autoplay = true
 
 [node name="victory" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )

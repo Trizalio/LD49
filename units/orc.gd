@@ -20,6 +20,3 @@ func _act():
 	))
 	if target_unit:
 		attack(target_unit)
-#		self_animate()
-#		target_unit.take_damage(Damage.damage(Damage.Types.Physical, self))
-			

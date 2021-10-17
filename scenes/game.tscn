@@ -62,13 +62,12 @@ margin_bottom = 38.0
 size_flags_horizontal = 3
 text = "123"
 
-[node name="exited_value" type="Label" parent="parts/score"]
+[node name="exited_value" type="RichTextLabel" parent="parts/score"]
 margin_left = 274.0
 margin_right = 371.0
 margin_bottom = 38.0
 size_flags_horizontal = 3
-text = "123"
-align = 2
+bbcode_enabled = true
 
 [node name="exited_text" type="Label" parent="parts/score"]
 margin_left = 375.0
@@ -81,7 +80,7 @@ align = 2
 [node name="texture" type="TextureRect" parent="parts"]
 margin_top = 42.0
 margin_right = 510.0
-margin_bottom = 317.0
+margin_bottom = 341.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 7 )
@@ -98,16 +97,16 @@ description = "Units crave to get here at any cost"
 visible = false
 
 [node name="centered" type="CenterContainer" parent="parts"]
-margin_top = 321.0
+margin_top = 345.0
 margin_right = 510.0
-margin_bottom = 596.0
+margin_bottom = 644.0
 size_flags_vertical = 3
 
 [node name="map" type="GridContainer" parent="parts/centered"]
 margin_left = 255.0
-margin_top = 137.0
+margin_top = 149.0
 margin_right = 255.0
-margin_bottom = 137.0
+margin_bottom = 149.0
 columns = 3
 
 [node name="hint" parent="parts/centered" groups=[
@@ -117,14 +116,14 @@ title = "Plains"
 description = "Drag spells here to help or harm units"
 
 [node name="HSeparator" type="HSeparator" parent="parts"]
-margin_top = 600.0
+margin_top = 648.0
 margin_right = 510.0
-margin_bottom = 604.0
+margin_bottom = 652.0
 
 [node name="spells" type="HBoxContainer" parent="parts"]
-margin_top = 608.0
+margin_top = 656.0
 margin_right = 510.0
-margin_bottom = 672.0
+margin_bottom = 720.0
 alignment = 1
 
 [node name="fireball" parent="parts/spells" instance=ExtResource( 4 )]
@@ -166,6 +165,7 @@ title = "Spells"
 description = "Drag to plains"
 
 [node name="root_buttons" type="HBoxContainer" parent="parts"]
+visible = false
 margin_top = 676.0
 margin_right = 510.0
 margin_bottom = 720.0
@@ -181,8 +181,17 @@ margin_right = 195.0
 margin_bottom = 44.0
 text = "Spawn"
 
-[node name="unit_type" type="Label" parent="parts/root_buttons"]
+[node name="spawn_full" type="Button" parent="parts/root_buttons"]
 margin_left = 199.0
+margin_right = 221.0
+margin_bottom = 44.0
+text = "*"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="unit_type" type="Label" parent="parts/root_buttons"]
+margin_left = 225.0
 margin_top = 3.0
 margin_right = 366.0
 margin_bottom = 41.0
@@ -280,6 +289,7 @@ margin_bottom = 735.0
 
 [connection signal="pressed" from="parts/root_buttons/next_turn" to="." method="_on_next_turn_pressed"]
 [connection signal="pressed" from="parts/root_buttons/spawn" to="." method="_on_spawn_imp_pressed"]
+[connection signal="pressed" from="parts/root_buttons/spawn_full" to="." method="_on_spawn_full_pressed"]
 [connection signal="pressed" from="parts/root_buttons/x_controls2/next" to="." method="_on_change_selected_unit_type" binds= [ 1 ]]
 [connection signal="pressed" from="parts/root_buttons/x_controls2/last" to="." method="_on_change_selected_unit_type" binds= [ -1 ]]
 [connection signal="pressed" from="parts/root_buttons/x_controls/inc" to="." method="_change_x" binds= [ 1 ]]

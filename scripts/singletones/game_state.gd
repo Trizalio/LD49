@@ -1,14 +1,13 @@
 extends Node
 
 signal active_spells_changed(spell_names)
-signal unit_exited
 #onready var UnitClass = load("res://scenes/unit.gd")
-var turn_number: int = 0
-var god_mode: bool = true
-var castle_capacity = 10
+var turn_number: int
+const god_mode: bool = false
+const castle_capacity = 10
 
-var base_time_step = 0.4
-var duration_deviation_fraction = 0.2
+const base_time_step = 0.4
+const duration_deviation_fraction = 0.2
 var game = null
 
 func get_rand_animation_duration() -> float:
@@ -16,22 +15,19 @@ func get_rand_animation_duration() -> float:
 	var max_time_step = base_time_step * (1 + duration_deviation_fraction)
 	return Rand.float_in_range(min_time_step, max_time_step)
 
-var element_to_spell_names = {
+const element_to_spell_names = {
 	"fire": ['fireball', 'firejet'],
 	"lightning": ['lightning_shield', 'chain_lightning'],
 	"frost": ['frost_circle', 'frost_shard'],
 }
-var current_element: String = ''
+var current_element: String
 
 #var unit_race_to_amount_spawned: Dictionary = {}
 #var unit_race_to_amount_field: Dictionary = {}
-var unit_race_to_amount_exit: Dictionary = {}
+var unit_race_to_amount_exit: Dictionary
 
 func _subsctibe():
 	pass
-#	Matrix.connect("unit_exited", self, 'unit_exited_count')
-#	Matrix.connect("unit_entered", self, 'count_entered_unit')
-#	Matrix.connect("unit_replaced", self, 'on_unit_replaced')
 
 func cast_spell(spell: Spell, destination: Vector2) -> void:
 	spell._cast(destination)
@@ -47,16 +43,14 @@ func roll_spells():
 	emit_signal('active_spells_changed', element_to_spell_names[current_element])
 
 func _end_game():
-	if unit_race_to_amount_exit.get('undead', 0) > castle_capacity / 2:
+	if unit_race_to_amount_exit.get(UnitUtils.Race.Undead, 0) > castle_capacity / 2:
 		SceneChanger.goto_scene('res://scenes/ends/end_undeads.tscn')
-	elif unit_race_to_amount_exit.get('demon', 0) > castle_capacity / 2:
+	elif unit_race_to_amount_exit.get(UnitUtils.Race.Demon, 0) > castle_capacity / 2:
 		SceneChanger.goto_scene('res://scenes/ends/end_demons.tscn')
-	elif unit_race_to_amount_exit.get('greenskin', 0) > castle_capacity / 2:
+	elif unit_race_to_amount_exit.get(UnitUtils.Race.Greenskin, 0) > castle_capacity / 2:
 		SceneChanger.goto_scene('res://scenes/ends/end_orks.tscn')
 	else:
 		SceneChanger.goto_scene('res://scenes/ends/end_fail.tscn')
-		
-		
 
 func unit_exited(unit):
 	var race = unit.get_race()
@@ -74,26 +68,10 @@ func unit_exited(unit):
 #	print("unit_race_to_amount_field" + str(unit_race_to_amount_field))
 	print("unit_race_to_amount_exit" + str(unit_race_to_amount_exit))
 	
-#func on_unit_replaced(old_unit, new_unit):
-#	if not new_unit:
-#		var race = old_unit.get_race()
-#		_reduce_in_field_counter(race)
-
-#func _reduce_in_field_counter(race):
-#	assert (race in unit_race_to_amount_field)
-#	assert (unit_race_to_amount_field[race] != 0) 
-#	unit_race_to_amount_field[race] -= 1
-
-#func count_entered_unit(position):
-#	var unit = Matrix.get_cell(position).unit
-#	var race = unit.get_race()
-#	var tier = unit.get_tier()
-#	unit_race_to_amount_field[race] = unit_race_to_amount_field.get(race, 0) + 1
-#	unit_race_to_amount_spawned[race] = unit_race_to_amount_spawned.get(race, 0) + 1
-#	print("unit_race_to_amount_field " + str(unit_race_to_amount_field))
-#	print("unit_race_to_amount_spawned " + str(unit_race_to_amount_spawned))
-
-func start_new_game():
+func start_new_game(game_scene):
+	game = game_scene
+	current_element = ''
+	unit_race_to_amount_exit = {}
 	turn_number = 0
 	Matrix._generate_cells()
 	self._subsctibe()
@@ -122,12 +100,3 @@ func _add_units_on_top_row():
 			if new_unit != null:
 #			var new_unit = get_new_unit(matrix_cell_index)
 				Matrix.enter_matrix(position, new_unit)
-	
-#
-#func get_new_unit(matrix_cell_index):
-##	Fader.instance()
-#	if matrix_cell_index >= 1:
-#		return Imp.instance()
-#	else:
-#		return Zombie.instance()
-#		UnitClass.Unit.new(2)

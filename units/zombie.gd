@@ -1,6 +1,5 @@
 extends Unit
 
-
 var hint = (
 	'Move: move to one of 3 tiles ahead\n' + 
 	"Blocked: wanders around\n" +

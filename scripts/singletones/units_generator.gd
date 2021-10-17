@@ -20,8 +20,8 @@ func _ready():
 #		'undead': [Zombie, Zombie, Zombie], 
 #		'orc': [Goblin, Ork, Ogre],
 #		'orc': [Goblin, Goblin, Goblin],
-		'greenskin': [Goblin, Orc],
-		'undead': [UndeadSkeleton, Zombie], 
+		'greenskin': [Goblin, Orc, Ogre],
+		'undead': [UndeadSkeleton, Zombie, Vampire], 
 #		'undead': [Zombie], 
 		'demon': [Imp, Magog, Efreet],
 #		'undead': []

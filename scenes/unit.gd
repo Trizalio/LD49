@@ -34,7 +34,7 @@ func move(target_position):
 
 func exit():
 	Matrix.get_cell(Matrix.get_unit_coordinates(self)).unit = null
-	GameState.unit_exited(self)
+#	GameState.unit_exited(self)
 
 func power_move(best_shifts: Array, other_shifts: Array) -> bool:
 	var pos = Matrix.get_unit_coordinates(self)
@@ -122,16 +122,17 @@ func act():
 func _act():
 	pass
 
+func _take_damage(damage: Damage.Damage):
+	if _status == null or _status.on_take_damage(damage):
+		die(damage.delay)
+		
 func take_damage(damage: Damage.Damage):
 #	print("unit: "  + str(self) + " took damage:" + str(damage))
 	if damage.type == Damage.Types.Lightning:
 		self_animate("take_lightning_damage", null, damage.delay)
 	if damage.type == Damage.Types.Fire:
 		self_animate("take_fire_damage", null, damage.delay)
-	if _status == null or _status.on_take_damage(damage):
-		die(damage.delay)
-#		emit_signal("damage_taken", damage)
-#		emit_signal("replace_unit", self, null)
+	_take_damage(damage)
 
 
 func change_status(reason, new_status: Status, delay: bool = true) -> bool:
@@ -257,7 +258,8 @@ func animate_enter_matrix(matrix_position):
 	$spawn.play()
 
 func animate_exit(__):
-	GameState.game.increase_exited_amount(self)
+	GameState.unit_exited(self)
+	GameState.game.render_exited_amount()
 	_interpolate(self, "modulate", Color(1, 1, 1, 0), true)
 	$victory.play()
 	

@@ -21,8 +21,7 @@ func _ready():
 	_fetch_queue()
 	$parts/root_buttons.visible = GameState.god_mode
 	render_exited_amount()
-	GameState.game = self
-	GameState.start_new_game()
+	GameState.start_new_game(self)
 	prepare_spell_hints()
 #	set_hints_visibility(true)
 	call_deferred('set_hints_visibility', not GameState.god_mode)
@@ -153,16 +152,32 @@ func matrix_to_map(matrix_position: Vector2) -> Vector2:
 	
 func append_unit(unit: Unit):
 	units.add_child(unit)
-
-var exited = 0
-
-func increase_exited_amount(unit):
-	exited += 1
-	render_exited_amount()
+#
+#var exited = 0
+#
+#func increase_exited_amount(unit):
+#	exited += 1
+#	render_exited_amount()
+onready var race_to_color_code: Dictionary = {
+	UnitUtils.Race.Undead: "#a0aaaaff",
+	UnitUtils.Race.Demon: "#a0ffaaaa",
+	UnitUtils.Race.Greenskin: "#a0aaffaa",
+}
 
 func render_exited_amount():
+	var exited_text = ""
+	for race in race_to_color_code.keys():
+		var exited_amount = GameState.unit_race_to_amount_exit.get(race, 0)
+		var color_code = race_to_color_code[race]
+		print(race, ": ", exited_amount, ", ", color_code)
+#		var color_code = race_to_color_code.get(race, "#a0ffffff")
+		if exited_text:
+			exited_text += "/"
+		exited_text += "[color=" + color_code + "]" + str(exited_amount) + "[/color]"
 	$parts/score/capacity_value.text = str(GameState.castle_capacity)
-	$parts/score/exited_value.text = str(exited)
+	$parts/score/exited_value.bbcode_text = str(exited_text)
+	$parts/score/exited_value.get_child(0).modulate.a = 0
+	
 
 var spawn_position = Vector2(0, 0)
 func _change_x(change: int):
@@ -205,8 +220,7 @@ func _on_change_selected_unit_type(shift: int):
 func _on_next_turn_pressed():
 	GameState._next_turn()
 
-
-func _on_spawn_all_pressed():
+func _on_spawn_full_pressed():
 	for y in range(Matrix.matrix_height - 1, -1, -1):
 		for x in range(Matrix.matrix_width - 1, -1, -1):
 			spawn_position = Vector2(x, y)

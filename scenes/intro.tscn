@@ -93,8 +93,8 @@ custom_fonts/font = SubResource( 2 )
 enabled_focus_mode = 0
 text = "Continue"
 
-[node name="IntroPlay" type="AudioStreamPlayer" parent="."]
+[node name="background" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
-volume_db = -20.0
+volume_db = -5.0
 
 [connection signal="pressed" from="parts/MarginContainer/centered/CenterContainer/continue" to="." method="_on_continue_pressed"]

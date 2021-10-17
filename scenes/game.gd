@@ -3,7 +3,6 @@ extends MarginContainer
 onready var map: GridContainer = $parts/centered/map
 var units = null
 
-var sound = preload("res://resources/sounds/main scene (mp3cut.net).mp3")
 var TileScene = preload("res://utils/tile.tscn")
 var _animate_queue: Array
 var _hints_enabled: bool = true
@@ -24,9 +23,7 @@ func _ready():
 	set_spells_lock(true)
 	_on_change_selected_unit_type(0)
 	call_deferred('_spawn_drag_hint')
-	AudioManager.play_this(sound)
-	
-	
+	AudioManager.play_this($background.stream, $background.volume_db)
 	
 func set_hints_visibility(is_visible: bool):
 	_hints_enabled = is_visible

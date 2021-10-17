@@ -169,13 +169,12 @@ func attack(target_unit):
 	emit_animate(self, "interact", target_unit)
 	target_unit.take_damage(Damage.damage(Damage.Types.Physical, self))
 
-func apply_status(target_unit, status):
+func apply_status(target_unit, status, delay: bool = true):
 	if target_unit == null or status == null:
 		return
 		
 	emit_animate(self, "interact", target_unit)
-	if target_unit.change_status(status):
-		emit_animate(status, "appied")
+	target_unit.change_status(self, status)
 #
 #func change_state(target_unit, new_state):
 #	if target_unit == null:
@@ -245,6 +244,7 @@ func animate_move(target_cell_or_position):
 	_interpolate(self, "position", matrix_to_map(target_cell.get_coordinates()))
 	
 func animate_change_status(new_status: Status):
+	print('animate_change_status', new_status)
 	add_child(new_status)
 	
 func animate_enter_matrix(matrix_position):

@@ -1,6 +1,6 @@
 extends Status
 var hint_ = (
-	"protects from most damage types and deals lightning damage if attacked; " +
+	"Protects from most damage types and deals lightning damage if attacked; " +
 	"explodes on lightning damage"
 )
 func _init().("Lightning shield", hint_):

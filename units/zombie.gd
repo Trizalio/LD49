@@ -7,7 +7,7 @@ var hint = (
 	"On killed: spawns skeleton"
 ) 
 
-func _init().("undead", 2, "zombie", hint):
+func _init().(UnitUtils.Race.Undead, 2, "Zombie", hint):
 	pass
 
 func _act():

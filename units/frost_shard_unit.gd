@@ -11,6 +11,7 @@ func _init().(UnitUtils.Race.Special, 0, "Frost shard", hint):
 func change_status(reason, status: Status, delay: bool = true) -> bool:
 	print('change_status: ', status._name, " ? ", StatusUtils.Burning()._name)
 	if status._name == StatusUtils.Burning()._name:
+		emit_animate(self, "steam", null, false)
 		melt()
 		
 	if status._name == StatusUtils.Frozen()._name:
@@ -39,3 +40,7 @@ func _act():
 
 func animate_change_state(state):
 	$sprite.frame = state
+	
+
+func animate_steam(__):
+	self.add_child(EffectUtils.SteamCloud())

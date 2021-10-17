@@ -11,7 +11,7 @@ onready var Goblin = preload("res://units/goblin.tscn")
 onready var Ogre = preload("res://units/ogre.tscn")
 onready var Orc = preload("res://units/orc.tscn")
 onready var Ifrite = preload("res://units/ifrite.tscn")
-onready var Demon = preload("res://units/demon.tscn")
+onready var Magog = preload("res://units/magog.tscn")
 
 var faction_to_units = {}
 func _ready():
@@ -23,7 +23,7 @@ func _ready():
 		'greenskin': [Goblin, Orc],
 		'undead': [UndeadSkeleton, Zombie], 
 #		'undead': [Zombie], 
-		'demon': [Imp],
+		'demon': [Imp, Magog],
 #		'undead': []
 #		'demon': [Ifrite, Ifrite, Ifrite]
 #		'demon': [Demon, Demon, Demon]
@@ -52,7 +52,7 @@ func get_unit(column_index):
 	
 	var faction = Rand.choice(faction_to_units.keys())
 	var faction_types = faction_to_units[faction]
-	var upgrade_chance = 0.5
+	var upgrade_chance = 0.4
 	var type_index = 0
 	while type_index < len(faction_types) - 1 and Rand.check(upgrade_chance):
 		type_index += 1

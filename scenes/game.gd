@@ -129,7 +129,6 @@ func set_spells_lock(locked: bool):
 		if child is Spell:
 			child.is_enabled = not locked
 	
-	
 func _fetch_queue():
 	var wait = true
 	if _animate_queue.size() > 0:

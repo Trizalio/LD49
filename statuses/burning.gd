@@ -9,12 +9,6 @@ var hint_ = (
 func _init().("Burning", hint_):
 	pass
 
-func animate_appied():
-	$sprite.scale = Vector2(0, 0)
-	var duration = Rand.float_in_range(0.4, 0.6)
-	Animator.animate(self, "scale", Vector2(1, 1), duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-
-
 func on_turn_end() -> bool:
 	_owner.take_damage(Damage.damage(Damage.Types.Fire, self))
 	return false

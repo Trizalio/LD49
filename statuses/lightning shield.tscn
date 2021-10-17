@@ -27,13 +27,13 @@ animations = [ {
 modulate = Color( 1, 1, 1, 0.588235 )
 script = ExtResource( 2 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 4 )
 animation = "shield"
 frame = 2
 playing = true
 
-[node name="AnimatedSprite2" type="AnimatedSprite" parent="."]
+[node name="sprite2" type="AnimatedSprite" parent="."]
 frames = SubResource( 4 )
 animation = "shield"
 frame = 1

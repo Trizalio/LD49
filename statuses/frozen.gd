@@ -10,6 +10,10 @@ var lifespan: int = 0
 func _init().("Frozen", hint_):
 	lifespan = 2
 
+func _ready():
+	scale = Vector2(1, 1)
+	pass
+
 func animate_applied(__):
 	sprite.play()
 

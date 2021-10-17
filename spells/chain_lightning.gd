@@ -5,7 +5,7 @@ var max_jumps = 5
 var _target_race = null
 var hint = (
 	'Spell: chain lightning \n' + 
-	'Deals lightning damage to target and up to 4 more connected units of the same type'
+	'Deals lightning damage to target and up to 4 more connected units of the same race'
 )
 
 func _ready():
@@ -20,7 +20,7 @@ func cast(coords: Vector2):
 	if unit == null:
 		return false
 		
-	var target_type = unit.get_type_name()
+	var target_type = unit.get_race()
 	print('target_type: ', target_type)
 	var my_damage = Damage.damage(Damage.Types.Lightning, self)
 	
@@ -33,7 +33,7 @@ func cast(coords: Vector2):
 		var positions = MatrixUtils.get_positions_by_shifts_with_units(coords, MatrixUtils.all_neighbours)
 		var possible_target_positions = []
 		for pos in positions:
-			if not (pos in affected_positions) and Matrix.get_unit(pos).get_type_name() == target_type:
+			if not (pos in affected_positions) and Matrix.get_unit(pos).get_race() == target_type:
 				possible_target_positions.append(pos)
 				
 		if not possible_target_positions:
@@ -50,14 +50,14 @@ func render_targets(coords: Vector2):
 	var unit = Matrix.get_unit(coords)
 	if unit == null:
 		return false
-	var target_type = unit.get_type_name()
+	var target_type = unit.get_race()
 	var affected_positions = []
 	for i in range(max_jumps):
 		affected_positions.append(coords)
 		var positions = MatrixUtils.get_positions_by_shifts_with_units(coords, MatrixUtils.all_neighbours)
 		var possible_target_positions = []
 		for pos in positions:
-			if not (pos in affected_positions) and Matrix.get_unit(pos).get_type_name() == target_type:
+			if not (pos in affected_positions) and Matrix.get_unit(pos).get_race() == target_type:
 				possible_target_positions.append(pos)
 				
 		if not possible_target_positions:

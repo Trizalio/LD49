@@ -84,7 +84,6 @@ margin_bottom = 170.0
 [node name="DemonsCastle" type="AnimatedSprite" parent="parts/centered/Control"]
 scale = Vector2( 3.3, 3.3 )
 frames = SubResource( 5 )
-frame = 2
 playing = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="parts"]

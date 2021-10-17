@@ -20,8 +20,8 @@ func _ready():
 	GameState.connect("unit_exited", self, 'render_exited_amount')
 	_fetch_queue()
 	$parts/root_buttons.visible = GameState.god_mode
-	render_exited_amount()
 	GameState.start_new_game(self)
+	render_exited_amount()
 	prepare_spell_hints()
 #	set_hints_visibility(true)
 	call_deferred('set_hints_visibility', not GameState.god_mode)
@@ -55,9 +55,18 @@ func prepare_spell_hints():
 func show_spells(spells: Array):
 	if GameState.god_mode:
 		return
-		
+	
+	var spell_children = []
 	for child in $parts/spells.get_children():
-		child.visible = spells.find(child.get_name()) != -1
+		child.visible = false
+		if child is Spell:
+			spell_children.append(child)
+		
+	var selected_spells = [Rand.choice(spell_children)]
+	spell_children.erase(selected_spells[0])
+	selected_spells.append(Rand.choice(spell_children))
+	for spell in selected_spells:
+		spell.visible = true
 	
 	call_deferred('set_hints_visibility', GameState.turn_number == 1 and not GameState.god_mode)
 #	set_hints_visibility(false)

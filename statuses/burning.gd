@@ -19,4 +19,5 @@ func on_changed(new_status: Status) -> bool:
 		return false
 	if new_status != null and new_status._name == self._name:
 		_owner.take_damage(Damage.damage(Damage.Types.Fire, self))
+		vanish()
 	return true

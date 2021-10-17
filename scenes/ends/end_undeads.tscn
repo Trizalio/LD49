@@ -6,7 +6,7 @@
 [ext_resource path="res://resources/sounds/endings/ending_undead_win.mp3" type="AudioStream" id=4]
 [ext_resource path="res://resources/fonts/Galiver Sans.ttf" type="DynamicFontData" id=5]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=5]
 size = 35
 font_data = ExtResource( 5 )
 
@@ -22,7 +22,7 @@ region = Rect2( 100, 0, 100, 100 )
 atlas = ExtResource( 2 )
 region = Rect2( 200, 0, 100, 100 )
 
-[sub_resource type="SpriteFrames" id=5]
+[sub_resource type="SpriteFrames" id=6]
 animations = [ {
 "frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
@@ -30,7 +30,7 @@ animations = [ {
 "speed": 1.0
 } ]
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=7]
 size = 30
 font_data = ExtResource( 5 )
 
@@ -64,7 +64,7 @@ margin_bottom = 735.0
 [node name="Label" type="Label" parent="parts"]
 margin_right = 510.0
 margin_bottom = 59.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 5 )
 text = "Ending 2 of 4"
 align = 1
 
@@ -83,8 +83,8 @@ margin_bottom = 170.0
 
 [node name="UndeadCastle" type="AnimatedSprite" parent="parts/centered/Control"]
 scale = Vector2( 3.3, 3.3 )
-frames = SubResource( 5 )
-frame = 1
+frames = SubResource( 6 )
+frame = 2
 playing = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="parts"]
@@ -92,7 +92,7 @@ margin_top = 407.0
 margin_right = 510.0
 margin_bottom = 657.0
 rect_min_size = Vector2( 0, 250 )
-custom_fonts/normal_font = SubResource( 6 )
+custom_fonts/normal_font = SubResource( 7 )
 bbcode_enabled = true
 bbcode_text = "[center]Victory!
 Undeads occupied the castle.
@@ -107,7 +107,7 @@ margin_top = 661.0
 margin_right = 352.0
 margin_bottom = 720.0
 size_flags_horizontal = 4
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 5 )
 text = "Main menu"
 
 [node name="UndeadWins" type="AudioStreamPlayer" parent="."]

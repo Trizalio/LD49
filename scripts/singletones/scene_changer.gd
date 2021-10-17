@@ -28,6 +28,7 @@ func goto_scene(path, fade_in_time: float = 0.2, fade_out_time: float = 0.2):
 	# we can be sure that no code from the current scene is running:
 	
 	fader.fade(fade_in_time, fade_out_time)
+	AudioManager.fade_in()
 	yield(fader, 'faded_in')
 #	yield(get_tree().create_timer(fade_in_time), "timeout")
 	call_deferred("_deferred_goto_scene", path)
@@ -52,5 +53,6 @@ func _deferred_goto_scene(path):
 	
 	# Optionally, to make it compatible with the SceneTree.change_scene() API.
 	get_tree().set_current_scene(current_scene)
+	AudioManager.fade_out()
 	print('scene changed to: ', current_scene, '(', path, ')')
 	emit_signal("scene_changed")

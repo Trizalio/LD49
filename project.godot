@@ -56,6 +56,7 @@ Damage="*res://scripts/singletones/damage.gd"
 StatusUtils="*res://scripts/singletones/status_utils.gd"
 UnitUtils="*res://scripts/singletones/unit_utils.gd"
 EffectUtils="*res://scripts/singletones/effect_utils.gd"
+AudioManager="*res://scripts/singletones/audio_manager.gd"
 
 [display]
 

@@ -3,7 +3,8 @@ extends MarginContainer
 onready var map: GridContainer = $parts/centered/map
 var units = null
 
-onready var TileScene = preload("res://utils/tile.tscn")
+var sound = preload("res://resources/sounds/main scene (mp3cut.net).mp3")
+var TileScene = preload("res://utils/tile.tscn")
 var _animate_queue: Array
 var _hints_enabled: bool = true
 
@@ -12,7 +13,6 @@ func _ready():
 	_hints_enabled = true
 	_prepare_battlefield()
 	GameState.connect("active_spells_changed", self, 'show_spells')
-	GameState.connect("unit_exited", self, 'render_exited_amount')
 	_fetch_queue()
 	$parts/root_buttons.visible = GameState.god_mode
 	GameState.start_new_game(self)
@@ -24,6 +24,7 @@ func _ready():
 	set_spells_lock(true)
 	_on_change_selected_unit_type(0)
 	call_deferred('_spawn_drag_hint')
+	AudioManager.play_this(sound)
 	
 	
 	

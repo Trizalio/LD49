@@ -1,10 +1,10 @@
 extends Unit
 
-var hint = 'Does not mov.\nMelts turn by turn.'
+var hint = 'Doesn`t move.\nMelts turn by turn.'
 var _lifespan = 1
 var _state = 0
 
-func _init().(UnitUtils.Race.Special, 0, "Frost shard"):
+func _init().(UnitUtils.Race.Special, 0, "Frost shard", hint):
 	_state = 0
 
 

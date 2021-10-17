@@ -9,7 +9,7 @@ onready var UndeadSkeleton = preload("res://units/skeleton.tscn")
 onready var Vampire = preload("res://units/vampire.tscn")
 onready var Goblin = preload("res://units/goblin.tscn")
 onready var Ogre = preload("res://units/ogre.tscn")
-onready var Ork = preload("res://units/ork.tscn")
+onready var Orc = preload("res://units/orc.tscn")
 onready var Ifrite = preload("res://units/ifrite.tscn")
 onready var Demon = preload("res://units/demon.tscn")
 
@@ -20,9 +20,9 @@ func _ready():
 #		'undead': [Zombie, Zombie, Zombie], 
 #		'orc': [Goblin, Ork, Ogre],
 #		'orc': [Goblin, Goblin, Goblin],
-		'orc': [Goblin],
-#		'undead': [UndeadSkeleton, Zombie], 
-		'undead': [Zombie], 
+		'orc': [Orc],
+		'undead': [UndeadSkeleton, Zombie], 
+#		'undead': [Zombie], 
 		'demon': [Imp],
 #		'undead': []
 #		'demon': [Ifrite, Ifrite, Ifrite]

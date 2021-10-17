@@ -2,7 +2,7 @@ extends Unit
 
 var hint = (
 	"Move: only straight\n" + 
-	"Sprint: can move two times in a row\n"
+	"Sprint: can move two times in a row"
 )
 
 func _init().("greenskin", 1, "goblin", hint):

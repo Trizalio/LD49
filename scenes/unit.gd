@@ -186,7 +186,7 @@ func apply_status(target_unit, status, delay: bool = true):
 func die_extension(self_position: Vector2, delay: bool = true):
 	pass
 
-func die(delay: bool = true):
+func die(delay: bool = true, call_extension: bool = true):
 	if _dead:
 		return
 	_dead = true
@@ -194,7 +194,8 @@ func die(delay: bool = true):
 	var cell = Matrix.get_cell(self_position)
 	cell.unit = null
 	emit_animate(self, "death", null, delay)
-	die_extension(self_position, delay)
+	if call_extension:
+		die_extension(self_position, delay)
 
 ###########################################################################
 

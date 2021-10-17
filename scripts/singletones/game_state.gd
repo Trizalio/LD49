@@ -4,7 +4,7 @@ signal active_spells_changed(spell_names)
 signal unit_exited
 #onready var UnitClass = load("res://scenes/unit.gd")
 var turn_number: int = 0
-var god_mode: bool = false
+var god_mode: bool = true
 var castle_capacity = 10
 
 var base_time_step = 0.4

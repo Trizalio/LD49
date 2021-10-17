@@ -10,7 +10,7 @@ onready var Vampire = preload("res://units/vampire.tscn")
 onready var Goblin = preload("res://units/goblin.tscn")
 onready var Ogre = preload("res://units/ogre.tscn")
 onready var Orc = preload("res://units/orc.tscn")
-onready var Ifrite = preload("res://units/ifrite.tscn")
+onready var Efreet = preload("res://units/efreet.tscn")
 onready var Magog = preload("res://units/magog.tscn")
 
 var faction_to_units = {}
@@ -23,7 +23,7 @@ func _ready():
 		'greenskin': [Goblin, Orc],
 		'undead': [UndeadSkeleton, Zombie], 
 #		'undead': [Zombie], 
-		'demon': [Imp, Magog],
+		'demon': [Imp, Magog, Efreet],
 #		'undead': []
 #		'demon': [Ifrite, Ifrite, Ifrite]
 #		'demon': [Demon, Demon, Demon]

@@ -34,7 +34,7 @@ func on_changed(new_status: Status) -> bool:
 		return false
 	if new_status != null and new_status._name == self._name:
 		var target_position = Matrix.get_unit_coordinates(_owner)
-		_owner.die()
+		_owner.die(false, false)
 		Matrix.enter_matrix(target_position, UnitsGenerator.FrostShardUnit.instance(), true, true)
 	return true
 

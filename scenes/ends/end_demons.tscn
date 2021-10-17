@@ -71,43 +71,39 @@ align = 1
 [node name="centered" type="CenterContainer" parent="parts"]
 margin_top = 63.0
 margin_right = 510.0
-margin_bottom = 316.0
+margin_bottom = 403.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="DemonsCastle" type="AnimatedSprite" parent="parts/centered"]
-position = Vector2( 258, 125 )
-scale = Vector2( 2.425, 2.425 )
+[node name="Control" type="Control" parent="parts/centered"]
+margin_left = 255.0
+margin_top = 170.0
+margin_right = 255.0
+margin_bottom = 170.0
+
+[node name="DemonsCastle" type="AnimatedSprite" parent="parts/centered/Control"]
+scale = Vector2( 3.3, 3.3 )
 frames = SubResource( 5 )
-frame = 1
 playing = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="parts"]
-margin_top = 320.0
+margin_top = 407.0
 margin_right = 510.0
-margin_bottom = 720.0
-rect_min_size = Vector2( 0, 400 )
+margin_bottom = 657.0
+rect_min_size = Vector2( 0, 250 )
 custom_fonts/normal_font = SubResource( 6 )
 bbcode_enabled = true
 bbcode_text = "[center]Victory!
 Daemons occupied the castle.
-Those are still hot things![/center]"
+They are scorching hot![/center]"
 text = "Victory!
 Daemons occupied the castle.
-Those are still hot things!"
+They are scorching hot!"
 
-[node name="buttons" type="VBoxContainer" parent="parts/RichTextLabel"]
-margin_top = 250.0
+[node name="MainMenu" type="Button" parent="parts"]
+margin_top = 661.0
 margin_right = 510.0
-margin_bottom = 309.0
-alignment = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MainMenu" type="Button" parent="parts/RichTextLabel/buttons"]
-margin_right = 510.0
-margin_bottom = 59.0
+margin_bottom = 720.0
 custom_fonts/font = SubResource( 1 )
 text = "Main menu"
 
@@ -116,4 +112,4 @@ stream = ExtResource( 4 )
 volume_db = -20.0
 autoplay = true
 
-[connection signal="pressed" from="parts/RichTextLabel/buttons/MainMenu" to="." method="_on_MainMenu_pressed"]
+[connection signal="pressed" from="parts/MainMenu" to="." method="_on_MainMenu_pressed"]

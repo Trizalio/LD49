@@ -5,7 +5,7 @@ var hint = (
 	"Sprint: can move two times in a row"
 )
 
-func _init().("greenskin", 1, "goblin", hint):
+func _init().(UnitUtils.Race.Greenskin, 1, "Goblin", hint):
 	pass
 
 func _ready():

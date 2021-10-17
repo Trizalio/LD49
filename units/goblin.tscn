@@ -24,11 +24,12 @@ animations = [ {
 "speed": 2.0
 } ]
 
-[node name="goblins" type="Node2D"]
+[node name="goblin" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
+frame = 1
 playing = true
 
 [node name="spawn" type="AudioStreamPlayer" parent="."]

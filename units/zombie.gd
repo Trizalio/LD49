@@ -1,13 +1,12 @@
 extends Unit
 
-
 var hint = (
 	'Move: move to one of 3 tiles ahead\n' + 
-	"On blocked: wanders around\n" +
-	"On killed: spawns skeleton"
+	"Blocked: wanders around\n" +
+	"Killed: spawns skeleton"
 ) 
 
-func _init().("undead", 2, "zombie", hint):
+func _init().(UnitUtils.Race.Undead, 2, "Zombie", hint):
 	pass
 
 func _act():

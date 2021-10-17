@@ -37,6 +37,7 @@ func show_unit_hint(unit):
 			background.remove_child(child)
 		var status_copy = status.duplicate()
 		background.add_child(status_copy)
+		status_copy.animate_applied(null)
 		status_copy.position = background.rect_size / 2
 	else:
 		$field/vbox/status.visible = false

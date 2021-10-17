@@ -34,7 +34,7 @@ func move(target_position):
 
 func exit():
 	Matrix.get_cell(Matrix.get_unit_coordinates(self)).unit = null
-	GameState.unit_exited(self)
+#	GameState.unit_exited(self)
 
 func power_move(best_shifts: Array, other_shifts: Array) -> bool:
 	var pos = Matrix.get_unit_coordinates(self)
@@ -122,16 +122,17 @@ func act():
 func _act():
 	pass
 
+func _take_damage(damage: Damage.Damage):
+	if _status == null or _status.on_take_damage(damage):
+		die(damage.delay)
+		
 func take_damage(damage: Damage.Damage):
 #	print("unit: "  + str(self) + " took damage:" + str(damage))
 	if damage.type == Damage.Types.Lightning:
 		self_animate("take_lightning_damage", null, damage.delay)
 	if damage.type == Damage.Types.Fire:
 		self_animate("take_fire_damage", null, damage.delay)
-	if _status == null or _status.on_take_damage(damage):
-		die(damage.delay)
-#		emit_signal("damage_taken", damage)
-#		emit_signal("replace_unit", self, null)
+	_take_damage(damage)
 
 
 func change_status(reason, new_status: Status, delay: bool = true) -> bool:
@@ -169,13 +170,12 @@ func attack(target_unit):
 	emit_animate(self, "interact", target_unit)
 	target_unit.take_damage(Damage.damage(Damage.Types.Physical, self))
 
-func apply_status(target_unit, status):
+func apply_status(target_unit, status, delay: bool = true):
 	if target_unit == null or status == null:
 		return
 		
 	emit_animate(self, "interact", target_unit)
-	if target_unit.change_status(status):
-		emit_animate(status, "appied")
+	target_unit.change_status(self, status)
 #
 #func change_state(target_unit, new_state):
 #	if target_unit == null:
@@ -187,7 +187,7 @@ func apply_status(target_unit, status):
 func die_extension(self_position: Vector2, delay: bool = true):
 	pass
 
-func die(delay: bool = true):
+func die(delay: bool = true, call_extension: bool = true):
 	if _dead:
 		return
 	_dead = true
@@ -195,7 +195,8 @@ func die(delay: bool = true):
 	var cell = Matrix.get_cell(self_position)
 	cell.unit = null
 	emit_animate(self, "death", null, delay)
-	die_extension(self_position, delay)
+	if call_extension:
+		die_extension(self_position, delay)
 
 ###########################################################################
 
@@ -245,6 +246,7 @@ func animate_move(target_cell_or_position):
 	_interpolate(self, "position", matrix_to_map(target_cell.get_coordinates()))
 	
 func animate_change_status(new_status: Status):
+	print('animate_change_status', new_status)
 	add_child(new_status)
 	
 func animate_enter_matrix(matrix_position):
@@ -256,7 +258,8 @@ func animate_enter_matrix(matrix_position):
 	$spawn.play()
 
 func animate_exit(__):
-	GameState.game.increase_exited_amount(self)
+	GameState.unit_exited(self)
+	GameState.game.render_exited_amount()
 	_interpolate(self, "modulate", Color(1, 1, 1, 0), true)
 	$victory.play()
 	

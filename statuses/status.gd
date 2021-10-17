@@ -14,7 +14,9 @@ func get_hint() -> String:
 	return _hint
 	
 func _ready():
-	call_deferred('animate_applied', null)
+	scale = Vector2(0, 0)
+#	call_deferred('animate_applied', null)
+	pass
 
 func emit_animate(target, method_name, arg=null, delay: bool = true):
 	GameState.game.put_into_animate_queue(target, method_name, arg, delay)
@@ -25,8 +27,8 @@ func apply(unit):
 	on_applied()
 
 func on_applied():
-#	emit_animate(self, "applied")
-	pass
+	emit_animate(self, 'applied')
+
 
 # false means to end turn, true - to coninue
 func on_turn_start() -> bool:
@@ -57,7 +59,8 @@ func vanish():
 # -> Animate
 
 func animate_applied(__):
-	pass
+	var duration = Rand.float_in_range(0.4, 0.6)
+	Animator.animate(self, "scale", Vector2(0.8, 0.8), duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 
 func animate_on_changed(__):
 	var parent = get_parent()

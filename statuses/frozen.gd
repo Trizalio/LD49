@@ -10,6 +10,10 @@ var lifespan: int = 0
 func _init().("Frozen", hint_):
 	lifespan = 2
 
+func _ready():
+	scale = Vector2(1, 1)
+	pass
+
 func animate_applied(__):
 	sprite.play()
 
@@ -30,7 +34,7 @@ func on_changed(new_status: Status) -> bool:
 		return false
 	if new_status != null and new_status._name == self._name:
 		var target_position = Matrix.get_unit_coordinates(_owner)
-		_owner.die()
+		_owner.die(false, false)
 		Matrix.enter_matrix(target_position, UnitsGenerator.FrostShardUnit.instance(), true, true)
 	return true
 

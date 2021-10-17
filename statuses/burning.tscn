@@ -35,7 +35,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="AnimatedSprite" type="Node2D"]
+[node name="burning" type="Node2D"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 script = ExtResource( 2 )
 
@@ -43,5 +43,5 @@ script = ExtResource( 2 )
 position = Vector2( 0, -5 )
 scale = Vector2( 0.8, 0.8 )
 frames = SubResource( 7 )
-frame = 1
+frame = 2
 playing = true

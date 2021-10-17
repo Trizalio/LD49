@@ -1,45 +1,38 @@
 extends Unit
 
-#var _race = "undead"
+var hint = (
+	'Move: move to one of 3 tiles ahead\n' +
+	"Killed: becomes weak\n" +
+	"Weak: freeze any enemy neighbour to recover self"
+) 
+var weaken: bool = false
 
-var hint = ("Unit: vampire \nRace: undead \nMove: 'madly', in any direction"+
-"to next three tiles, if no way - move to random way"+
-"\nProperties: every 3 turns become weak; if weak - freeze random "+
-"non-undead neighbour unit and returns to normal")
-
-var is_week = false
-var turn_counter = 0
-var max_turn_counter = 3
-
-func _ready():
-	self._type_name = 'Vampire'
-	self._race =  "undead"
-	self._tier =  3
-	
-
-#	change_status(self ,"lightning_shield")
-func get_race():
-	return "undead"
-
-func get_tier():
-	return 3
+func _init().(UnitUtils.Race.Undead, 3, "Zombie", hint):
+	pass
 
 func _act():
-#	if turn_counte == max_turn_counter:
-#
-#		var coordinates = Matrix.get_unit_coordinates(self)
-#		var neighbors_pos = filter_positions([coordinates])
-#		var not_undead_neighbors = []
-#		for neighbor_pos in neighbors_pos:
-#			var cell = Matrix.get_cell(neighbor_pos)
-#			if cell.unit:
-#				if cell.unit.get_race() != self._race:
-#					not_undead_neighbors.append(cell.unit)
-#
-#		var neighbor_pos = Rand.choice(neighbors_pos)
-#		var target =  Rand.choice(not_undead_neighbors)
-#		if target:
-#			target.change_status(self, "frozen")
-
-		wander_move()
+	if weaken:
+		var target_unit = Rand.choice(
+			MatrixUtils.get_units_by_shifts(
+				self, MatrixUtils.all_neighbours, self.get_race()
+		))
+		if target_unit:
+			apply_status(target_unit, Frozen.instance())
+			self_animate("weak", false)
+			weaken = false
+			
+	else:
+		nimble_move()
+		
+func _take_damage(damage: Damage.Damage):
+	if weaken:
+		return ._take_damage(damage)
+		
+	self_animate("weak", true)
+	weaken = true
+	
+func animate_weak(is_weak: bool):
+	self.add_child(EffectUtils.BlackCloud())
+	$sprite.get_material().set_shader_param("grayness", 1.0 * int(is_weak))
+	$sprite.get_material().set_shader_param("fade", 0.6 * int(is_weak))
 	

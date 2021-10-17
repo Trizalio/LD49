@@ -1,6 +1,5 @@
 extends Spell
 
-var Burning = preload("res://statuses/burning.tscn")
 var hint = (
 	'Spell: Fireball \n' + 
 	'Deals fire damage to target, ignites it and all neighbours'
@@ -14,12 +13,11 @@ func cast(target_position: Vector2):
 	var target_unit = Matrix.get_unit(target_position)
 	var unit_to_burn = MatrixUtils.get_units_by_shifts(target_position, MatrixUtils.all_neighbours)
 	if target_unit != null:
-		target_unit.take_damage (Damage.damage(Damage.Types.Fire, self))
-		target_unit.change_status(self, Burning.instance(), true)
+		target_unit.take_damage(Damage.damage(Damage.Types.Fire, self))
 		unit_to_burn = [target_unit] + unit_to_burn
 	
 	for neighbour in unit_to_burn:
-		neighbour.change_status(self, Burning.instance(), false)
+		neighbour.change_status(self, StatusUtils.Burning(), false)
 	
 	GameState.game.put_into_animate_queue(self, 'wait', null)
 #	$FireballSpell.play()

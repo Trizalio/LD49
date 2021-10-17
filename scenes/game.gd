@@ -4,33 +4,31 @@ onready var map: GridContainer = $parts/centered/map
 var units = null
 
 onready var TileScene = preload("res://utils/tile.tscn")
-
-
-# TODO: get from map
-onready var separation: Vector2 = Vector2(4, 4)
-var _animate_queue = []
-#var base_time_step = 0.1
-#var duration_deviation_fraction = 0.2
-#var min_time_step = base_time_step * (1 - duration_deviation_fraction)
-#var max_time_step = base_time_step * (1 + duration_deviation_fraction)
+var _animate_queue: Array
+var _hints_enabled: bool = true
 
 func _ready():
+	_animate_queue = []
+	_hints_enabled = true
 	_prepare_battlefield()
 	GameState.connect("active_spells_changed", self, 'show_spells')
 	GameState.connect("unit_exited", self, 'render_exited_amount')
 	_fetch_queue()
 	$parts/root_buttons.visible = GameState.god_mode
+	GameState.start_new_game(self)
 	render_exited_amount()
-	GameState.game = self
-	GameState.start_new_game()
 	prepare_spell_hints()
 #	set_hints_visibility(true)
 	call_deferred('set_hints_visibility', not GameState.god_mode)
 	$parts/texture/main_hint.call_deferred("rescale")
 	set_spells_lock(true)
 	_on_change_selected_unit_type(0)
+	call_deferred('_spawn_drag_hint')
+	
+	
 	
 func set_hints_visibility(is_visible: bool):
+	_hints_enabled = is_visible
 	for hint in get_tree().get_nodes_in_group("hints"):
 		hint.visible = is_visible
 		if is_visible:
@@ -56,9 +54,18 @@ func prepare_spell_hints():
 func show_spells(spells: Array):
 	if GameState.god_mode:
 		return
-		
+	
+	var spell_children = []
 	for child in $parts/spells.get_children():
-		child.visible = spells.find(child.get_name()) != -1
+		child.visible = false
+		if child is Spell:
+			spell_children.append(child)
+		
+	var selected_spells = [Rand.choice(spell_children)]
+	spell_children.erase(selected_spells[0])
+	selected_spells.append(Rand.choice(spell_children))
+	for spell in selected_spells:
+		spell.visible = true
 	
 	call_deferred('set_hints_visibility', GameState.turn_number == 1 and not GameState.god_mode)
 #	set_hints_visibility(false)
@@ -124,9 +131,10 @@ func put_into_animate_queue(arg_1, arg_2, arg_3, arg_4=true):
 	print("put_into_animate_queue(", arg_1, ", ", arg_2, ", ", arg_3, ", ", arg_4, ")")
 	_animate_queue.append([arg_1, arg_2, arg_3, arg_4])
 
-func set_spells_lock(boolean: bool):
-	$parts/spells.modulate = Color(1, 1, 1, 0.5 + 0.5 * int(!boolean))
-	
+func set_spells_lock(locked: bool):
+	for child in $parts/spells.get_children():
+		if child is Spell:
+			child.is_enabled = not locked
 	
 func _fetch_queue():
 	var wait = true
@@ -152,16 +160,32 @@ func matrix_to_map(matrix_position: Vector2) -> Vector2:
 	
 func append_unit(unit: Unit):
 	units.add_child(unit)
-
-var exited = 0
-
-func increase_exited_amount(unit):
-	exited += 1
-	render_exited_amount()
+#
+#var exited = 0
+#
+#func increase_exited_amount(unit):
+#	exited += 1
+#	render_exited_amount()
+onready var race_to_color_code: Dictionary = {
+	UnitUtils.Race.Undead: "#a0aaaaff",
+	UnitUtils.Race.Demon: "#a0ffaaaa",
+	UnitUtils.Race.Greenskin: "#a0aaffaa",
+}
 
 func render_exited_amount():
+	var exited_text = ""
+	for race in race_to_color_code.keys():
+		var exited_amount = GameState.unit_race_to_amount_exit.get(race, 0)
+		var color_code = race_to_color_code[race]
+		print(race, ": ", exited_amount, ", ", color_code)
+#		var color_code = race_to_color_code.get(race, "#a0ffffff")
+		if exited_text:
+			exited_text += "/"
+		exited_text += "[color=" + color_code + "]" + str(exited_amount) + "[/color]"
 	$parts/score/capacity_value.text = str(GameState.castle_capacity)
-	$parts/score/exited_value.text = str(exited)
+	$parts/score/exited_value.bbcode_text = str(exited_text)
+	$parts/score/exited_value.get_child(0).modulate.a = 0
+	
 
 var spawn_position = Vector2(0, 0)
 func _change_x(change: int):
@@ -204,8 +228,7 @@ func _on_change_selected_unit_type(shift: int):
 func _on_next_turn_pressed():
 	GameState._next_turn()
 
-
-func _on_spawn_all_pressed():
+func _on_spawn_full_pressed():
 	for y in range(Matrix.matrix_height - 1, -1, -1):
 		for x in range(Matrix.matrix_width - 1, -1, -1):
 			spawn_position = Vector2(x, y)
@@ -221,3 +244,16 @@ func _on_spawn_imp_pressed():
 		return
 	var new_unit = selected_unit.instance()
 	Matrix.enter_matrix(spawn_position, new_unit, false)
+
+const DragHint = preload("res://scenes/drag_hint.tscn")
+
+func _spawn_drag_hint():
+	if not _hints_enabled:
+		return
+	print('spawn_drag_hint')
+	var hint = DragHint.instance()
+	var map_rect = $parts/centered.get_rect()
+	var spells_rect = $parts/spells.get_rect()
+	hint.position = spells_rect.position + spells_rect.size / 2
+	$parts.add_child(hint)
+	hint.move_to(map_rect.position + map_rect.size / 2, $Timer.wait_time)

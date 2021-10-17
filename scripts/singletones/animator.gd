@@ -6,6 +6,7 @@ class AnimationStep:
 	var duration = null
 	var trans_type = null
 	var ease_type = null
+	var property = null
 	
 	func _init(_final_val, _duration: float, _start_val=null, _trans_type=null, _ease_type=null):
 		start_val = _start_val
@@ -13,6 +14,7 @@ class AnimationStep:
 		duration = _duration
 		trans_type = _trans_type
 		ease_type = _ease_type
+		property = null
 
 
 func multi_animate(object: Object, property: NodePath, animation_steps: Array, 
@@ -39,6 +41,8 @@ func _tween_callback(object, property, tween: Tween, animation_steps: Array,
 		trans_type = current_step.trans_type
 	if current_step.ease_type != null:
 		ease_type = current_step.ease_type
+	if current_step.property != null:
+		property = current_step.property
 	tween.interpolate_property(object, property, start_val, 
 		current_step.final_val, current_step.duration, trans_type, ease_type)
 	tween.start()

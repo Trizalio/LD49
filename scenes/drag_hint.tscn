@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://scenes/drag_hint.gd" type="Script" id=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float start = 0.7;
+uniform float width = 0.3;
+uniform vec4 color: hint_color = vec4(1, 1, 1, 0.5);
+
+void fragment(){
+	COLOR = color;
+//	float range = length(UV - vec2(0.5)) / length(vec2(0.5));
+	float range = length(UV - vec2(0.5)) / 0.5;
+	float alpha = 1. + (start - range) / width;
+	COLOR.a *= clamp(alpha, 0., 1.);
+//	COLOR.a = clamp(1. - pow(range, 1. / 0.7), 0., 1.);
+//	COLOR = vec4(1.);
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/start = 0.7
+shader_param/width = 0.3
+shader_param/color = Color( 1, 1, 1, 0.5 )
+
+[node name="drag_hint" type="Sprite"]
+modulate = Color( 1, 1, 1, 0 )
+material = SubResource( 2 )
+texture = ExtResource( 1 )
+script = ExtResource( 2 )

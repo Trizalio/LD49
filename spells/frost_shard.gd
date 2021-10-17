@@ -11,7 +11,7 @@ func cast(target_position: Vector2):
 	print('cast frost_shard: ', target_position)
 	var cell = Matrix.get_cell(target_position)
 	if cell.unit != null:
-		cell.unit.die()
+		cell.unit.die(false, false)
 	Matrix.enter_matrix(target_position, FrostShardUnit.instance(), true, true)
 	return true
 

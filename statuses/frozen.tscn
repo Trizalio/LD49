@@ -51,7 +51,7 @@ animations = [ {
 "speed": 7.0
 } ]
 
-[node name="status" type="Node2D"]
+[node name="frozen" type="Node2D"]
 position = Vector2( 1, 0 )
 script = ExtResource( 2 )
 

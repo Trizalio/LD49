@@ -11,5 +11,5 @@ dest_files=[ "res://.import/spell_frozen_shard.mp3-1d13e3fd8ab095b8d75a0f50b8e55
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

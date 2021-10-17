@@ -204,7 +204,8 @@ func _on_change_selected_unit_type(shift: int):
 func _on_next_turn_pressed():
 	GameState._next_turn()
 
-func _on_spawn_imp_pressed():
+
+func _on_spawn_all_pressed():
 	for y in range(Matrix.matrix_height - 1, -1, -1):
 		for x in range(Matrix.matrix_width - 1, -1, -1):
 			spawn_position = Vector2(x, y)
@@ -213,3 +214,10 @@ func _on_spawn_imp_pressed():
 				return
 			var new_unit = selected_unit.instance()
 			Matrix.enter_matrix(spawn_position, new_unit, false)
+
+func _on_spawn_imp_pressed():
+	var cell = Matrix.get_cell(spawn_position)
+	if cell.unit != null:
+		return
+	var new_unit = selected_unit.instance()
+	Matrix.enter_matrix(spawn_position, new_unit, false)

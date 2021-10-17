@@ -124,8 +124,10 @@ func put_into_animate_queue(arg_1, arg_2, arg_3, arg_4=true):
 	print("put_into_animate_queue(", arg_1, ", ", arg_2, ", ", arg_3, ", ", arg_4, ")")
 	_animate_queue.append([arg_1, arg_2, arg_3, arg_4])
 
-func set_spells_lock(boolean: bool):
-	$parts/spells.modulate = Color(1, 1, 1, 0.5 + 0.5 * int(!boolean))
+func set_spells_lock(locked: bool):
+	for child in $parts/spells.get_children():
+		if child is Spell:
+			child.is_enabled = not locked
 	
 	
 func _fetch_queue():

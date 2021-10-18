@@ -40,7 +40,7 @@ func cast(coords: Vector2):
 			break
 			
 		coords = Rand.choice(possible_target_positions)
-		
+	$ChainLightningSpell.play()	
 	return true
 
 func render_targets(coords: Vector2):

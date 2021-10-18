@@ -24,7 +24,8 @@ func cast(target_position: Vector2):
 		if unit == null:
 			break
 		print(i, " - ", unit)
-		unit.change_status(self,  Burning.instance())	
+		unit.change_status(self,  Burning.instance())
+	$FirejetSpell.play()	
 
 func render_targets(coords: Vector2):
 	var targets = SpellTargets.new()

@@ -11,5 +11,5 @@ dest_files=[ "res://.import/spell_chain_ightning.mp3-06e675fcc5a7305e090b23c7b54
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

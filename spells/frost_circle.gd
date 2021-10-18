@@ -14,6 +14,7 @@ func cast(target_position: Vector2):
 		neighbour.change_status(self, Frozen.instance(), false)
 	
 	GameState.game.put_into_animate_queue(self, 'wait', null)
+	$FrostCircleSpell.play()
 	return true
 
 func render_targets(coords: Vector2):

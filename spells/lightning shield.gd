@@ -19,6 +19,7 @@ func cast(target_position: Vector2):
 		return false
 
 	var done = target_unit.change_status(self, LightningShield.instance())
+	$LightningShield.play()
 	return done
 
 func render_targets(target_position: Vector2):

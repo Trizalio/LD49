@@ -20,7 +20,7 @@ func cast(target_position: Vector2):
 		neighbour.change_status(self, StatusUtils.Burning(), false)
 	
 	GameState.game.put_into_animate_queue(self, 'wait', null)
-#	$FireballSpell.play()
+	$FireballSpell.play()
 	return true
 
 

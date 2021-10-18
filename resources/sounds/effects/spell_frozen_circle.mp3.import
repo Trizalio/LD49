@@ -11,5 +11,5 @@ dest_files=[ "res://.import/spell_frozen_circle.mp3-350ca080ea20e60913aa722a2dc1
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

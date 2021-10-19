@@ -109,13 +109,11 @@ func _prepare_battlefield():
 	map.add_child(units)
 	
 func add_hint_to_control(target: Control, method_name: String, args):
-	var timer = Timer.new()
-	timer.wait_time = 0.3
-	timer.one_shot = true
-	target.add_child(timer)
-	target.connect("mouse_entered", timer, "start")
-	target.connect("mouse_exited", timer, "stop")
-	timer.connect("timeout", self, method_name, args)
+	target.connect("mouse_entered", self, method_name, args)
+	target.connect("mouse_exited", self, "hide_main_hint")
+
+func hide_main_hint():
+	$parts/texture/main_hint.hide()
 	
 func show_spell_hint(spell: Spell) -> void:
 	print('show_spell_hint')

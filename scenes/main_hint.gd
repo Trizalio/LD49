@@ -11,6 +11,9 @@ func rescale():
 	field.rect_size = rect.size
 #	call_deferred("rescale")
 
+func hide_hint():
+	visible = false
+
 func show_spell_hint(spell):
 	if spell == null:
 		return
@@ -41,6 +44,3 @@ func show_unit_hint(unit):
 		status_copy.position = background.rect_size / 2
 	else:
 		$field/vbox/status.visible = false
-
-func _input(event):
-	visible = false
